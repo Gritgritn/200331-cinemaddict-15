@@ -40,7 +40,7 @@ const commentedFilmList = siteMainElement.querySelector('.films-list--commented'
 const mama = commentedFilmList.querySelector('.films-list__container');
 for (let i = 0; i < EXTRA_CARD_COUNT; i++) {
   render(mama, createFilmCard(), 'beforeend');
-};
+}
 
 const siteFooterElement = document.querySelector('.footer');
 render(siteFooterElement, createFooterStatisticTemplate(), 'beforeend');
