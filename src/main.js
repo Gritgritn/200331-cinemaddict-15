@@ -3,6 +3,7 @@ import {createFilmCard} from './view/card.js';
 import {createShowmoreBtn} from './view/morebtn.js';
 import {createUserTitle} from './view/usertitle.js';
 import {createFooterStatisticTemplate} from './view/footerstatistic.js';
+import {CreatePopupElement} from './view/popup.js';
 
 const MAIN_CARD_COUNT = 5;
 const EXTRA_CARD_COUNT = 2;
@@ -44,3 +45,6 @@ for (let i = 0; i < EXTRA_CARD_COUNT; i++) {
 
 const siteFooterElement = document.querySelector('.footer');
 render(siteFooterElement, createFooterStatisticTemplate(), 'beforeend');
+
+const sitePopupElement = document.querySelector('.footer');
+render(sitePopupElement, CreatePopupElement(), 'afterend');
