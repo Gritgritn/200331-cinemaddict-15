@@ -2,6 +2,7 @@ import {createSiteMenuTemplate} from './view/menu.js';
 import {createFilmCard} from './view/card.js';
 import {createShowmoreBtn} from './view/morebtn.js';
 import {createUserTitle} from './view/usertitle.js';
+import {createFooterStatisticTemplate} from './view/footerstatistic.js';
 
 const MAIN_CARD_COUNT = 5;
 const EXTRA_CARD_COUNT = 2;
@@ -33,3 +34,13 @@ const extraFilmCardElement = extraFilmList.querySelector('.films-list__container
 for (let i = 0; i < EXTRA_CARD_COUNT; i++) { 
   render(extraFilmCardElement, createFilmCard(), 'beforeend');
 };
+
+
+const commentedFilmList = siteMainElement.querySelector('.films-list--commented');
+const mama = commentedFilmList.querySelector('.films-list__container');
+for (let i = 0; i < EXTRA_CARD_COUNT; i++) { 
+  render(mama, createFilmCard(), 'beforeend');
+};
+
+const siteFooterElement = document.querySelector('.footer');
+render(siteFooterElement, createFooterStatisticTemplate(), 'beforeend');
