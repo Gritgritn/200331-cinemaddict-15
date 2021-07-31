@@ -21,9 +21,9 @@ render(siteMainElement, createSiteMenuTemplate(), 'afterBegin');
 
 const boardElement = siteMainElement.querySelector('.films-list');
 const filmCardElement = boardElement.querySelector('.films-list__container');
-for (let i = 0; i < MAIN_CARD_COUNT; i++) { 
-    render(filmCardElement, createFilmCard(), 'beforeend');
-};
+for (let i = 0; i < MAIN_CARD_COUNT; i++) {
+  render(filmCardElement, createFilmCard(), 'beforeend');
+}
 
 const ShowMoreElement = siteMainElement.querySelector('.films-list');
 render(ShowMoreElement, createShowmoreBtn(), 'beforeend');
@@ -31,14 +31,14 @@ render(ShowMoreElement, createShowmoreBtn(), 'beforeend');
 
 const extraFilmList = siteMainElement.querySelector('.films-list--extra');
 const extraFilmCardElement = extraFilmList.querySelector('.films-list__container');
-for (let i = 0; i < EXTRA_CARD_COUNT; i++) { 
+for (let i = 0; i < EXTRA_CARD_COUNT; i++) {
   render(extraFilmCardElement, createFilmCard(), 'beforeend');
-};
+}
 
 
 const commentedFilmList = siteMainElement.querySelector('.films-list--commented');
 const mama = commentedFilmList.querySelector('.films-list__container');
-for (let i = 0; i < EXTRA_CARD_COUNT; i++) { 
+for (let i = 0; i < EXTRA_CARD_COUNT; i++) {
   render(mama, createFilmCard(), 'beforeend');
 };
 
