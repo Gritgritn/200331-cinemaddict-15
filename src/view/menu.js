@@ -1,16 +1,16 @@
-// const createFilterItemTemplate = (filter) => {
-//   const {name, count} = filter;
-//   return(
-//   `<a href="#${name}" class="main-navigation__item">${name} <span class="main-navigation__item-count">${count}</span></a>`
-//   )
-// };
+const createFilterItemTemplate = (filter) => {
+  const {name, count} = filter;
+  return(
+  `<a href="#${name}" class="main-navigation__item">${name} <span class="main-navigation__item-count">${count}</span></a>`
+  )
+};
 
-// const createFilterTemplate = (filterItems) => {
-//   const filterItemsTemplate = filterItems
-//     .map((filter, index) => createFilterItemTemplate(filter, index === 0))
-//     .join('');
-//     return `${filterItemsTemplate}`;
-// }
+const createFilterTemplate = (filterItems) => {
+  const filterItemsTemplate = filterItems
+    .map((filter, index) => createFilterItemTemplate(filter, index === 0))
+    .join('');
+    return `${filterItemsTemplate}`;
+}
 
 const createSiteMenuTemplate = () => (
   `<nav class="main-navigation">
@@ -22,5 +22,5 @@ const createSiteMenuTemplate = () => (
   </nav>`
 );
 
-// export {createFilterTemplate};
+export {createFilterTemplate};
 export {createSiteMenuTemplate};

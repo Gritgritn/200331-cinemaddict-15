@@ -24,13 +24,12 @@ const FILM_COUNT_PER_STEP = 5;
 
 const films = new Array(FILM_COUNT).fill().map(generateFilm);
 // const comments = new Array(4).fill().map(generateMovieComment);
-const filters = generateFilter(films);
-
-console.log(films);
+// const filters = generateFilter(films);
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
 };
+
 
 const siteHeaderElement = document.querySelector('.header');
 render(siteHeaderElement, createUserTitle(), 'beforeend');
@@ -38,7 +37,7 @@ render(siteHeaderElement, createUserTitle(), 'beforeend');
 const siteMainElement = document.querySelector('.main');
 render(siteMainElement, createSortTemplate(), 'afterBegin');
 render(siteMainElement, createSiteMenuTemplate(), 'afterBegin');
-// const siteNavigationElement = siteMainElement.querySelector('main-navigation__items');
+const siteNavigationElement = siteMainElement.querySelector('main-navigation__items');
 // render(siteNavigationElement, createFilterTemplate(filters), 'beforeend');
 
 
