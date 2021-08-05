@@ -23,7 +23,8 @@ const FILM_COUNT_PER_STEP = 5;
 
 
 const films = new Array(FILM_COUNT).fill().map(generateFilm);
-// const filters = generateFilter(films);
+// const comments = new Array(4).fill().map(generateMovieComment);
+const filters = generateFilter(films);
 
 console.log(films);
 
@@ -79,14 +80,15 @@ for (let i = 0; i < EXTRA_CARD_COUNT; i++) {
 
 
 const commentedFilmList = siteMainElement.querySelector('.films-list--commented');
-const mama = commentedFilmList.querySelector('.films-list__container');
+const topCommented = commentedFilmList.querySelector('.films-list__container');
 for (let i = 0; i < EXTRA_CARD_COUNT; i++) {
-  render(mama, createFilmCard(films[i]), 'beforeend');
+  render(topCommented, createFilmCard(films[i]), 'beforeend');
 }
 
 const siteFooterElement = document.querySelector('.footer');
 render(siteFooterElement, createFooterStatisticTemplate(), 'beforeend');
 
 const sitePopupElement = document.querySelector('.footer');
-render(sitePopupElement, CreatePopupElement(), 'afterend');
-
+for (let i = 0; i < Math.min(films.length, FILM_COUNT_PER_STEP); i++) {
+  render(sitePopupElement, CreatePopupElement(films[i]), 'afterend');
+};

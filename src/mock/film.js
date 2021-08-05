@@ -48,8 +48,8 @@ const getRandomEmotion = () => {
 const generateMovieComment = () => {
     return {
     author: getCommentAuthor(),
-    comment: getRandomComment(),
-    date: getCommentDate(),
+    commentText: getRandomComment(),
+    commentDate: getCommentDate(),
     emotion: getRandomEmotion(),
     };
 };
@@ -135,6 +135,12 @@ const generateFilm = () => {
     isInWatchlist: Boolean(getRandomInteger(0, 1)),
     isWatched: Boolean(getRandomInteger(0, 1)),
     isFavorite: Boolean(getRandomInteger(0, 1)),
+    comments: {
+        author: getCommentAuthor(),
+        commentText: getRandomComment(),
+        commentDate: getCommentDate(),
+        emotion: getRandomEmotion(),
+    }
     };
 };
 
