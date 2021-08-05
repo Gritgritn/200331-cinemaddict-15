@@ -1,6 +1,6 @@
 import {getRandomInteger} from '../utils.js';
 
-let generalMovieCount = getRandomInteger(110110, 150000);
+const generalMovieCount = getRandomInteger(110110, 150000);
 
 const createFooterStatisticTemplate = () => (
   `<section class="footer__statistics">

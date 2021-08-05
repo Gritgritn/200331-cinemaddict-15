@@ -6,18 +6,18 @@ const createFilmCard = (film) => {
   let hours = Math.floor(runtime / 60);
   let minutes = Math.floor(runtime) - (hours * 60);
   let slicedDescription = description.slice(0, 140);
-    if (slicedDescription.length < description.length) {
-      slicedDescription += ' ...';
+  if (slicedDescription.length < description.length) {
+    slicedDescription += ' ...';
   }
   const watchlistClassName = isInWatchlist
-  ? 'film-card__controls-item--add-to-watchlist film-card__controls-item--active'
-  : 'film-card__controls-item--add-to-watchlist';
+    ? 'film-card__controls-item--add-to-watchlist film-card__controls-item--active'
+    : 'film-card__controls-item--add-to-watchlist';
   const watchedClassName = isWatched
-  ? 'film-card__controls-item--mark-as-watched film-card__controls-item--active'
-  : 'film-card__controls-item--mark-as-watched';
+    ? 'film-card__controls-item--mark-as-watched film-card__controls-item--active'
+    : 'film-card__controls-item--mark-as-watched';
   const favoriteClassName = isFavorite
-  ? 'film-card__controls-item--favorite film-card__controls-item--active'
-  : 'film-card__controls-item--favorite';
+    ? 'film-card__controls-item--favorite film-card__controls-item--active'
+    : 'film-card__controls-item--favorite';
 
   return `<article class="film-card">
         <h3 class="film-card__title">${moviename}</h3>

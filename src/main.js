@@ -7,19 +7,18 @@ import {CreatePopupElement} from './view/popup.js';
 import {generateFilm} from './mock/film.js';
 import {generateMovieComment} from './mock/film.js';
 import {createSortTemplate} from './view/sort.js';
-import {generateFilter} from './mock/filter.js';
+// import {generateFilter} from './mock/filter.js';
 
-console.log(
-  generateFilm()
-);
-console.log(
-  generateMovieComment()
-);
+// console.log(
+//   generateFilm()
+// );
+// console.log(
+//   generateMovieComment()
+// );
 
 const EXTRA_CARD_COUNT = 2;
 const FILM_COUNT = 15;
 const FILM_COUNT_PER_STEP = 5;
-
 
 
 const films = new Array(FILM_COUNT).fill().map(generateFilm);
@@ -37,9 +36,8 @@ render(siteHeaderElement, createUserTitle(), 'beforeend');
 const siteMainElement = document.querySelector('.main');
 render(siteMainElement, createSortTemplate(), 'afterBegin');
 render(siteMainElement, createSiteMenuTemplate(), 'afterBegin');
-const siteNavigationElement = siteMainElement.querySelector('main-navigation__items');
+// const siteNavigationElement = siteMainElement.querySelector('main-navigation__items');
 // render(siteNavigationElement, createFilterTemplate(filters), 'beforeend');
-
 
 
 const boardElement = siteMainElement.querySelector('.films-list');
@@ -90,4 +88,4 @@ render(siteFooterElement, createFooterStatisticTemplate(), 'beforeend');
 const sitePopupElement = document.querySelector('.footer');
 for (let i = 0; i < Math.min(films.length, FILM_COUNT_PER_STEP); i++) {
   render(sitePopupElement, CreatePopupElement(films[i]), 'afterend');
-};
+}
