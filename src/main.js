@@ -9,12 +9,6 @@ import {generateFilm} from './mock/film.js';
 import {createSortTemplate} from './view/sort.js';
 import {generateFilter} from './mock/filter.js';
 
-// console.log(
-//   generateFilm()
-// );
-// console.log(
-//   generateMovieComment()
-// );
 
 const EXTRA_CARD_COUNT = 2;
 const FILM_COUNT = 15;
@@ -24,7 +18,7 @@ const FILM_COUNT_PER_STEP = 5;
 const films = new Array(FILM_COUNT).fill().map(generateFilm);
 // const comments = new Array(4).fill().map(generateMovieComment);
 const filters = generateFilter(films);
-console.log(filters);
+
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
@@ -71,7 +65,7 @@ if (films.length > FILM_COUNT_PER_STEP) {
 const extraFilmList = siteMainElement.querySelector('.films-list--extra');
 const extraFilmCardElement = extraFilmList.querySelector('.films-list__container');
 for (let i = 0; i < EXTRA_CARD_COUNT; i++) {
-  render(extraFilmCardElement, createFilmCard(films[i]), 'beforeend');
+  render(extraFilmCardElement, createFilmCard(films[i]), 'beforeend')
 }
 
 

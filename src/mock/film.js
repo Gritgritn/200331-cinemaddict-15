@@ -47,50 +47,50 @@ const getRandomEmotion = () => {
 
 const generateMovieComment = () => {
   return {
-  author: getCommentAuthor(),
-  commentText: getRandomComment(),
-  commentDate: getCommentDate(),
-  emotion: getRandomEmotion(),
+    author: getCommentAuthor(),
+    commentText: getRandomComment(),
+    commentDate: getCommentDate(),
+    emotion: getRandomEmotion(),
   };
 };
 
 const generateMovieName = () => {
   const movienames = [
-  'Легенда',
-  'Аватар',
-  'Интерстеллар',
-  'Цикада 3301',
-  'Никто',
-  'Проект X',
-  'Джентельмены',
-  'Однажды в Голливуде',
-];
-const randomIndex = getRandomInteger(0, movienames.length - 1);
+    'Легенда',
+    'Аватар',
+    'Интерстеллар',
+    'Цикада 3301',
+    'Никто',
+    'Проект X',
+    'Джентельмены',
+    'Однажды в Голливуде',
+  ];
+  const randomIndex = getRandomInteger(0, movienames.length - 1);
   return movienames[randomIndex];
 };
 
 const generatePoster = () => {
   const posters = [
-  'made-for-each-other.png',
-  'popeye-meets-sinbad.png',
-  'sagebrush-trail.jpg',
-  'the-dance-of-life.jpg',
-  'the-great-flamarion.jpg',
-  'the-man-with-the-golden-arm.jpg',
-  'santa-claus-conquers-the-martians.jpg',
-];
-const randomIndex = getRandomInteger(0, posters.length - 1);
+    'made-for-each-other.png',
+    'popeye-meets-sinbad.png',
+    'sagebrush-trail.jpg',
+    'the-dance-of-life.jpg',
+    'the-great-flamarion.jpg',
+    'the-man-with-the-golden-arm.jpg',
+    'santa-claus-conquers-the-martians.jpg',
+  ];
+  const randomIndex = getRandomInteger(0, posters.length - 1);
   return posters[randomIndex];
 };
 
 const generateDescription = () => {
   const descriptions = [
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.  ',
-  'Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus.',
-  'Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.',
-  'Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus.',
-  'Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.',
-];
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.  ',
+    'Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus.',
+    'Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.',
+    'Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus.',
+    'Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.',
+  ];
   const randomIndex = getRandomInteger(0, descriptions.length - 1);
   return descriptions[randomIndex];
 };
@@ -121,27 +121,27 @@ const getRandomGenre = () => {
 
 const generateFilm = () => {
   return {
-  moviename: generateMovieName(),
-  poster: generatePoster(),
-  description: generateDescription(),
-  premiereDate: generateDate(),
-  rating: getRandomInteger(1, 10),
-  pegi: getRandomInteger(1, 18) + '+',
-  director: getRandomDirector(),
-  writers: getRandomWriter(),
-  actors: getRandomActor(),
-  runtime: getRandomInteger(60, 120),
-  genre: getRandomGenre(),
-  isInWatchlist: Boolean(getRandomInteger(0, 1)),
-  isWatched: Boolean(getRandomInteger(0, 1)),
-  isFavorite: Boolean(getRandomInteger(0, 1)),
-  comments: {
-    author: getCommentAuthor(),
-    commentText: getRandomComment(),
-    commentDate: getCommentDate(),
-    emotion: getRandomEmotion(),
-  },
-};
+    moviename: generateMovieName(),
+    poster: generatePoster(),
+    description: generateDescription(),
+    premiereDate: generateDate(),
+    rating: getRandomInteger(1, 10),
+    pegi: getRandomInteger(1, 18) + '+',
+    director: getRandomDirector(),
+    writers: getRandomWriter(),
+    actors: getRandomActor(),
+    runtime: getRandomInteger(60, 120),
+    genre: getRandomGenre(),
+    isInWatchlist: Boolean(getRandomInteger(0, 1)),
+    isWatched: Boolean(getRandomInteger(0, 1)),
+    isFavorite: Boolean(getRandomInteger(0, 1)),
+    comments: {
+      author: getCommentAuthor(),
+      commentText: getRandomComment(),
+      commentDate: getCommentDate(),
+      emotion: getRandomEmotion(),
+    },
+  };
 };
 
 export {generateFilm};
