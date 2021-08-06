@@ -44,11 +44,11 @@ const getRandomEmotion = () => {
 };
 
 const generateMovieComment = () => ({
-    author: getCommentAuthor(),
-    commentText: getRandomComment(),
-    commentDate: getCommentDate(),
-    emotion: getRandomEmotion(),
-  });
+  author: getCommentAuthor(),
+  commentText: getRandomComment(),
+  commentDate: getCommentDate(),
+  emotion: getRandomEmotion(),
+});
 
 const generateMovieName = () => {
   const movienames = [
