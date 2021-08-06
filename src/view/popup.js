@@ -5,17 +5,17 @@ const CreatePopupElement = (film) => {
   // const {author, commentText, commentDate, emotion} = comment;
   // const dateOfComment = dayjs(commentDate).format('DD MMM YYYY');
   const date = dayjs(premiereDate).format('DD MMM YYYY');
-  let hours = Math.floor(runtime / 60);
-  let minutes = Math.floor(runtime) - (hours * 60);
+  const hours = Math.floor(runtime / 60);
+  const minutes = Math.floor(runtime) - (hours * 60);
   const watchlistClassName = isInWatchlist
-  ? 'film-details__control-button--active film-details__control-button--watchlist'
-  : 'film-details__control-button--watchlist';
+    ? 'film-details__control-button--active film-details__control-button--watchlist'
+    : 'film-details__control-button--watchlist';
   const watchedClassName = isWatched
-  ? 'film-details__control-button--active film-details__control-button--watched'
-  : 'film-details__control-button--watched';
+    ? 'film-details__control-button--active film-details__control-button--watched'
+    : 'film-details__control-button--watched';
   const favoriteClassName = isFavorite
-  ? 'film-details__control-button--active film-details__control-button--favorite'
-  : 'film-details__control-button--favorite';
+    ? 'film-details__control-button--active film-details__control-button--favorite'
+    : 'film-details__control-button--favorite';
 
 
   return `<section class="film-details" style="display: none;">
@@ -179,7 +179,7 @@ const CreatePopupElement = (film) => {
       </section>
     </div>
   </form>
-  </section>`
+  </section>`;
 };
 
 export {CreatePopupElement};

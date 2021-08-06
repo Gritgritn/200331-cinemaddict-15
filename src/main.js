@@ -1,13 +1,13 @@
-import {createSiteMenuTemplate} from './view/menu.js';
+import {createFilterTemplate} from './view/menu.js';
 import {createFilmCard} from './view/card.js';
 import {createShowmoreBtn} from './view/morebtn.js';
 import {createUserTitle} from './view/usertitle.js';
 import {createFooterStatisticTemplate} from './view/footerstatistic.js';
 import {CreatePopupElement} from './view/popup.js';
 import {generateFilm} from './mock/film.js';
-import {generateMovieComment} from './mock/film.js';
+// import {generateMovieComment} from './mock/film.js';
 import {createSortTemplate} from './view/sort.js';
-// import {generateFilter} from './mock/filter.js';
+import {generateFilter} from './mock/filter.js';
 
 // console.log(
 //   generateFilm()
@@ -23,7 +23,8 @@ const FILM_COUNT_PER_STEP = 5;
 
 const films = new Array(FILM_COUNT).fill().map(generateFilm);
 // const comments = new Array(4).fill().map(generateMovieComment);
-// const filters = generateFilter(films);
+const filters = generateFilter(films);
+console.log(filters);
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
@@ -35,9 +36,7 @@ render(siteHeaderElement, createUserTitle(), 'beforeend');
 
 const siteMainElement = document.querySelector('.main');
 render(siteMainElement, createSortTemplate(), 'afterBegin');
-render(siteMainElement, createSiteMenuTemplate(), 'afterBegin');
-// const siteNavigationElement = siteMainElement.querySelector('main-navigation__items');
-// render(siteNavigationElement, createFilterTemplate(filters), 'beforeend');
+render(siteMainElement, createFilterTemplate(filters), 'afterBegin');
 
 
 const boardElement = siteMainElement.querySelector('.films-list');
@@ -63,7 +62,7 @@ if (films.length > FILM_COUNT_PER_STEP) {
     renderedFilmCount += FILM_COUNT_PER_STEP;
 
     if (renderedFilmCount >= films.length) {
-      showMoreButton.remove();
+      showMoreButton.remove()
     }
   });
 };

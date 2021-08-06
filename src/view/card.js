@@ -3,8 +3,8 @@ import dayjs from 'dayjs';
 const createFilmCard = (film) => {
   const {moviename, poster, description, premiereDate, rating, genre, runtime, isInWatchlist, isWatched, isFavorite} = film;
   const date = dayjs(premiereDate).format('YYYY');
-  let hours = Math.floor(runtime / 60);
-  let minutes = Math.floor(runtime) - (hours * 60);
+  const hours = Math.floor(runtime / 60);
+  const minutes = Math.floor(runtime) - (hours * 60);
   let slicedDescription = description.slice(0, 140);
   if (slicedDescription.length < description.length) {
     slicedDescription += ' ...';
