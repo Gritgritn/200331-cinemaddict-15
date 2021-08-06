@@ -43,14 +43,12 @@ const getRandomEmotion = () => {
   return EMOTIONS[randomIndex];
 };
 
-const generateMovieComment = () => {
-  return {
+const generateMovieComment = () => ({
     author: getCommentAuthor(),
     commentText: getRandomComment(),
     commentDate: getCommentDate(),
     emotion: getRandomEmotion(),
-  };
-};
+  });
 
 const generateMovieName = () => {
   const movienames = [
@@ -117,30 +115,28 @@ const getRandomGenre = () => {
   return genres[randomIndex];
 };
 
-const generateFilm = () => {
-  return {
-    moviename: generateMovieName(),
-    poster: generatePoster(),
-    description: generateDescription(),
-    premiereDate: generateDate(),
-    rating: getRandomInteger(1, 10),
-    pegi: getRandomInteger(1, 18),
-    director: getRandomDirector(),
-    writers: getRandomWriter(),
-    actors: getRandomActor(),
-    runtime: getRandomInteger(60, 120),
-    genre: getRandomGenre(),
-    isInWatchlist: Boolean(getRandomInteger(0, 1)),
-    isWatched: Boolean(getRandomInteger(0, 1)),
-    isFavorite: Boolean(getRandomInteger(0, 1)),
-    comments: {
-      author: getCommentAuthor(),
-      commentText: getRandomComment(),
-      commentDate: getCommentDate(),
-      emotion: getRandomEmotion(),
-    },
-  };
-};
+const generateFilm = () => ({
+  moviename: generateMovieName(),
+  poster: generatePoster(),
+  description: generateDescription(),
+  premiereDate: generateDate(),
+  rating: getRandomInteger(1, 10),
+  pegi: getRandomInteger(1, 18),
+  director: getRandomDirector(),
+  writers: getRandomWriter(),
+  actors: getRandomActor(),
+  runtime: getRandomInteger(60, 120),
+  genre: getRandomGenre(),
+  isInWatchlist: Boolean(getRandomInteger(0, 1)),
+  isWatched: Boolean(getRandomInteger(0, 1)),
+  isFavorite: Boolean(getRandomInteger(0, 1)),
+  comments: {
+    author: getCommentAuthor(),
+    commentText: getRandomComment(),
+    commentDate: getCommentDate(),
+    emotion: getRandomEmotion(),
+  },
+});
 
 export {generateFilm};
 export {generateMovieComment};
