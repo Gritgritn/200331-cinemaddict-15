@@ -28,7 +28,7 @@ const CreatePopupElement = (film) => {
         <div class="film-details__poster">
           <img class="film-details__poster-img" src="./images/posters/${poster}" alt="">
 
-          <p class="film-details__age">${pegi}</p>
+          <p class="film-details__age">${pegi}+</p>
         </div>
 
         <div class="film-details__info">

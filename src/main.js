@@ -56,16 +56,16 @@ if (films.length > FILM_COUNT_PER_STEP) {
     renderedFilmCount += FILM_COUNT_PER_STEP;
 
     if (renderedFilmCount >= films.length) {
-      showMoreButton.remove()
+      showMoreButton.remove();
     }
   });
-};
+}
 
 
 const extraFilmList = siteMainElement.querySelector('.films-list--extra');
 const extraFilmCardElement = extraFilmList.querySelector('.films-list__container');
 for (let i = 0; i < EXTRA_CARD_COUNT; i++) {
-  render(extraFilmCardElement, createFilmCard(films[i]), 'beforeend')
+  render(extraFilmCardElement, createFilmCard(films[i]), 'beforeend');
 }
 
 

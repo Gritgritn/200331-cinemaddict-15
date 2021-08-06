@@ -4,8 +4,6 @@ import {EMOTIONS} from '../const.js';
 // Функция из интернета по генерации случайного числа из диапазона
 // Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
 
-
-
 const generateDate = () => {
   const maxDaysGap = 14965;
   const daysGap = getRandomInteger(-maxDaysGap, maxDaysGap);
@@ -126,7 +124,7 @@ const generateFilm = () => {
     description: generateDescription(),
     premiereDate: generateDate(),
     rating: getRandomInteger(1, 10),
-    pegi: getRandomInteger(1, 18) + '+',
+    pegi: getRandomInteger(1, 18),
     director: getRandomDirector(),
     writers: getRandomWriter(),
     actors: getRandomActor(),
