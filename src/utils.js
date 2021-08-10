@@ -7,7 +7,6 @@ const getRandomInteger = (a = 0, b = 1) => {
 const RenderPosition = {
   AFTERBEGIN:'afterbegin',
   BEFOREEND: 'beforeend',
-  AFTEREND: 'afterEnd',
 };
 
 const render = (container, element, place) => {
