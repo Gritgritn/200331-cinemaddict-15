@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import {createElement} from '../utils.js';
 
 const createFilmCard = (film) => {
   const {moviename, poster, description, premiereDate, rating, genre, runtime, isInWatchlist, isWatched, isFavorite} = film;
@@ -38,4 +39,27 @@ const createFilmCard = (film) => {
       </article>`;
 };
 
-export {createFilmCard};
+class FilmCard {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmCard(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
+
+export default FilmCard;

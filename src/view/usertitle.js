@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const createUserTitle = () => (
   `<section class="header__profile profile">
     <p class="profile__rating">Movie Buff</p>
@@ -5,4 +7,26 @@ const createUserTitle = () => (
   </section>`
 );
 
-export {createUserTitle};
+class UserTitle {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createUserTitle();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
+
+export default UserTitle;

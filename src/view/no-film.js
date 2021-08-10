@@ -1,18 +1,18 @@
 import {createElement} from '../utils.js';
 
-const createShowmoreBtn = () => (
-  `<button class="films-list__show-more">
-    Show more
-  </button>`
+const createNoTaskTemplate = () => (
+  `<p class="board__no-tasks">
+    Click «ADD NEW TASK» in menu to create your first task
+  </p>`
 );
 
-class ShowmoreBtn {
+class NoTask {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createShowmoreBtn();
+    return createNoTaskTemplate();
   }
 
   getElement() {
@@ -27,5 +27,3 @@ class ShowmoreBtn {
     this._element = null;
   }
 }
-
-export default ShowmoreBtn;
