@@ -1,4 +1,4 @@
-import {getRandomInteger} from '../utils.js';
+import {getRandomInteger} from '../utils/common.js';
 import AbstractView from './abstract.js';
 
 const generalMovieCount = getRandomInteger(110110, 150000);
