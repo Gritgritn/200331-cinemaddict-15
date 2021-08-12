@@ -1,9 +1,8 @@
 import dayjs from 'dayjs';
+import {createElement} from '../utils.js';
 
 const CreatePopupElement = (film) => {
   const {moviename, poster, description, premiereDate, rating, genre, runtime, isInWatchlist, isWatched, actors, isFavorite, pegi, director, writers, comments} = film;
-  // const {author, commentText, commentDate, emotion} = comment;
-  // const dateOfComment = dayjs(commentDate).format('DD MMM YYYY');
   const date = dayjs(premiereDate).format('DD MMM YYYY');
   const hours = Math.floor(runtime / 60);
   const minutes = Math.floor(runtime) - (hours * 60);
@@ -18,7 +17,7 @@ const CreatePopupElement = (film) => {
     : 'film-details__control-button--favorite';
 
 
-  return `<section class="film-details" style="display: none;">
+  return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
     <div class="film-details__top-container">
       <div class="film-details__close">
@@ -182,4 +181,27 @@ const CreatePopupElement = (film) => {
   </section>`;
 };
 
-export {CreatePopupElement};
+class PopupTemplate {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return CreatePopupElement(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
+
+export default PopupTemplate;

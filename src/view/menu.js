@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const createFilterItemTemplate = (filter) => {
   const {name, count} = filter;
   return(
@@ -18,5 +20,27 @@ const createFilterTemplate = (filterItems) => {
     </nav>`;
 };
 
+class MenuTemplate {
+  constructor(filters) {
+    this._filters = filters;
+    this._element = null;
+  }
 
-export {createFilterTemplate};
+  getTemplate() {
+    return createFilterTemplate(this._filters);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
+
+export default MenuTemplate;
