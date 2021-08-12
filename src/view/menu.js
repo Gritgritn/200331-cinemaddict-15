@@ -25,6 +25,7 @@ class MenuTemplate extends AbstractView {
     super();
     this._filters = filters;
   }
+
   getTemplate() {
     return createFilterTemplate(this._filters);
   }

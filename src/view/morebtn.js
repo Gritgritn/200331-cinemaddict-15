@@ -15,6 +15,7 @@ class ShowmoreBtn extends AbstractView {
   getTemplate() {
     return createShowmoreBtn();
   }
+
   _clickHandler(evt) {
     evt.preventDefault();
     this._callback.click();
