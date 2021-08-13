@@ -15,19 +15,19 @@ const render = (container, child, place) => {
   }
 
   switch (place) {
-    case RenderPosition.AFTERBEGIN:
+    case RenderPosition.AFTERBEGIN: {
       container.prepend(child);
-      break;
-    case RenderPosition.BEFOREEND:
+      break;}
+    case RenderPosition.BEFOREEND: {
       container.append(child);
-      break;
+      break;}
   }
 };
 
 const createElement = (template) => {
   const newElement = document.createElement('div');
   newElement.innerHTML = template;
-  return newElement.firstChild;
+  return newElement.firstElementChild;
 };
 
 const remove = (component) => {
@@ -38,7 +38,4 @@ const remove = (component) => {
   component.removeElement();
 };
 
-export {remove};
-export {createElement};
-export {render};
-export {RenderPosition};
+export {remove, createElement, render, RenderPosition};
