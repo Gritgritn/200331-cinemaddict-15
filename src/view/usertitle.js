@@ -1,4 +1,4 @@
-import {createElement} from '../utils.js';
+import AbstractView from './abstract.js';
 
 const createUserTitle = () => (
   `<section class="header__profile profile">
@@ -7,25 +7,9 @@ const createUserTitle = () => (
   </section>`
 );
 
-class UserTitle {
-  constructor() {
-    this._element = null;
-  }
-
+class UserTitle extends AbstractView {
   getTemplate() {
     return createUserTitle();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
 

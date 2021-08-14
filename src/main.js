@@ -7,7 +7,7 @@ import PopupTemplateView from './view/popup.js';
 import {generateFilm} from './mock/film.js';
 import SortTemplateView from './view/sort.js';
 import {generateFilter} from './mock/filter.js';
-import {render, RenderPosition} from './utils.js';
+import {render, RenderPosition} from './utils/render.js';
 // import NoFilmView from './view/no-film';
 
 const EXTRA_CARD_COUNT = 2;
@@ -18,7 +18,7 @@ const films = new Array(FILM_COUNT).fill().map(generateFilm);
 const filters = generateFilter(films);
 
 const siteHeaderElement = document.querySelector('.header');
-render(siteHeaderElement, new UserTitleView().getElement(), RenderPosition.BEFOREEND);
+render(siteHeaderElement, new UserTitleView(), RenderPosition.BEFOREEND);
 
 const BodyElement = document.querySelector('body');
 
@@ -45,28 +45,28 @@ const renderFilm = (filmListElement, film) => {
     }
   };
 
-  render(filmListElement, filmComponent.getElement(), RenderPosition.BEFOREEND);
+  render(filmListElement, filmComponent, RenderPosition.BEFOREEND);
 
-  filmComponent.getElement().querySelector('.film-card__poster').addEventListener('click', () => {
+  filmComponent.setPosterClickHandler(() => {
     createPopupComponent();
     document.addEventListener('keydown', onEscKeyDown);
-    PopupComponent.getElement().querySelector('.film-details__close-btn').addEventListener('click', () => {
+    PopupComponent.setClosePopupButtonHandler(() => {
       removePopupComponent();
     });
   });
 
-  filmComponent.getElement().querySelector('.film-card__title').addEventListener('click', () => {
+  filmComponent.setFilmNameClickHandler(() => {
     createPopupComponent();
     document.addEventListener('keydown', onEscKeyDown);
-    PopupComponent.getElement().querySelector('.film-details__close-btn').addEventListener('click', () => {
+    PopupComponent.setClosePopupButtonHandler(() => {
       removePopupComponent();
     });
   });
 
-  filmComponent.getElement().querySelector('.film-card__comments').addEventListener('click', () => {
+  filmComponent.setAllCommentsClickHandler(() => {
     createPopupComponent();
     document.addEventListener('keydown', onEscKeyDown);
-    PopupComponent.getElement().querySelector('.film-details__close-btn').addEventListener('click', () => {
+    PopupComponent.setClosePopupButtonHandler(() => {
       removePopupComponent();
     });
   });
@@ -74,8 +74,8 @@ const renderFilm = (filmListElement, film) => {
 
 
 const siteMainElement = document.querySelector('.main');
-render(siteMainElement, new SortTemplateView().getElement(), RenderPosition.AFTERBEGIN);
-render(siteMainElement, new MenuTemplateView(filters).getElement(), RenderPosition.AFTERBEGIN);
+render(siteMainElement, new SortTemplateView(), RenderPosition.AFTERBEGIN);
+render(siteMainElement, new MenuTemplateView(filters), RenderPosition.AFTERBEGIN);
 
 
 const filmListElementent = siteMainElement.querySelector('.films-list');
@@ -89,7 +89,7 @@ for (let i = 0; i < Math.min(films.length, FILM_COUNT_PER_STEP); i++) {
 if (films.length > FILM_COUNT_PER_STEP) {
   let renderedFilmCount = FILM_COUNT_PER_STEP;
   const showMoreBtnComponent = new ShowmoreBtnView();
-  render(filmListElementent, showMoreBtnComponent.getElement(), RenderPosition.BEFOREEND);
+  render(filmListElementent, showMoreBtnComponent, RenderPosition.BEFOREEND);
 
   showMoreBtnComponent.getElement().addEventListener('click', (evt) => {
     evt.preventDefault();
