@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import {getRandomInteger} from '../utils/common.js';
 import {EMOTIONS} from '../const.js';
+import {nanoid} from 'nanoid';
 // Функция из интернета по генерации случайного числа из диапазона
 // Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
 
@@ -116,6 +117,7 @@ const getRandomGenre = () => {
 };
 
 const generateFilm = () => ({
+  id: nanoid(),
   moviename: generateMovieName(),
   poster: generatePoster(),
   description: generateDescription(),

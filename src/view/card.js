@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import AbstractView from './abstract.js';
 
+
 const createFilmCard = (film) => {
   const {moviename, poster, description, premiereDate, rating, genre, runtime, isInWatchlist, isWatched, isFavorite} = film;
   const date = dayjs(premiereDate).format('YYYY');

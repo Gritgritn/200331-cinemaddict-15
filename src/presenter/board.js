@@ -1,9 +1,7 @@
 import FilmCardView from './view/card.js';
 import ShowmoreBtnView from './view/morebtn.js';
-import {generateFilm} from './mock/film.js';
 import SortTemplateView from './view/sort.js';
 import FilmBoardTemplateView from './view/filmboard.js';
-import {generateFilter} from './mock/filter.js';
 import {render, RenderPosition} from './utils/render.js';
 import FilmListView from './view/filmlist.js';
 
