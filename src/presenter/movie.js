@@ -1,7 +1,6 @@
 import FilmCardView from '../view/card.js';
 import PopupTemplateView from '../view/popup.js';
 import {render, RenderPosition, remove, replace} from '../utils/render.js';
-import {nanoid} from 'nanoid';
 
 class Film {
   constructor(filmCardContainer, changeData) {
@@ -123,13 +122,13 @@ class Film {
 
   _openPopupClickHandler() {
     // Метод открытия попапа при нажатии на постер
-    if (Boolean(document.body.querySelector('.film-details'))) {
+    if (document.body.querySelector('.film-details')) {
       this._hidePopup();
     }
     this._renderPopup();
     document.addEventListener('keydown', this._escKeyDownHandler);
     this._popupComponent.setClosePopupButtonHandler(() => {
-    this._removePopup();
+      this._removePopup();
     });
   }
 }

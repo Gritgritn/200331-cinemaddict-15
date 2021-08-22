@@ -215,8 +215,6 @@ class PopupTemplate extends AbstractView {
     this._callback.watchlistClick();
   }
 
-
-
   setFavoritePopupButtonClick(callback) {
     this._callback.favoritesClick = callback;
     this.getElement().querySelector('.film-details__control-button--favorite').addEventListener('click', this._favoritesClickHandler);

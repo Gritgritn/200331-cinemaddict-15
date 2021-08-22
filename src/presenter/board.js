@@ -6,7 +6,7 @@ import FilmListView from '../view/filmlist.js';
 import FilmPresenter from './movie.js';
 import FilmListContainerView from '../view/flim-listcontainer.js';
 import {updateItem} from '../utils/common.js';
-import NoFilmsView from '../view/no-film.js'
+import NoFilmsView from '../view/no-film.js';
 
 const FILM_COUNT_PER_STEP = 5;
 
