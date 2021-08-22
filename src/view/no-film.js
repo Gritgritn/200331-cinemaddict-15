@@ -1,13 +1,15 @@
-// import AbstractView from './abstract.js';
+import Abstract from './abstract.js';
 
-// const createNoTaskTemplate = () => (
-//   `<h2 class="films-list__title">There are no movies in our database</h2>`
-// );
+const createNoFilmLsTemplate = () => (
+  `<section class="films-list">
+    <h2 class="films-list__title">There are no movies in our database</h2>
+  </section>`
+);
 
-// class NoTask extends AbstractView {
-//   getTemplate() {
-//     return createNoTaskTemplate();
-//   }
-// }
+class NoFilms extends Abstract {
+  getTemplate() {
+    return createNoFilmLsTemplate();
+  }
+}
 
-// export default NoTask;
+export default NoFilms;
