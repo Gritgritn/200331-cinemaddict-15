@@ -7,7 +7,6 @@ import FilmPresenter from './movie.js';
 import FilmListContainerView from '../view/flim-listcontainer.js';
 import {updateItem, sortByDate, sortByRating} from '../utils/common.js';
 import NoFilmsView from '../view/no-film.js';
-import {sortTaskUp, sortTaskDown} from '../utils/common.js';
 import {SortType} from '../const.js';
 
 const FILM_COUNT_PER_STEP = 5;
