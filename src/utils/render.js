@@ -25,7 +25,7 @@ const render = (container, child, place) => {
   }
 };
 
-const isEnterEvent = (evt) => evt.key === 'Enter';
+const isCtrlEnterEvent = (evt) => evt.ctrlKey && 'Enter'.includes(evt.key);
 
 const createElement = (template) => {
   const newElement = document.createElement('div');
@@ -59,4 +59,4 @@ const remove = (component) => {
   component.removeElement();
 };
 
-export {remove, createElement, render, RenderPosition, replace, isEnterEvent};
+export {remove, createElement, render, RenderPosition, replace, isCtrlEnterEvent};

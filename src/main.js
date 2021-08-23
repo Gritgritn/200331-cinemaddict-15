@@ -20,6 +20,6 @@ const filmPresenter = new BoardPresenter(siteMainElement);
 render(siteHeaderElement, new UserTitleView(), RenderPosition.BEFOREEND);
 render(siteMainElement, new MenuTemplateView(filters), RenderPosition.BEFOREEND);
 filmPresenter.init(films);
-const comm = generateComment();
+const comm = generateFilm();
 console.log(comm);
 render(siteFooterElement, new FooterStatisticView(), RenderPosition.BEFOREEND);

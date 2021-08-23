@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime.js';
 import SmartView from './smart.js';
-import {isEnterEvent} from '../utils/render.js';
-import {generateComment} from '../mock/film.js';
+import {isCtrlEnterEvent} from '../utils/render.js';
+
+dayjs.extend(relativeTime);
 
 const CreatePopupElement = (film) => {
   const {moviename, poster, description, premiereDate, rating, genre, runtime, isInWatchlist, isWatched, actors, isFavorite, pegi, director, writers, comments} = film;
@@ -99,7 +101,7 @@ const CreatePopupElement = (film) => {
               <img src="./images/emoji/${comments.emotion}.png" width="55" height="55" alt="emoji-smile">
             </span>
             <div>
-              <p class="film-details__comment-text">${comments.commentText}</p>
+              <p class="film-details__comment-text">${comments.commentTexts}</p>
               <p class="film-details__comment-info">
                 <span class="film-details__comment-author">${comments.author}</span>
                 <span class="film-details__comment-day">2019/12/31 23:59</span>
@@ -192,8 +194,13 @@ class PopupTemplate extends SmartView {
     this._watchlistClickHandler = this._watchlistClickHandler.bind(this);
     this._popupClickHandler = this._popupClickHandler.bind(this);
     this._emojiListHandler = this._emojiListHandler.bind(this);
-
+    this._textCommentInputHandler = this._textCommentInputHandler.bind(this);
+    this._createCommentHandler = this._createCommentHandler.bind(this);
     this.restoreHandlers();
+  }
+  _textCommentInputHandler(evt){
+    evt.preventDefault();
+    this._textComment = evt.target.value;
   }
 
   getTemplate() {
@@ -221,24 +228,46 @@ class PopupTemplate extends SmartView {
   }
 
   _emojiListHandler(evt) {
-    if (evt.target.tagName !== 'IMG') {
+    evt.preventDefault();
+    if (evt.target.alt !== 'emoji') {
       return;
     }
     if(this._containerEmodji){
       this._containerEmodji.innerHTML = ' ';
     }
-
     this._containerEmodji = this.getElement().querySelector('.film-details__add-emoji-label');
     const emodjiElement = evt.target.cloneNode();
     emodjiElement.style.height = '55px';
     emodjiElement.style.width = '55px';
     this._containerEmodji.appendChild(emodjiElement);
+
+    return emodjiElement.className;
   }
 
   restoreHandlers(){
+    this.getElement().querySelector('.film-details__comment-input').addEventListener('input', this._textCommentInputHandler);
     this.getElement().querySelector('.film-details__emoji-list').addEventListener('click', this._emojiListHandler);
     this.getElement().addEventListener('keydown', this._createCommentHandler);
+    this.getElement().querySelector('.film-details__control-button--favorite').addEventListener('click', this._favoritesClickHandler);
+    this.getElement().querySelector('.film-details__control-button--watched').addEventListener('click', this._watchedClickHandler);
+    this.getElement().querySelector('.film-details__control-button--watchlist').addEventListener('click', this._watchlistClickHandler);
   }
+
+  _createCommentHandler(evt) {
+    if(isCtrlEnterEvent(evt)){
+      // this._film.comments.push(generateComment());
+
+      this.updateElement(true);
+    }
+  }
+
+  // _createComment() {
+  //   const comment = generateComment();
+  //   comment.emotion = this._containerEmodji.firstElementChild.id;
+  //   comment.comment = this._textComment;
+  //   comment.date = dayjs();
+  //   return comment;
+  // }
 
   setFavoritePopupButtonClick(callback) {
     this._callback.favoritesClick = callback;
