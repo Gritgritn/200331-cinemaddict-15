@@ -4,16 +4,10 @@ const getRandomInteger = (a = 0, b = 1) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
-const updateItem = (items, update) => {
-  return items.map((it) => it.id === update.id ? update : it);
-};
+const updateItem = (items, update) => items.map((it) => it.id === update.id ? update : it);
 
-const sortByDate = (filmA, filmB) => {
-  return filmB.premiereDate - filmA.premiereDate;
-};
+const sortByDate = (filmA, filmB) => filmB.premiereDate - filmA.premiereDate;
 
-const sortByRating = (filmA ,filmB) => {
-  return filmB.rating - filmA.rating;
-};
+const sortByRating = (filmA ,filmB) => filmB.rating - filmA.rating;
 
 export {getRandomInteger, updateItem, sortByDate, sortByRating};
