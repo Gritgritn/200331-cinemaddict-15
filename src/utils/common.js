@@ -9,13 +9,11 @@ const updateItem = (items, update) => {
 };
 
 const sortByDate = (filmA, filmB) => {
-  const sortedByDateFilm = filmB.premiereDate - filmA.premiereDate;
-  return sortedByDateFilm;
+  return filmB.premiereDate - filmA.premiereDate;
 };
 
 const sortByRating = (filmA ,filmB) => {
-  const sortedByRateFilm = filmB.rating - filmA.rating;
-  return sortedByRateFilm;
+  return filmB.rating - filmA.rating;
 };
 
 export {getRandomInteger, updateItem, sortByDate, sortByRating};
