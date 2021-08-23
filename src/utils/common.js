@@ -8,8 +8,12 @@ const updateItem = (items, update) => {
   return items.map((it) => it.id === update.id ? update : it);
 };
 
-const sortByDate = (filmA, filmB) => filmB.premiereDate - filmA.premiereDate;
+const sortByDate = (filmA, filmB) => {
+  filmB.premiereDate - filmA.premiereDate
+};
 
-const sortByRating = (filmA ,filmB) => filmB.rating - filmA.rating;
+const sortByRating = (filmA ,filmB) => {
+  filmB.rating - filmA.rating
+};
 
 export {getRandomInteger, updateItem, sortByDate, sortByRating};
