@@ -1,4 +1,5 @@
 import Abstract from '../view/abstract.js';
+import KeyboardKey from '../const.js';
 
 const RenderPosition = {
   AFTERBEGIN: 'afterbegin',
@@ -23,6 +24,8 @@ const render = (container, child, place) => {
       break;}
   }
 };
+
+const isEnterEvent = (evt) => evt.key === 'Enter';
 
 const createElement = (template) => {
   const newElement = document.createElement('div');
@@ -56,4 +59,4 @@ const remove = (component) => {
   component.removeElement();
 };
 
-export {remove, createElement, render, RenderPosition, replace};
+export {remove, createElement, render, RenderPosition, replace, isEnterEvent};

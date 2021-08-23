@@ -1,7 +1,7 @@
 import MenuTemplateView from './view/menu.js';
 import UserTitleView from './view/usertitle.js';
 import FooterStatisticView from './view/footerstatistic.js';
-import {generateFilm} from './mock/film.js';
+import {generateFilm, generateComment} from './mock/film.js';
 import {generateFilter} from './mock/filter.js';
 import {render, RenderPosition} from './utils/render.js';
 import BoardPresenter from './presenter/board.js';
@@ -20,4 +20,6 @@ const filmPresenter = new BoardPresenter(siteMainElement);
 render(siteHeaderElement, new UserTitleView(), RenderPosition.BEFOREEND);
 render(siteMainElement, new MenuTemplateView(filters), RenderPosition.BEFOREEND);
 filmPresenter.init(films);
+const comm = generateComment();
+console.log(comm);
 render(siteFooterElement, new FooterStatisticView(), RenderPosition.BEFOREEND);

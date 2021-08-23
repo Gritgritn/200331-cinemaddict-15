@@ -1,5 +1,7 @@
 import dayjs from 'dayjs';
-import AbstractView from './abstract.js';
+import SmartView from './smart.js';
+import {isEnterEvent} from '../utils/render.js';
+import {generateComment} from '../mock/film.js';
 
 const CreatePopupElement = (film) => {
   const {moviename, poster, description, premiereDate, rating, genre, runtime, isInWatchlist, isWatched, actors, isFavorite, pegi, director, writers, comments} = film;
@@ -181,7 +183,7 @@ const CreatePopupElement = (film) => {
   </section>`;
 };
 
-class PopupTemplate extends AbstractView {
+class PopupTemplate extends SmartView {
   constructor(film) {
     super();
     this._film = film;
@@ -189,6 +191,9 @@ class PopupTemplate extends AbstractView {
     this._watchedClickHandler = this._watchedClickHandler.bind(this);
     this._watchlistClickHandler = this._watchlistClickHandler.bind(this);
     this._popupClickHandler = this._popupClickHandler.bind(this);
+    this._emojiListHandler = this._emojiListHandler.bind(this);
+
+    this.restoreHandlers();
   }
 
   getTemplate() {
@@ -213,6 +218,26 @@ class PopupTemplate extends AbstractView {
   _watchlistClickHandler(evt) {
     evt.preventDefault();
     this._callback.watchlistClick();
+  }
+
+  _emojiListHandler(evt) {
+    if (evt.target.tagName !== 'IMG') {
+      return;
+    }
+    if(this._containerEmodji){
+      this._containerEmodji.innerHTML = ' ';
+    }
+
+    this._containerEmodji = this.getElement().querySelector('.film-details__add-emoji-label');
+    const emodjiElement = evt.target.cloneNode();
+    emodjiElement.style.height = '55px';
+    emodjiElement.style.width = '55px';
+    this._containerEmodji.appendChild(emodjiElement);
+  }
+
+  restoreHandlers(){
+    this.getElement().querySelector('.film-details__emoji-list').addEventListener('click', this._emojiListHandler);
+    this.getElement().addEventListener('keydown', this._createCommentHandler);
   }
 
   setFavoritePopupButtonClick(callback) {

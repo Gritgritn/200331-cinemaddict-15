@@ -8,6 +8,8 @@ const SortType = {
 
 const KeyboardKey = {
   ESCAPE: 'Escape',
+  ENTER: 'Enter',
 };
 
 export {EMOTIONS, SortType, KeyboardKey};
+export default KeyboardKey;
