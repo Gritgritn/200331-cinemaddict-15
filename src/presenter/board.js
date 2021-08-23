@@ -47,14 +47,17 @@ class Board {
 
   _sortFilms(sortType) {
     switch (sortType) {
-      case SortType.DATE:
+      case SortType.DATE: {
         this._boardFilms.sort(sortByDate);
         break;
-      case SortType.RATE:
+      }
+      case SortType.RATE: {
         this._boardFilms.sort(sortByRating);
         break;
-      default:
+      }
+      default: {
         this._boardFilms  = this._sourcedBoardFilms.slice();
+      }
     }
 
     this._currentSortType = sortType;

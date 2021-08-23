@@ -21,7 +21,7 @@ class SortTemplate extends AbstractView {
   }
 
   _sortTypeChangeHandler(evt) {
-    if (evt.target.tagName !== 'A') {
+    if (evt.target.tagName === 'data-sort-type') {
       return;
     }
 

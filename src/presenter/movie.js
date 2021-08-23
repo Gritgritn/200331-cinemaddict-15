@@ -1,6 +1,7 @@
 import FilmCardView from '../view/card.js';
 import PopupTemplateView from '../view/popup.js';
 import {render, RenderPosition, remove, replace} from '../utils/render.js';
+import {KeyboardKey} from '../const.js';
 
 class Film {
   constructor(filmCardContainer, changeData) {
@@ -73,7 +74,7 @@ class Film {
 
 
   _escKeyDownHandler(evt) {
-    if (evt.key === 'Escape' || evt.key === 'Esc') {
+    if (evt.key === KeyboardKey.ESCAPE) {
       evt.preventDefault();
       this._removePopup();
       document.removeEventListener('keydown', this._escKeyDownHandler);

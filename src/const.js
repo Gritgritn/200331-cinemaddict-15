@@ -6,4 +6,8 @@ const SortType = {
   RATE: 'date-up',
 };
 
-export {EMOTIONS, SortType};
+const KeyboardKey = {
+  ESCAPE: 'Escape',
+};
+
+export {EMOTIONS, SortType, KeyboardKey};
