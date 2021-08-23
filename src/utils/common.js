@@ -5,17 +5,11 @@ const getRandomInteger = (a = 0, b = 1) => {
 };
 
 const updateItem = (items, update) => {
-  const index = items.findIndex((item) => item.id === update.id);
-
-  if (index === -1) {
-    return items;
-  }
-
-  return [
-    ...items.slice(0, index),
-    update,
-    ...items.slice(index + 1),
-  ];
+  return items.map((it) => it.id === update.id ? update : it);
 };
 
-export {getRandomInteger, updateItem};
+const sortByDate = (filmA, filmB) => filmB.premiereDate - filmA.premiereDate;
+
+const sortByRating = (filmA ,filmB) => filmB.rating - filmA.rating;
+
+export {getRandomInteger, updateItem, sortByDate, sortByRating};

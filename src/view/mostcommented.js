@@ -5,8 +5,10 @@ const createMostCommentedFilmList = () => `<section class="films-list films-list
 <div class="films-list__container"></div>
 </section>`;
 
-export default class MostCommentedList extends AbstractView {
+class MostCommentedList extends AbstractView {
   getTemplate() {
     return createMostCommentedFilmList();
   }
 }
+
+export default MostCommentedList;

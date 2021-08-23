@@ -55,7 +55,7 @@ class Film {
   }
 
   destroy() {
-    remove(this._filmComponent);
+    remove(this._filmCardComponent);
     remove(this._popupComponent);
   }
 

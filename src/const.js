@@ -1,3 +1,9 @@
 const EMOTIONS = ['smile', 'sleeping', 'puke', 'angry'];
 
-export {EMOTIONS};
+const SortType = {
+  DEFAULT: 'default',
+  DATE: 'date-down',
+  RATE: 'date-up',
+};
+
+export {EMOTIONS, SortType};
