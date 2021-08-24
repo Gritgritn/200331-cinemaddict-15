@@ -9,6 +9,8 @@ const createSortTemplate = () => (
   </ul>`
 );
 
+
+
 class SortTemplate extends AbstractView {
   constructor() {
     super();
@@ -21,12 +23,17 @@ class SortTemplate extends AbstractView {
   }
 
   _sortTypeChangeHandler(evt) {
-    if (evt.target.tagName === 'data-sort-type') {
+    const SORT_TYPE_DATA_ATTR = 'data-sort-type';
+    evt.preventDefault();
+    const hasAttr = evt.target.hasAttribute('data-sort-type');
+
+
+    if (!hasAttr) {
       return;
     }
 
-    evt.preventDefault();
-    this._callback.sortTypeChange(evt.target.dataset.sortType);
+
+    this._callback.sortTypeChange(evt.target.getAttribute(SORT_TYPE_DATA_ATTR));
   }
 
   setSortTypeChangeHandler(callback) {
