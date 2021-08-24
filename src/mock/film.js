@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import {getRandomInteger} from '../utils/common.js';
 import {EMOTIONS} from '../const.js';
+import {nanoid} from 'nanoid';
 // Функция из интернета по генерации случайного числа из диапазона
 // Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
 
@@ -116,6 +117,7 @@ const getRandomGenre = () => {
 };
 
 const generateFilm = () => ({
+  id: nanoid(),
   moviename: generateMovieName(),
   poster: generatePoster(),
   description: generateDescription(),
@@ -132,11 +134,61 @@ const generateFilm = () => ({
   isFavorite: Boolean(getRandomInteger(0, 1)),
   comments: {
     author: getCommentAuthor(),
-    commentText: getRandomComment(),
+    commentTexts: getRandomComment(),
     commentDate: getCommentDate(),
     emotion: getRandomEmotion(),
   },
 });
 
+// const generateData = (array) => {
+//   const randomIndex = getRandomInteger(0, array.length - 1);
+//   return array[randomIndex];
+// };
+
+// // const generateComment = () => {
+// //   const maxGap = 3;
+// //   const gap = getRandomInteger(0, maxGap);
+
+// //   return {
+// //     id: getRandomInteger(0, 10),
+// //     author: generateData(AUTHORS_COMMENT),
+// //     comment: generateData(DESCRIPTIONS),
+// //     date: dayjs()
+// //       .subtract(gap, 'minute')
+// //       .subtract(gap, 'hour')
+// //       .subtract(gap, 'day')
+// //       .format('YYYY/MM/DD HH:mm'),
+// //     emotion: generateData(EMOTIONS),
+// //   };
+// // };
+
+// const AUTHORS_COMMENT = [
+//   ' Ванька',
+//   ' Петька',
+//   ' Илюха',
+//   ' Нагибатор666',
+//   ' Оленька',
+//   ' Алена',
+//   ' Злая девочка',
+//   ' Просто придурок',
+//   ' Альфонс',
+//   ' Задрот',
+// ];
+
+// const DESCRIPTIONS = [
+//   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+//   'Cras aliquet varius magna, non porta ligula feugiat eget.',
+//   'Fusce tristique felis at fermentum pharetra.',
+//   'Aliquam id orci ut lectus varius viverra.',
+//   'Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.',
+//   'Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.',
+//   'Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.',
+//   'Sed sed nisi sed augue convallis suscipit in sed felis.',
+//   'Aliquam erat volutpat.',
+//   'Nunc fermentum tortor ac porta dapibus.',
+//   'In rutrum ac purus sit amet tempus.',
+// ];
+
+// export {generateComment};
 export {generateFilm};
 export {generateMovieComment};
