@@ -20,5 +20,4 @@ const filmPresenter = new BoardPresenter(siteMainElement);
 render(siteHeaderElement, new UserTitleView(), RenderPosition.BEFOREEND);
 render(siteMainElement, new MenuTemplateView(filters), RenderPosition.BEFOREEND);
 filmPresenter.init(films);
-const comm = generateFilm();
 render(siteFooterElement, new FooterStatisticView(), RenderPosition.BEFOREEND);
