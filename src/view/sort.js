@@ -10,7 +10,6 @@ const createSortTemplate = () => (
 );
 
 
-
 class SortTemplate extends AbstractView {
   constructor() {
     super();

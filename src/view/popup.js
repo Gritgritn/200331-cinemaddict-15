@@ -198,6 +198,7 @@ class PopupTemplate extends SmartView {
     this._createCommentHandler = this._createCommentHandler.bind(this);
     this.restoreHandlers();
   }
+
   _textCommentInputHandler(evt){
     evt.preventDefault();
     this._textComment = evt.target.value;

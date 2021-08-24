@@ -1,5 +1,4 @@
 import Abstract from '../view/abstract.js';
-import KeyboardKey from '../const.js';
 
 const RenderPosition = {
   AFTERBEGIN: 'afterbegin',
