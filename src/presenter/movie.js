@@ -1,7 +1,7 @@
 import FilmCardView from '../view/card.js';
 import PopupTemplateView from '../view/popup.js';
 import {render, RenderPosition, remove, replace} from '../utils/render.js';
-import {KeyboardKey} from '../const.js';
+import {KeyboardKey, UserAction, UpdateType} from '../const.js';
 
 class Film {
   constructor(filmCardContainer, changeData) {
@@ -83,6 +83,8 @@ class Film {
 
   _handleFavoriteClick() {
     this._changeData(
+      UserAction.UPDATE_FILM,
+      UpdateType.MINOR,
       Object.assign(
         {},
         this._film,
@@ -95,6 +97,8 @@ class Film {
 
   _handleWatchListClick() {
     this._changeData(
+      UserAction.UPDATE_FILM,
+      UpdateType.MINOR,
       Object.assign(
         {},
         this._film,
@@ -107,6 +111,8 @@ class Film {
 
   _handleAsWatchedClick() {
     this._changeData(
+      UserAction.UPDATE_FILM,
+      UpdateType.MINOR,
       Object.assign(
         {},
         this._film,
