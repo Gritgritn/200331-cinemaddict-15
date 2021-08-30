@@ -1,15 +1,90 @@
 import dayjs from 'dayjs';
-import {getRandomInteger} from '../utils/common.js';
+import {getRandomInteger, getRandomArray} from '../utils/common.js';
 import {EMOTIONS} from '../const.js';
 import {nanoid} from 'nanoid';
 // Функция из интернета по генерации случайного числа из диапазона
 // Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
+const generateData = (array) => {
+  const randomIndex = getRandomInteger(0, array.length - 1);
+  return array[randomIndex];
+};
+const ALTERNATIVE_TITLES = [
+  'The Dance of Life',
+  'Sagebrush Trail',
+  'The Man with the Golden Arm',
+  'Santa Claus Conquers the Martians',
+  'Popeye the Sailor Meets Sindbad the Sailor',
+  'The Great Flamarion',
+  'Made for Each Other',
+];
+const COUNTRIES = [
+  ' Afghanistan',
+  ' Albania',
+  ' Algeria',
+  ' Andorra',
+  ' Angola',
+  ' Argentina',
+  ' Armenia',
+  ' Azerbaijan',
+  ' Bangladesh',
+  ' Barbados',
+];
+const WRITERS = [
+  ' Billy Wilder',
+  ' Robert Towne',
+  ' Quentin Tarantino',
+  ' Charlie Kaufman',
+  ' Woody Allen',
+  ' Steven Spielberg',
+  ' David Fincher',
+  ' James Cameron',
+  ' Martin Scorsese',
+  ' Christopher Nolan',
+];
+const ACTORS = [
+  ' Alan Rickman',
+  ' Benedict Cumberbatch',
+  ' Benicio del Toro',
+  ' Vincent Cassel',
+  ' Viggo Mortensen',
+  ' James McAvoy',
+  ' Jake Gyllenhaal',
+  ' Daniel Day-Lewis',
+  ' Daniel Radcliffe',
+  ' Casey Affleck',
+];
+const GENRES = [
+  ' Musical',
+  ' Western',
+  ' Drama',
+  ' Comedy',
+  ' Cartoon',
+  ' Mystery',
+];
+const AUTHORS_COMMENT = [
+  ' Ванька',
+  ' Петька',
+  ' Илюха',
+  ' Нагибатор666',
+  ' Оленька',
+  ' Алена',
+  ' Злая девочка',
+  ' Просто придурок',
+  ' Альфонс',
+  ' Задрот',
+];
+// const generateDate = () => {
+//   const maxDaysGap = 14965;
+//   const daysGap = getRandomInteger(-maxDaysGap, maxDaysGap);
 
+//   return dayjs('1980-01-01').add(daysGap, 'day').toDate();
+// };
 const generateDate = () => {
-  const maxDaysGap = 14965;
-  const daysGap = getRandomInteger(-maxDaysGap, maxDaysGap);
+  const randYear = getRandomInteger(1920, 2020);
+  const randMonth = getRandomInteger(1, 12);
+  const randDay = getRandomInteger(1, 30);
 
-  return dayjs('1980-01-01').add(daysGap, 'day').toDate();
+  return `${randYear}-${randMonth}-${randDay}`;
 };
 
 const getRandomComment = () => {
@@ -33,12 +108,14 @@ const getCommentAuthor = () => {
 
   return commentator[randomIndex];
 };
+
 const getCommentDate = () => {
   const maxDaysGap = 600;
   const daysGap = getRandomInteger(-maxDaysGap, maxDaysGap);
 
   return dayjs('2019-06-06').add(daysGap, 'day').toDate();
 };
+
 const getRandomEmotion = () => {
   const randomIndex = getRandomInteger(0, EMOTIONS.length - 1);
   return EMOTIONS[randomIndex];
@@ -116,35 +193,98 @@ const getRandomGenre = () => {
   return genres[randomIndex];
 };
 
-const generateFilm = () => ({
-  id: nanoid(),
-  moviename: generateMovieName(),
-  poster: generatePoster(),
-  description: generateDescription(),
-  premiereDate: generateDate(),
-  rating: getRandomInteger(1, 10),
-  pegi: getRandomInteger(1, 18),
-  director: getRandomDirector(),
-  writers: getRandomWriter(),
-  actors: getRandomActor(),
-  runtime: getRandomInteger(60, 120),
-  genre: getRandomGenre(),
-  isInWatchlist: Boolean(getRandomInteger(0, 1)),
-  isWatched: Boolean(getRandomInteger(0, 1)),
-  isFavorite: Boolean(getRandomInteger(0, 1)),
-  comments: {
-    id: getRandomInteger(0, 10000),
-    author: getCommentAuthor(),
-    commentTexts: getRandomComment(),
-    commentDate: getCommentDate(),
-    emotion: getRandomEmotion(),
-  },
+// const generateFilm = () => ({
+//   id: nanoid(),
+//   moviename: generateMovieName(),
+//   poster: generatePoster(),
+//   description: generateDescription(),
+//   premiereDate: generateDate(),
+//   rating: getRandomInteger(1, 10),
+//   pegi: getRandomInteger(1, 18),
+//   director: getRandomDirector(),
+//   writers: getRandomWriter(),
+//   actors: getRandomActor(),
+//   runtime: getRandomInteger(60, 120),
+//   genre: getRandomGenre(),
+//   isInWatchlist: Boolean(getRandomInteger(0, 1)),
+//   isWatched: Boolean(getRandomInteger(0, 1)),
+//   isFavorite: Boolean(getRandomInteger(0, 1)),
+//   comments: {
+//     id: getRandomInteger(0, 10000),
+//     author: getCommentAuthor(),
+//     commentTexts: getRandomComment(),
+//     commentDate: getCommentDate(),
+//     emotion: getRandomEmotion(),
+//   },
+// });
+let index = 0;
+const generateUserDetails = () => ({
+  watchlist: Boolean(getRandomInteger(0, 1)),
+  already_watched: Boolean(getRandomInteger(0, 1)),
+  watching_date: generateDate(),
+  favorite: Boolean(getRandomInteger(0, 1)),
 });
-
-const generateData = (array) => {
-  const randomIndex = getRandomInteger(0, array.length - 1);
-  return array[randomIndex];
+const generateReleaseFilm = () => {
+  const randomDate = dayjs(generateDate());
+  return {
+    date: dayjs(randomDate).format('DD MMMM YYYY'),
+    releaseCountry: generateData(COUNTRIES),
+  };
 };
+const generateFIlmInfo = () => {
+  const releaseFilm = generateReleaseFilm();
+
+  return {
+    title: generateMovieName(),
+    alternativeTitle: generateData(ALTERNATIVE_TITLES),
+    totalRating: getRandomInteger(1, 10),
+    poster: generatePoster(),
+    ageRating: getRandomInteger(1, 18),
+    director: getRandomDirector(),
+    writers: getRandomArray(1, 3, WRITERS),
+    actors: getRandomArray(1, 3, ACTORS),
+    releaseFilm,
+    runtime: getRandomInteger(60, 120),
+    genre: getRandomArray(1, 2, GENRES),
+    description: generateDescription(),
+  };
+};
+const generateFilm = (commentsId) => {
+  const filmInfo = generateFIlmInfo();
+  const userDetails = generateUserDetails();
+  index += 1;
+
+  return {
+    id: index,
+    comments: commentsId,
+    filmInfo,
+    userDetails,
+  };
+};
+export const generateComment = () => {
+  const maxGap = 3;
+  const gap = getRandomInteger(0, maxGap);
+
+  return {
+    id: getRandomInteger(0, 10000),
+    author: generateData(AUTHORS_COMMENT),
+    comment: getRandomComment(),
+    date: dayjs()
+      .subtract(gap, 'minute')
+      .subtract(gap, 'hour')
+      .subtract(gap, 'day')
+      .format('YYYY/MM/DD HH:mm'),
+    emotion: getRandomEmotion(),
+  };
+};
+
+export const generateCardFilmTemplate = () => {
+  const comments = new Array(getRandomInteger(1, 6)).fill(null).map(generateComment);
+  const commentsId = comments.map((item) => item.id);
+  const film = generateFilm(commentsId);
+  return {film, comments};
+};
+
 
 // // const generateComment = () => {
 // //   const maxGap = 3;
@@ -191,5 +331,5 @@ const generateData = (array) => {
 // ];
 
 // export {generateComment};
-export {generateFilm};
-export {generateMovieComment};
+// export {generateFilm};
+// export {generateMovieComment};

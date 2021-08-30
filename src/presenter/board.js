@@ -62,9 +62,11 @@ class Board {
       case UpdateType.PATCH:
         // - обновить часть списка (например, когда поменялось описание)
 
-        this._filmPresenter.get(data.id).init(data);
+        // this._filmPresenter.get(data.id).init(data);
+        this._filmPresenter.get(update.film.id).init(update, this._filmsContainer, this._filterType);
         break;
       case UpdateType.MINOR:
+        alert('byla');
         this._clearBoard();
         this._renderBoard();
         // - обновить список (например, когда задача ушла в архив)
@@ -88,14 +90,11 @@ class Board {
 
     switch (this._currentSortType) {
       case SortType.DATE:
-        // return this._filmsModel.getFilms().slice().sort(sortByDate);
         return filtredFilms.sort(sortByDate);
       case SortType.RATE:
-        // return this._filmsModel.getFilms().slice().sort(sortByRating);
         return filtredFilms.sort(sortByRating);
     }
 
-    // return this._filmsModel.getFilms();
     return filtredFilms;
   }
 
@@ -128,8 +127,8 @@ class Board {
 
   _renderFilm(film) {
     const filmPresenter = new FilmPresenter(this._filmListContainer, this._handleViewAction);
-    filmPresenter.init(film);
-    this._filmPresenter.set(film.id, filmPresenter);
+    filmPresenter.init(film, this._filterType);
+    this._filmPresenter.set(film.film.id, filmPresenter);
   }
 
   _renderFilms(films) {
@@ -182,21 +181,19 @@ class Board {
     // }
   }
 
-  _clearFilmList() {
-    this._filmPresenter.forEach((presenter) => presenter.destroy());
-    this._filmPresenter.clear();
-    this._renderedFilmCount = FILM_COUNT_PER_STEP;
-    remove(this._showMoreBtnComponent);
-  }
+  // _clearFilmList() {
+  //   this._filmPresenter.forEach((presenter) => presenter.destroy());
+  //   this._filmPresenter.clear();
+  //   this._renderedFilmCount = FILM_COUNT_PER_STEP;
+  //   remove(this._showMoreBtnComponent);
+  // }
 
   _clearBoard({resetRenderedFilmCount = false, resetSortType = false} = {}) {
     const filmCount = this._getFilms().length;
-
     this._filmPresenter.forEach((presenter) => presenter.destroy());
     this._filmPresenter.clear();
 
     remove(this._sortComponent);
-    // remove(this._noFilmComponent);
     if (this._noFilmComponent) {
       remove(this._noFilmComponent);
     }

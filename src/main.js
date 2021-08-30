@@ -1,6 +1,6 @@
 import UserTitleView from './view/usertitle.js';
 import FooterStatisticView from './view/footerstatistic.js';
-import {generateFilm} from './mock/film.js';
+import {generateCardFilmTemplate} from './mock/film.js';
 import FilmsModel from './model/movie.js';
 import FilterModel from './model/filter.js';
 import {render, RenderPosition} from './utils/render.js';
@@ -10,7 +10,9 @@ import FiltersPresenter from './presenter/filter.js';
 
 const FILM_COUNT = 20;
 
-const films = new Array(FILM_COUNT).fill().map(generateFilm);
+const films = new Array(FILM_COUNT).fill().map(generateCardFilmTemplate);
+console.log(films);
+// console.log(film.filmInfo.releaseFilm.date);
 const filmsModel = new FilmsModel();
 filmsModel.setFilms(films);
 

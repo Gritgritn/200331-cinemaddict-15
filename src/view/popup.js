@@ -3,24 +3,57 @@ import relativeTime from 'dayjs/plugin/relativeTime.js';
 import SmartView from './smart.js';
 import {isCtrlEnterEvent} from '../utils/render.js';
 import {getRandomInteger} from '../utils/common.js';
-import {generateData} from '../mock/film.js';
 
 dayjs.extend(relativeTime);
 
-const CreatePopupElement = (film) => {
-  const {moviename, poster, description, premiereDate, rating, genre, runtime, isInWatchlist, isWatched, actors, isFavorite, pegi, director, writers, comments} = film;
-  const date = dayjs(premiereDate).format('DD MMM YYYY');
+const isGenre = (array) => array.length > 1 ? 'Genres' : 'Genre';
+
+const generateCommentsList = (commentary = {}) => {
+  const {author, comment, date, emotion} = commentary;
+
+  const timePassed = dayjs(date).fromNow();
+
+  return `
+    <li class="film-details__comment">
+      <span class="film-details__comment-emoji">
+        <img src="./images/emoji/${emotion}.png" width="55" height="55" alt="emoji-smile">
+      </span>
+      <div>
+        <p class="film-details__comment-text">${comment}</p>
+        <p class="film-details__comment-info">
+          <span class="film-details__comment-author">${author}</span>
+          <span class="film-details__comment-day">${timePassed}</span>
+          <button class="film-details__comment-delete">Delete</button>
+        </p>
+      </div>
+    </li>`;
+};
+
+const renderTemplateComment = (comments) => comments.map((comment) => generateCommentsList(comment)).join('');
+
+const CreatePopupElement = (card) => {
+  // const {moviename, poster, description, premiereDate, rating, genre, runtime, isInWatchlist, isWatched, actors, isFavorite, pegi, director, writers, comments} = film;
+  // const date = dayjs(premiereDate).format('DD MMM YYYY');
+
+
+  const {film, comments} = card;
+  const {filmInfo, userDetails} = film;
+  const {title, totalRating, releaseFilm, genre, poster, description, ageRating, alternativeTitle, writers, director, actors, runtime} = filmInfo;
+  const {date, releaseCountry} = releaseFilm;
+  const {watchlist, already_watched, favorite} = userDetails;
   const hours = Math.floor(runtime / 60);
   const minutes = Math.floor(runtime) - (hours * 60);
-  const watchlistClassName = isInWatchlist
-    ? 'film-details__control-button--active film-details__control-button--watchlist'
-    : 'film-details__control-button--watchlist';
-  const watchedClassName = isWatched
-    ? 'film-details__control-button--active film-details__control-button--watched'
-    : 'film-details__control-button--watched';
-  const favoriteClassName = isFavorite
-    ? 'film-details__control-button--active film-details__control-button--favorite'
-    : 'film-details__control-button--favorite';
+  const isClassNamePopup = (boolean) =>  boolean ? 'film-details__control-button--active' : '';
+
+  // const watchlistClassName = isInWatchlist
+  //   ? 'film-details__control-button--active film-details__control-button--watchlist'
+  //   : 'film-details__control-button--watchlist';
+  // const watchedClassName = isWatched
+  //   ? 'film-details__control-button--active film-details__control-button--watched'
+  //   : 'film-details__control-button--watched';
+  // const favoriteClassName = isFavorite
+  //   ? 'film-details__control-button--active film-details__control-button--favorite'
+  //   : 'film-details__control-button--favorite';
 
 
   return `<section class="film-details">
@@ -33,18 +66,18 @@ const CreatePopupElement = (film) => {
         <div class="film-details__poster">
           <img class="film-details__poster-img" src="./images/posters/${poster}" alt="">
 
-          <p class="film-details__age">${pegi}+</p>
+          <p class="film-details__age">${ageRating}+</p>
         </div>
 
         <div class="film-details__info">
           <div class="film-details__info-head">
             <div class="film-details__title-wrap">
-              <h3 class="film-details__title">${moviename}</h3>
-              <p class="film-details__title-original">Original: The Great Flamarion</p>
+              <h3 class="film-details__title">${title}</h3>
+              <p class="film-details__title-original">Original: ${alternativeTitle}</p>
             </div>
 
             <div class="film-details__rating">
-              <p class="film-details__total-rating">${rating}</p>
+              <p class="film-details__total-rating">${totalRating}</p>
             </div>
           </div>
 
@@ -55,11 +88,11 @@ const CreatePopupElement = (film) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Writers</td>
-              <td class="film-details__cell">${writers}, Heinz Herald, Richard Weil</td>
+              <td class="film-details__cell">${writers}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Actors</td>
-              <td class="film-details__cell">${actors}, Erich von Stroheim, Mary Beth Hughes, Dan Duryea</td>
+              <td class="film-details__cell">${actors}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
@@ -71,12 +104,13 @@ const CreatePopupElement = (film) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>
-              <td class="film-details__cell">USA</td>
+              <td class="film-details__cell">${releaseCountry}</td>
             </tr>
             <tr class="film-details__row">
-              <td class="film-details__term">Genres</td>
-              <td class="film-details__cell">
-                <span class="film-details__genre">${genre}</span>
+            <td class="film-details__term">${isGenre(genre)}</td>
+            <td class="film-details__cell film-details__cell-genre">
+              <span class="film-details__genre">${genre.join(', ')}</span>
+            </td>
             </tr>
           </table>
 
@@ -87,103 +121,46 @@ const CreatePopupElement = (film) => {
       </div>
 
       <section class="film-details__controls">
-        <button type="button" class="film-details__control-button ${watchlistClassName}" id="watchlist" name="watchlist">Add to watchlist</button>
-        <button type="button" class="film-details__control-button ${watchedClassName}" id="watched" name="watched">Already watched</button>
-        <button type="button" class="film-details__control-button ${favoriteClassName}" id="favorite" name="favorite">Add to favorites</button>
+        <button type="button" class="film-details__control-button film-details__control-button--watchlist ${isClassNamePopup(watchlist)}" id="watchlist" name="watchlist">Add to watchlist</button>
+        <button type="button" class="film-details__control-button film-details__control-button--watched ${isClassNamePopup(already_watched)}" id="watched" name="watched">Already watched</button>
+        <button type="button" class="film-details__control-button film-details__control-button--favorite ${isClassNamePopup(favorite)}" id="favorite" name="favorite">Add to favorites</button>
       </section>
     </div>
 
     <div class="film-details__bottom-container">
       <section class="film-details__comments-wrap">
-        <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">4</span></h3>
+        <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
 
         <ul class="film-details__comments-list">
-          <li class="film-details__comment">
-            <span class="film-details__comment-emoji">
-              <img src="./images/emoji/${comments.emotion}.png" width="55" height="55" alt="emoji-smile">
-            </span>
-            <div>
-              <p class="film-details__comment-text">${comments.commentTexts}</p>
-              <p class="film-details__comment-info">
-                <span class="film-details__comment-author">${comments.author}</span>
-                <span class="film-details__comment-day">2019/12/31 23:59</span>
-                <button class="film-details__comment-delete">Delete</button>
-              </p>
-            </div>
-          </li>
-          <li class="film-details__comment">
-            <span class="film-details__comment-emoji">
-              <img src="./images/emoji/sleeping.png" width="55" height="55" alt="emoji-sleeping">
-            </span>
-            <div>
-              <p class="film-details__comment-text">Booooooooooring</p>
-              <p class="film-details__comment-info">
-                <span class="film-details__comment-author">John Doe</span>
-                <span class="film-details__comment-day">2 days ago</span>
-                <button class="film-details__comment-delete">Delete</button>
-              </p>
-            </div>
-          </li>
-          <li class="film-details__comment">
-            <span class="film-details__comment-emoji">
-              <img src="./images/emoji/puke.png" width="55" height="55" alt="emoji-puke">
-            </span>
-            <div>
-              <p class="film-details__comment-text">Very very old. Meh</p>
-              <p class="film-details__comment-info">
-                <span class="film-details__comment-author">John Doe</span>
-                <span class="film-details__comment-day">2 days ago</span>
-                <button class="film-details__comment-delete">Delete</button>
-              </p>
-            </div>
-          </li>
-          <li class="film-details__comment">
-            <span class="film-details__comment-emoji">
-              <img src="./images/emoji/angry.png" width="55" height="55" alt="emoji-angry">
-            </span>
-            <div>
-              <p class="film-details__comment-text">Almost two hours? Seriously?</p>
-              <p class="film-details__comment-info">
-                <span class="film-details__comment-author">John Doe</span>
-                <span class="film-details__comment-day">Today</span>
-                <button class="film-details__comment-delete">Delete</button>
-              </p>
-            </div>
-          </li>
-        </ul>
-
-        <div class="film-details__new-comment">
-          <div class="film-details__add-emoji-label"></div>
-
-          <label class="film-details__comment-label">
-            <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
+            ${renderTemplateComment(comments)}
+      </ul>
+      <div class="film-details__new-comment">
+        <div class="film-details__add-emoji-label"></div>
+        <label class="film-details__comment-label">
+          <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
+        </label>
+        <div class="film-details__emoji-list">
+          <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="smile">
+          <label class="film-details__emoji-label" for="emoji-smile">
+            <img src="./images/emoji/smile.png" id="smile" width="30" height="30" alt="emoji">
           </label>
-
-          <div class="film-details__emoji-list">
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="smile">
-            <label class="film-details__emoji-label" for="emoji-smile">
-              <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
-            </label>
-
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="sleeping">
-            <label class="film-details__emoji-label" for="emoji-sleeping">
-              <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
-            </label>
-
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-puke" value="puke">
-            <label class="film-details__emoji-label" for="emoji-puke">
-              <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
-            </label>
-
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="angry">
-            <label class="film-details__emoji-label" for="emoji-angry">
-              <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
-            </label>
-          </div>
+          <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="sleeping">
+          <label class="film-details__emoji-label" for="emoji-sleeping">
+            <img src="./images/emoji/sleeping.png" id="sleeping" width="30" height="30" alt="emoji">
+          </label>
+          <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-puke" value="puke">
+          <label class="film-details__emoji-label" for="emoji-puke">
+            <img src="./images/emoji/puke.png" id="puke" width="30" height="30" alt="emoji">
+          </label>
+          <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="angry">
+          <label class="film-details__emoji-label" for="emoji-angry">
+            <img src="./images/emoji/angry.png" id="angry" width="30" height="30" alt="emoji">
+          </label>
         </div>
-      </section>
+      </div>
+    </section>
     </div>
-  </form>
+    </form>
   </section>`;
 };
 
@@ -198,6 +175,7 @@ class PopupTemplate extends SmartView {
     this._emojiListHandler = this._emojiListHandler.bind(this);
     this._textCommentInputHandler = this._textCommentInputHandler.bind(this);
     this._createCommentHandler = this._createCommentHandler.bind(this);
+    this._deleteCommentClickHandler = this._deleteCommentClickHandler.bind(this);
     this.restoreHandlers();
   }
 
@@ -262,6 +240,8 @@ class PopupTemplate extends SmartView {
     this.getElement().querySelector('.film-details__comment-input').addEventListener('input', this._textCommentInputHandler);
     this.getElement().querySelector('.film-details__emoji-list').addEventListener('click', this._emojiListHandler);
     this.getElement().addEventListener('keydown', this._createCommentHandler);
+    this._buttonsDeleteComment = this.getElement().querySelectorAll('.film-details__comment-delete');
+    this._buttonsDeleteComment.forEach((item) => item.addEventListener('click', this._deleteCommentClickHandler));
     this.getElement().querySelector('.film-details__control-button--favorite').addEventListener('click', this._favoritesClickHandler);
     this.getElement().querySelector('.film-details__control-button--watched').addEventListener('click', this._watchedClickHandler);
     this.getElement().querySelector('.film-details__control-button--watchlist').addEventListener('click', this._watchlistClickHandler);
@@ -277,7 +257,7 @@ class PopupTemplate extends SmartView {
       this._film.comments.push(newComment);
       this._film.film.comments.push(newComment.id);
       this.reset();
-      this._callback.createCommentClick();
+      // this._callback.createCommentClick();
       this.updateElement(true);
     }
   }
@@ -291,13 +271,19 @@ class PopupTemplate extends SmartView {
       emotion: this._containerEmodji.firstElementChild.id,
     };
   }
-  // _createComment() {
-  //   const comment = generateComment();
-  //   comment.emotion = this._containerEmodji.firstElementChild.id;
-  //   comment.comment = this._textComment;
-  //   comment.date = dayjs();
-  //   return comment;
-  // }
+  _deleteCommentClickHandler(evt){
+    evt.preventDefault();
+    const parentElement = evt.target.parentElement.parentElement;
+    this._film.comments.forEach((item, index) => {
+      if(parentElement.textContent.includes(item.comment) && parentElement.textContent.includes(item.author)){
+        this._film.comments.splice(index, 1);
+        this._film.film.comments.splice(index, 1);
+      }
+    });
+
+    this.reset();
+    this._callback.deleteCommentClick();
+  }
 
   setFavoritePopupButtonClick(callback) {
     this._callback.favoritesClick = callback;

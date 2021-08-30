@@ -12,6 +12,8 @@ class Film {
     this._openPopupClickHandler = this._openPopupClickHandler.bind(this);
     this._escKeyDownHandler = this._escKeyDownHandler.bind(this);
     this._removePopup = this._removePopup.bind(this);
+    this._handleDeleteCommentClick = this._handleDeleteCommentClick.bind(this);
+    this._handleCreateCommentClick = this._handleCreateCommentClick.bind(this);
     this._handleFavoriteClick = this._handleFavoriteClick.bind(this);
     this._handleWatchListClick = this._handleWatchListClick.bind(this);
     this._handleAsWatchedClick = this._handleAsWatchedClick.bind(this);
@@ -36,6 +38,8 @@ class Film {
     this._popupComponent.setFavoritePopupButtonClick(this._handleFavoriteClick);
     this._popupComponent.setAddToWatchlistPopupButtonClick(this._handleWatchListClick);
     this._popupComponent.setMarkAsWatchedPopupButtonClick(this._handleAsWatchedClick);
+    this._popupComponent.setDeleteCommentClickHandler(this._handleDeleteCommentClick);
+    this._popupComponent.setCreateCommentClickHandler(this._handleCreateCommentClick);
 
     if (prevFilmComponent === null || prevFilmPopupComponent === null) {
       render(this._filmCardContainer, this._filmCardComponent, RenderPosition.BEFOREEND);
@@ -72,13 +76,20 @@ class Film {
     document.querySelector('body').classList.remove('hide-overflow');
   }
 
-
   _escKeyDownHandler(evt) {
     if (evt.key === KeyboardKey.ESCAPE) {
       evt.preventDefault();
       this._removePopup();
       document.removeEventListener('keydown', this._escKeyDownHandler);
     }
+  }
+
+  _handleDeleteCommentClick() {
+    return this._changeData(UserAction.UPDATE_FILM, UpdateType.MINOR, this._film);
+  }
+
+  _handleCreateCommentClick() {
+    return this._changeData(UserAction.UPDATE_FILM, UpdateType.MINOR, this._film);
   }
 
   _handleFavoriteClick() {
@@ -89,7 +100,7 @@ class Film {
         {},
         this._film,
         {
-          isFavorite: !this._film.isFavorite,
+          favorite: !this._film.favorite,
         },
       ),
     );
@@ -101,9 +112,9 @@ class Film {
       UpdateType.MINOR,
       Object.assign(
         {},
-        this._film,
+        this._film.UserDetails,
         {
-          isInWatchlist: !this._film.isInWatchlist,
+          watchlist: !this._film.UserDetails.watchlist,
         },
       ),
     );
@@ -117,7 +128,7 @@ class Film {
         {},
         this._film,
         {
-          isWatched: !this._film.isWatched,
+          already_watched: !this._film.already_watched,
         },
       ),
     );
