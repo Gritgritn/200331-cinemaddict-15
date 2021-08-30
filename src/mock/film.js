@@ -133,6 +133,7 @@ const generateFilm = () => ({
   isWatched: Boolean(getRandomInteger(0, 1)),
   isFavorite: Boolean(getRandomInteger(0, 1)),
   comments: {
+    id: getRandomInteger(0, 10000),
     author: getCommentAuthor(),
     commentTexts: getRandomComment(),
     commentDate: getCommentDate(),
@@ -140,10 +141,10 @@ const generateFilm = () => ({
   },
 });
 
-// const generateData = (array) => {
-//   const randomIndex = getRandomInteger(0, array.length - 1);
-//   return array[randomIndex];
-// };
+const generateData = (array) => {
+  const randomIndex = getRandomInteger(0, array.length - 1);
+  return array[randomIndex];
+};
 
 // // const generateComment = () => {
 // //   const maxGap = 3;

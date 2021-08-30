@@ -2,6 +2,8 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import SmartView from './smart.js';
 import {isCtrlEnterEvent} from '../utils/render.js';
+import {getRandomInteger} from '../utils/common.js';
+import {generateData} from '../mock/film.js';
 
 dayjs.extend(relativeTime);
 
@@ -199,6 +201,7 @@ class PopupTemplate extends SmartView {
     this.restoreHandlers();
   }
 
+
   _textCommentInputHandler(evt){
     evt.preventDefault();
     this._textComment = evt.target.value;
@@ -206,6 +209,16 @@ class PopupTemplate extends SmartView {
 
   getTemplate() {
     return CreatePopupElement(this._film);
+  }
+
+  reset() {
+    this.updateElement(true);
+    if(this._containerEmodji){
+      this._containerEmodji.innerHTML = ' ';
+    }
+    if(this._textComment){
+      this._textComment = ' ';
+    }
   }
 
   _popupClickHandler(evt) {
@@ -256,13 +269,28 @@ class PopupTemplate extends SmartView {
   }
 
   _createCommentHandler(evt) {
-    if(isCtrlEnterEvent(evt)){
+    this._containerEmodji = this.getElement().querySelector('.film-details__add-emoji-label');
+    if(isCtrlEnterEvent(evt) && this._containerEmodji.firstChild && this._textComment){
+      evt.preventDefault();
       // this._film.comments.push(generateComment());
-
+      const newComment = this._createComment();
+      this._film.comments.push(newComment);
+      this._film.film.comments.push(newComment.id);
+      this.reset();
+      this._callback.createCommentClick();
       this.updateElement(true);
     }
   }
 
+  _createComment() {
+    return {
+      id: getRandomInteger(0, 10000),
+      author: "me",
+      commentTexts: this._textComment,
+      commentDate: dayjs(),
+      emotion: this._containerEmodji.firstElementChild.id,
+    };
+  }
   // _createComment() {
   //   const comment = generateComment();
   //   comment.emotion = this._containerEmodji.firstElementChild.id;
@@ -289,6 +317,14 @@ class PopupTemplate extends SmartView {
   setClosePopupButtonHandler(callback) {
     this._callback.popupClick = callback;
     this.getElement().querySelector('.film-details__close-btn').addEventListener('click', this._popupClickHandler);
+  }
+
+  setDeleteCommentClickHandler(callback) {
+    this._callback.deleteCommentClick = callback;
+  }
+
+  setCreateCommentClickHandler(callback) {
+    this._callback.createCommentClick = callback;
   }
 }
 
