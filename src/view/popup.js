@@ -280,7 +280,6 @@ class PopupTemplate extends SmartView {
         this._film.film.comments.splice(index, 1);
       }
     });
-
     this.reset();
     this._callback.deleteCommentClick();
   }
