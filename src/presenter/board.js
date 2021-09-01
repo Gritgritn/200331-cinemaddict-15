@@ -9,6 +9,7 @@ import FilmListContainerView from '../view/flim-listcontainer.js';
 import {sortByDate, sortByRating} from '../utils/common.js';
 import {SortType, UpdateType, UserAction, FilterType} from '../const.js';
 import {filter} from '../utils/filters.js';
+import Stats from '../view/stats';
 
 const FILM_COUNT_PER_STEP = 5;
 
@@ -32,18 +33,34 @@ class Board {
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
     this._handleViewAction = this._handleViewAction.bind(this);
     this._handleModelEvent = this._handleModelEvent.bind(this);
+    this._handleSwitchToStats = this._handleSwitchToStats.bind(this);
 
     this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
-    this._filmsModel.addObserver(this._handleModelEvent);
-    this._filterModel.addObserver(this._handleModelEvent);
+
+
   }
 
   init() {
     render(this._filmListBoard, this._filmListComponent, RenderPosition.BEFOREEND);
     render(this._filmListComponent, this._filmListMain, RenderPosition.BEFOREEND);
-
+    this._filmsModel.addObserver(this._handleModelEvent);
+    this._filterModel.addObserver(this._handleModelEvent);
     this._renderBoard();
   }
+
+  _renderStats() {
+    this._stats = new Stats();
+    render(this._filtersMenu, this._stats, RenderPosition.BEFOREEND);
+  }
+
+  _handleSwitchToStats(evt) {
+    this._filterType = evt.target.dataset.option;
+    this._destroyListsAndSort();
+    this._renderStats();
+    this._renderFiltersMenu();
+  }
+
+
 
   _handleViewAction(actionType, updateType, update) {
     switch (actionType) {
@@ -66,7 +83,6 @@ class Board {
         this._filmPresenter.get(update.film.id).init(update, this._filmsContainer, this._filterType);
         break;
       case UpdateType.MINOR:
-        alert('byla');
         this._clearBoard();
         this._renderBoard();
         // - обновить список (например, когда задача ушла в архив)

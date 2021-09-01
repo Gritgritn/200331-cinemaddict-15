@@ -1,7 +1,7 @@
 import FilmCardView from '../view/card.js';
 import PopupTemplateView from '../view/popup.js';
 import {render, RenderPosition, remove, replace} from '../utils/render.js';
-import {KeyboardKey, UserAction, UpdateType} from '../const.js';
+import {KeyboardKey, UserAction, UpdateType, FilterType} from '../const.js';
 
 class Film {
   constructor(filmCardContainer, changeData) {
@@ -92,48 +92,81 @@ class Film {
     return this._changeData(UserAction.UPDATE_FILM, UpdateType.MINOR, this._film);
   }
 
-  _handleFavoriteClick() {
-    this._changeData(
-      UserAction.UPDATE_FILM,
-      UpdateType.MINOR,
-      Object.assign(
-        {},
-        this._film,
-        {
-          favorite: !this._film.favorite,
-        },
-      ),
-    );
-  }
+  // _handleFavoriteClick() {
+  //   this._changeData(
+  //     UserAction.UPDATE_FILM,
+  //     UpdateType.MINOR,
+  //     Object.assign(
+  //       {},
+  //       this._film,
+  //       {
+  //         favorite: !this._film.favorite,
+  //       },
+  //     ),
+  //   );
+  // }
 
+  // _handleWatchListClick() {
+  //   this._changeData(
+  //     UserAction.UPDATE_FILM,
+  //     UpdateType.MINOR,
+  //     Object.assign(
+  //       {},
+  //       this._film,
+  //       {
+  //         watchlist: !this._film.watchlist,
+  //       },
+  //     ),
+  //   );
+  // }
+
+  // _handleAsWatchedClick() {
+  //   this._changeData(
+  //     UserAction.UPDATE_FILM,
+  //     UpdateType.MINOR,
+  //     Object.assign(
+  //       {},
+  //       this._film,
+  //       {
+  //         already_watched: !this._film.already_watched,
+  //       },
+  //     ),
+  //   );
+  // }
   _handleWatchListClick() {
-    this._changeData(
-      UserAction.UPDATE_FILM,
-      UpdateType.MINOR,
-      Object.assign(
-        {},
-        this._film.UserDetails,
-        {
-          watchlist: !this._film.UserDetails.watchlist,
-        },
-      ),
-    );
+    this._changeEventButtons(FilterType.WATCHLIST);
   }
 
   _handleAsWatchedClick() {
-    this._changeData(
-      UserAction.UPDATE_FILM,
-      UpdateType.MINOR,
-      Object.assign(
-        {},
-        this._film,
-        {
-          already_watched: !this._film.already_watched,
-        },
-      ),
-    );
+    this._changeEventButtons(FilterType.HISTORY);
   }
 
+  _handleFavoriteClick() {
+    this._changeEventButtons(FilterType.FAVORITES);
+  }
+
+  _changeEventButtons(eventType) {
+    const copyFilm = {...this._film};
+    switch (eventType) {
+      case 'Favorites':
+        copyFilm.film.userDetails.favorite = !this._film.film.userDetails.favorite;
+        break;
+      case 'Watchlist':
+        copyFilm.film.userDetails.watchlist = !this._film.film.userDetails.watchlist;
+        break;
+      case 'History':
+        copyFilm.film.userDetails.already_watched = !this._film.film.userDetails.already_watched;
+        break;
+      default:
+        return;
+    }
+    this._isFilterType(copyFilm);
+  }
+
+  _isFilterType(film){
+    return  FilterType.ALL_MOVIES === this._filterType ? this._changeData(UserAction.UPDATE_FILM, UpdateType.MINOR, film) : this._changeData(UserAction.UPDATE_FILM, UpdateType.MINOR, film);
+
+  }
   _hidePopup() {
     document.querySelector('.film-details').remove();
   }

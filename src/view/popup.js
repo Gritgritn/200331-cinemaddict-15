@@ -266,7 +266,7 @@ class PopupTemplate extends SmartView {
     return {
       id: getRandomInteger(0, 10000),
       author: "me",
-      commentTexts: this._textComment,
+      comment: this._textComment,
       commentDate: dayjs(),
       emotion: this._containerEmodji.firstElementChild.id,
     };
