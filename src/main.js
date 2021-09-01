@@ -1,16 +1,19 @@
 import UserTitleView from './view/usertitle.js';
 import FooterStatisticView from './view/footerstatistic.js';
-import {generateFilm} from './mock/film.js';
+// import {generateFilm} from './mock/film.js';
 import FilmsModel from './model/movie.js';
 import FilterModel from './model/filter.js';
 import {render, RenderPosition} from './utils/render.js';
 import BoardPresenter from './presenter/board.js';
 import FiltersPresenter from './presenter/filter.js';
+import {moviesData} from './mock/newfilm';
 
 
-const FILM_COUNT = 20;
-
-const films = new Array(FILM_COUNT).fill().map(generateFilm);
+// const FILM_COUNT = 20;
+// const films1 = new Array(FILM_COUNT).fill().map(generateFilm);
+// console.log(films1);
+console.log(moviesData);
+const films = moviesData;
 const filmsModel = new FilmsModel();
 filmsModel.setFilms(films);
 

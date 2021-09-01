@@ -2,6 +2,8 @@ import FilmCardView from '../view/card.js';
 import PopupTemplateView from '../view/popup.js';
 import {render, RenderPosition, remove, replace} from '../utils/render.js';
 import {KeyboardKey, UserAction, UpdateType} from '../const.js';
+import CommentItem from '../view/popup-comment.js';
+import PopupNewCommentForm from '../view/popup-new-comment.js';
 
 class Film {
   constructor(filmCardContainer, changeData) {
@@ -64,6 +66,8 @@ class Film {
     // Метод создания попапа
     document.querySelector('body').classList.add('hide-overflow');
     document.querySelector('body').appendChild(this._popupComponent.getElement());
+    this._renderComments();
+    render(this._popupComponent.getElement().querySelector('.film-details__comments-wrap'), new PopupNewCommentForm(), RenderPosition.BEFOREEND);
   }
 
   _removePopup() {
@@ -72,6 +76,16 @@ class Film {
     document.querySelector('body').classList.remove('hide-overflow');
   }
 
+  _renderComments() {
+    this._comments = this._film.comments;
+    // this._commentsNumber.textContent = this._comments.length;
+    this._comments.forEach((commentItem) => {
+      const comment = new CommentItem(commentItem);
+      // comment.setCommentDeleteCallback(this._handleCommentDeletion);
+      render(this._popupComponent.getElement().querySelector('.film-details__comments-list'), comment, RenderPosition.BEFOREEND);
+      // this._shownComments.set(commentItem.id, comment.getElement());
+    });
+  }
 
   _escKeyDownHandler(evt) {
     if (evt.key === KeyboardKey.ESCAPE) {
@@ -89,7 +103,7 @@ class Film {
         {},
         this._film,
         {
-          isFavorite: !this._film.isFavorite,
+          favorite: !this._film.favorite,
         },
       ),
     );
@@ -103,7 +117,7 @@ class Film {
         {},
         this._film,
         {
-          isInWatchlist: !this._film.isInWatchlist,
+          watchlist: !this._film.watchlist,
         },
       ),
     );
@@ -117,7 +131,7 @@ class Film {
         {},
         this._film,
         {
-          isWatched: !this._film.isWatched,
+          alreadyWatched: !this._film.alreadyWatched,
         },
       ),
     );

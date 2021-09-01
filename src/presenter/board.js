@@ -47,9 +47,10 @@ class Board {
 
   _handleViewAction(actionType, updateType, update) {
     switch (actionType) {
-      case UserAction.UPDATE_FILM:
+      case UserAction.UPDATE_FILM: {
         this._filmsModel.updateFilm(updateType, update);
         break;
+      }
     }
     // Здесь будем вызывать обновление модели.
     // actionType - действие пользователя, нужно чтобы понять, какой метод модели вызвать
