@@ -51,7 +51,7 @@ class Film {
 
     if (this._bodyContainer.contains(prevFilmPopupComponent.getElement())) {
       replace(this._popupComponent, prevFilmPopupComponent);
-    }
+    } // эти условия не работают, из-за этого попап не перерисовывается
 
     remove(prevFilmComponent);
     remove(prevFilmPopupComponent);
@@ -96,45 +96,34 @@ class Film {
   }
 
   _handleFavoriteClick() {
-    this._changeData(
-      UserAction.UPDATE_FILM,
-      UpdateType.MINOR,
-      Object.assign(
-        {},
-        this._film,
-        {
-          favorite: !this._film.favorite,
-        },
-      ),
-    );
+    this._changeEventButtons('Favorite');
+  }
+
+  _changeEventButtons(eventType) {
+    const copyFilm = {...this._film};
+    switch (eventType) {
+      case 'Favorite': {
+          copyFilm.userDetails.favorite = !this._film.userDetails.favorite;
+          break;
+        }
+        case 'WatchList': {
+          copyFilm.userDetails.watchlist = !this._film.userDetails.watchlist;
+          break;
+        }
+        case 'History': {
+          copyFilm.userDetails.alreadyWatched = !this._film.userDetails.alreadyWatched;
+          break;
+        }
+      }
+    this._changeData(UserAction.UPDATE_FILM, UpdateType.MINOR, copyFilm)
   }
 
   _handleWatchListClick() {
-    this._changeData(
-      UserAction.UPDATE_FILM,
-      UpdateType.MINOR,
-      Object.assign(
-        {},
-        this._film,
-        {
-          watchlist: !this._film.watchlist,
-        },
-      ),
-    );
+    this._changeEventButtons('WatchList');
   }
 
   _handleAsWatchedClick() {
-    this._changeData(
-      UserAction.UPDATE_FILM,
-      UpdateType.MINOR,
-      Object.assign(
-        {},
-        this._film,
-        {
-          alreadyWatched: !this._film.alreadyWatched,
-        },
-      ),
-    );
+    this._changeEventButtons('History');
   }
 
   _hidePopup() {

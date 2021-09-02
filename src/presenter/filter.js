@@ -21,8 +21,7 @@ export default class Filter {
   init() {
     const filters = this._getFilters();
     const prevFilterComponent = this._filterComponent;
-    // console.log(this._filmsModel.getFilms()); - работает
-    // console.log(this._filmsModel.getFilms()); - работает
+
 
     this._filterComponent = new MenuTemplateView(filters, this._filterModel.getFilter());
     this._filterComponent.setFilterTypeChangeHandler(this._handleFilterTypeChange);
