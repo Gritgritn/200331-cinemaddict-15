@@ -1,10 +1,13 @@
 import {EmotionsImages} from '../mock/dataset';
 import Abstract from './abstract';
-// const relativeTime = require('dayjs/plugin/relativeTime');
-// dayjs.extend(relativeTime);
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime.js';
+dayjs.extend(relativeTime);
 
 const getCommentItemHtml = (commentDataItem) => {
   const {author, comment, date, emotion} = commentDataItem;
+  const formatDateForComments = (date) => dayjs(date).fromNow();
+  const relativeDate = formatDateForComments(date);
   // const formatDateForComments = (date) => dayjs(date).fromNow();
   // const relativeDate = formatDateForComments(date);
 
@@ -17,7 +20,7 @@ const getCommentItemHtml = (commentDataItem) => {
         <p class="film-details__comment-text">${comment}</p>
         <p class="film-details__comment-info">
           <span class="film-details__comment-author">${author}</span>
-          <span class="film-details__comment-day">${date}</span>
+          <span class="film-details__comment-day">${relativeDate}</span>
           <button class="film-details__comment-delete">Delete</button>
         </p>
       </div>

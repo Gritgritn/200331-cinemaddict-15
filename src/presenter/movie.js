@@ -67,13 +67,15 @@ class Film {
     document.querySelector('body').classList.add('hide-overflow');
     document.querySelector('body').appendChild(this._popupComponent.getElement());
     this._renderComments();
-    render(this._popupComponent.getElement().querySelector('.film-details__comments-wrap'), new PopupNewCommentForm(), RenderPosition.BEFOREEND);
+    render(this._popupComponent.getElement().querySelector('.film-details__comments-wrap'), new PopupNewCommentForm(this._film), RenderPosition.BEFOREEND);
   }
 
   _removePopup() {
     // Метод удаления попапа
     document.querySelector('body').removeChild(this._popupComponent.getElement());
     document.querySelector('body').classList.remove('hide-overflow');
+    remove(this._popupComponent);
+
   }
 
   _renderComments() {
@@ -115,7 +117,7 @@ class Film {
           break;
         }
       }
-    this._changeData(UserAction.UPDATE_FILM, UpdateType.MINOR, copyFilm)
+    this._changeData(UserAction.UPDATE_FILM, UpdateType.MINOR, copyFilm);
   }
 
   _handleWatchListClick() {

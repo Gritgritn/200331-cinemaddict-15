@@ -149,7 +149,7 @@ class PopupTemplate extends SmartView {
   }
 
 
-  restoreHandlers(){
+  restoreHandlers() {
     this.getElement().querySelector('.film-details__control-button--favorite').addEventListener('click', this._favoritesClickHandler);
     this.getElement().querySelector('.film-details__control-button--watched').addEventListener('click', this._watchedClickHandler);
     this.getElement().querySelector('.film-details__control-button--watchlist').addEventListener('click', this._watchlistClickHandler);
