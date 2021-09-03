@@ -32,7 +32,7 @@ const getPopupNewCommentHtml = () => (
           </label>
       </div>
     </form>`
-    );
+);
 
 export default class PopupNewCommentForm extends SmartView {
   constructor(film) {
