@@ -175,6 +175,7 @@ class PopupTemplate extends SmartView {
   setClosePopupButtonHandler(callback) {
     this._callback.popupClick = callback;
     this.getElement().querySelector('.film-details__close-btn').addEventListener('click', this._popupClickHandler);
+    this.restoreHandlers();
   }
 }
 

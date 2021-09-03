@@ -1,5 +1,6 @@
 import SmartView from './smart';
-import {EmotionsImages} from '../mock/dataset';
+// import {EmotionsImages} from '../mock/dataset';
+import he from 'he';
 import {isCtrlEnterEvent} from '../utils/render.js';
 import dayjs from 'dayjs';
 
@@ -38,7 +39,7 @@ const getPopupNewCommentHtml = () => {
 export default class PopupNewCommentForm extends SmartView {
   constructor(film) {
     super();
-    this._film= film;
+    this._film = film;
     this._emojiListHandler = this._emojiListHandler.bind(this);
     this._textCommentInputHandler = this._textCommentInputHandler.bind(this);
     this._createCommentHandler = this._createCommentHandler.bind(this);
@@ -84,7 +85,7 @@ export default class PopupNewCommentForm extends SmartView {
       date: '',
     };
     comment.emotion = this._containerEmodji.firstElementChild.id;
-    comment.comment = this._textComment;
+    comment.comment = he.encode(this._textComment);
     comment.date = dayjs();
     return comment;
   }
@@ -131,4 +132,5 @@ export default class PopupNewCommentForm extends SmartView {
 
     this.updateElement(true);
   }
+
 }
