@@ -5,7 +5,7 @@ import relativeTime from 'dayjs/plugin/relativeTime.js';
 dayjs.extend(relativeTime);
 
 const getCommentItemHtml = (commentDataItem) => {
-  const {author, comment, date, emotion} = commentDataItem;
+  const {author, comment, emotion} = commentDataItem;
   const formatDateForComments = (date) => dayjs(date).fromNow();
   const relativeDate = formatDateForComments(date);
   // const formatDateForComments = (date) => dayjs(date).fromNow();

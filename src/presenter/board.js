@@ -71,8 +71,8 @@ class Board {
         // - обновить список (например, когда задача ушла в архив)
         break;
       case UpdateType.MAJOR:
-          this._clearBoard({resetRenderedFilmCount: true, resetSortType: true});
-          this._renderBoard();
+        this._clearBoard({resetRenderedFilmCount: true, resetSortType: true});
+        this._renderBoard();
         // - обновить всю доску (например, при переключении фильтра)
         break;
     }

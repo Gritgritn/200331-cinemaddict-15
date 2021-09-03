@@ -5,9 +5,8 @@ import {isCtrlEnterEvent} from '../utils/render.js';
 import dayjs from 'dayjs';
 
 
-const getPopupNewCommentHtml = () => {
-  return `
-    <div class="film-details__new-comment" action="#">
+const getPopupNewCommentHtml = () => (
+  `<div class="film-details__new-comment" action="#">
        <div class="film-details__add-emoji-label">
 
        </div>
@@ -31,10 +30,9 @@ const getPopupNewCommentHtml = () => {
           <label class="film-details__emoji-label" for="emoji-angry">
             <img src="./images/emoji/angry.png" id="angry" width="30" height="30" alt="emoji" data-emotion="angry">
           </label>
-        </div>
-    </form>
-  `;
-};
+      </div>
+    </form>`
+    );
 
 export default class PopupNewCommentForm extends SmartView {
   constructor(film) {
@@ -112,15 +110,6 @@ export default class PopupNewCommentForm extends SmartView {
     this._textComment = evt.target.value;
   }
 
-  reset() {
-    if(this._containerEmodji){
-      this._containerEmodji.innerHTML = ' ';
-    }
-    if(this._textComment){
-      this._textComment = ' ';
-    }
-  }
-
   _deleteCommentClickHandler(evt){
     evt.preventDefault();
     this._film.comments.forEach((item, index) => {
@@ -132,5 +121,4 @@ export default class PopupNewCommentForm extends SmartView {
 
     this.updateElement(true);
   }
-
 }

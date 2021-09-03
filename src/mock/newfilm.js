@@ -2,8 +2,8 @@ import {CommentAuthors, Comments, Emotions} from './dataset';
 import dayjs from 'dayjs';
 import {getRandomInteger} from '../utils/common.js';
 import {Actors, Descriptions, FilmsDirectors, FilmsTitles, Genres, Posters, ReleaseCountries, Writers} from './dataset';
-const duration = require('dayjs/plugin/duration');
-const relativeTime = require('dayjs/plugin/relativeTime');
+import relativeTime from 'dayjs/plugin/relativeTime.js';
+import duration from 'dayjs/plugin/duration.js';
 dayjs.extend(relativeTime);
 dayjs.extend(duration);
 
@@ -86,6 +86,6 @@ const getRandomFilmData = (numberOfMovies) => {
   return films;
 };
 
-const moviesData = getRandomFilmData(NUMBER_OF_MOVIES)
+const moviesData = getRandomFilmData(NUMBER_OF_MOVIES);
 
 export {moviesData};

@@ -105,18 +105,18 @@ class Film {
     const copyFilm = {...this._film};
     switch (eventType) {
       case 'Favorite': {
-          copyFilm.userDetails.favorite = !this._film.userDetails.favorite;
-          break;
-        }
-        case 'WatchList': {
-          copyFilm.userDetails.watchlist = !this._film.userDetails.watchlist;
-          break;
-        }
-        case 'History': {
-          copyFilm.userDetails.alreadyWatched = !this._film.userDetails.alreadyWatched;
-          break;
-        }
+        copyFilm.userDetails.favorite = !this._film.userDetails.favorite;
+        break;
       }
+      case 'WatchList': {
+        copyFilm.userDetails.watchlist = !this._film.userDetails.watchlist;
+        break;
+      }
+      case 'History': {
+        copyFilm.userDetails.alreadyWatched = !this._film.userDetails.alreadyWatched;
+        break;
+      }
+    }
     this._changeData(UserAction.UPDATE_FILM, UpdateType.MINOR, copyFilm);
   }
 
