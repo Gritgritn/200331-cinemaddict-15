@@ -60,26 +60,21 @@ class Board {
 
   _handleModelEvent(updateType, data) {
     switch (updateType) {
-      case UpdateType.PATCH:
-        // - обновить часть списка (например, когда поменялось описание)
-
+      case UpdateType.PATCH: {
         this._filmPresenter.get(data.id).init(data);
         break;
-      case UpdateType.MINOR:
+      }
+      case UpdateType.MINOR: {
         this._clearBoard();
         this._renderBoard();
-        // - обновить список (например, когда задача ушла в архив)
         break;
-      case UpdateType.MAJOR:
+      }
+      case UpdateType.MAJOR: {
         this._clearBoard({resetRenderedFilmCount: true, resetSortType: true});
         this._renderBoard();
-        // - обновить всю доску (например, при переключении фильтра)
         break;
+      }
     }
-    // В зависимости от типа изменений решаем, что делать:
-    // - обновить часть списка (например, когда поменялось описание)
-    // - обновить список (например, когда задача ушла в архив)
-    // - обновить всю доску (например, при переключении фильтра)
   }
 
   _getFilms() {
@@ -89,19 +84,14 @@ class Board {
 
     switch (this._currentSortType) {
       case SortType.DATE:
-        // return this._filmsModel.getFilms().slice().sort(sortByDate);
         return filtredFilms.sort(sortByDate);
       case SortType.RATE:
-        // return this._filmsModel.getFilms().slice().sort(sortByRating);
         return filtredFilms.sort(sortByRating);
     }
-
-    // return this._filmsModel.getFilms();
     return filtredFilms;
   }
 
   _handleFilmChange(updatedFilm) {
-    // Здесь будем вызывать обновление модели
     this._filmPresenter.get(updatedFilm.id).init(updatedFilm);
   }
 
@@ -112,9 +102,6 @@ class Board {
     this._currentSortType = sortType;
     this._clearBoard({resetRenderedFilmCount: true});
     this._renderBoard();
-    // - Сортируем задачи
-    // - Очищаем список
-    // - Рендерим список заново
   }
 
   _renderSort() {
@@ -135,7 +122,6 @@ class Board {
 
   _renderFilms(films) {
     films.forEach((film) => this._renderFilm(film));
-    // Метод для рендеринга N-задач за раз
   }
 
   _renderNoFilms() {
@@ -172,15 +158,6 @@ class Board {
     if (filmCount > FILM_COUNT_PER_STEP) {
       this._renderShowMoreButton();
     }
-
-    // this._renderFilms(0, Math.min(this._getFilms().length, FILM_COUNT_PER_STEP));
-    // const films = this._getFilms().slice(0, Math.min(this._getFilms().length, FILM_COUNT_PER_STEP));
-
-    // this._renderFilms(films);
-
-    // if (this._getFilms().length > FILM_COUNT_PER_STEP) {
-    //   this._renderShowMoreButton();
-    // }
   }
 
   _clearFilmList() {
@@ -197,7 +174,6 @@ class Board {
     this._filmPresenter.clear();
 
     remove(this._sortComponent);
-    // remove(this._noFilmComponent);
     if (this._noFilmComponent) {
       remove(this._noFilmComponent);
     }
@@ -207,9 +183,6 @@ class Board {
     if (resetRenderedFilmCount) {
       this._renderedFilmCount = FILM_COUNT_PER_STEP;
     } else {
-      // На случай, если перерисовка доски вызвана
-      // уменьшением количества задач (например, удаление или перенос в архив)
-      // нужно скорректировать число показанных задач
       this._renderedFilmCount = Math.min(filmCount, this._renderedFilmCount);
     }
 
@@ -219,8 +192,6 @@ class Board {
   }
 
   _renderBoard() {
-    // Метод для инициализации (начала работы) модуля,
-    // бОльшая часть текущей функции renderBoard в main.js;
     const films = this._getFilms();
     const filmCount = films.length;
     if (filmCount === 0) {

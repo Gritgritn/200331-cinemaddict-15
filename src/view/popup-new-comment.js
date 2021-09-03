@@ -1,5 +1,4 @@
 import SmartView from './smart';
-// import {EmotionsImages} from '../mock/dataset';
 import he from 'he';
 import {isCtrlEnterEvent} from '../utils/render.js';
 import dayjs from 'dayjs';
@@ -34,7 +33,7 @@ const getPopupNewCommentHtml = () => (
     </form>`
 );
 
-export default class PopupNewCommentForm extends SmartView {
+class PopupNewCommentForm extends SmartView {
   constructor(film) {
     super();
     this._film = film;
@@ -122,3 +121,5 @@ export default class PopupNewCommentForm extends SmartView {
     this.updateElement(true);
   }
 }
+
+export default PopupNewCommentForm;

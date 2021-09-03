@@ -1,12 +1,11 @@
 import {EmotionsImages} from '../mock/dataset';
 import Abstract from './abstract';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime.js';
-dayjs.extend(relativeTime);
+import {relativeDate} from '../utils/common.js';
+
 
 const getCommentItemHtml = (commentDataItem) => {
   const {author, comment, date, emotion} = commentDataItem;
-  const relativeDate = dayjs(date).fromNow();
+  const commentDate = relativeDate(date);
 
   return `
     <li class="film-details__comment">
@@ -17,7 +16,7 @@ const getCommentItemHtml = (commentDataItem) => {
         <p class="film-details__comment-text">${comment}</p>
         <p class="film-details__comment-info">
           <span class="film-details__comment-author">${author}</span>
-          <span class="film-details__comment-day">${relativeDate}</span>
+          <span class="film-details__comment-day">${commentDate}</span>
           <button class="film-details__comment-delete">Delete</button>
         </p>
       </div>
@@ -25,7 +24,7 @@ const getCommentItemHtml = (commentDataItem) => {
   `;
 };
 
-export default class CommentItem extends Abstract {
+class CommentItem extends Abstract {
   constructor(commentDataItem) {
     super();
     this._commentdataItem = commentDataItem;
@@ -49,3 +48,5 @@ export default class CommentItem extends Abstract {
       .addEventListener('click', this._commentDeleteCallback);
   }
 }
+
+export default CommentItem;

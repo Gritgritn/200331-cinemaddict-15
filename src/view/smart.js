@@ -24,28 +24,13 @@ export default class Smart extends Abstract {
     this.updateElement();
   }
 
-  resetData() {
-    const update = {
-      id: 0,
-      author: 'You',
-      emotion: 'smile',
-      comment: '',
-      date: '',
-    };
-    this.updateData(update);
-  }
-
-  updateElement(scrollDown) {
+  updateElement() {
     const prevElement = this.getElement();
     const parent = prevElement.parentElement;
     this.removeElement();
 
     const newElement = this.getElement();
     parent.replaceChild(newElement, prevElement);
-
-    if(scrollDown){
-      this.getElement().scrollTop = this.getElement().scrollHeight;
-    }
 
     this.restoreHandlers();
   }

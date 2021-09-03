@@ -3,7 +3,7 @@ import {render, RenderPosition, replace, remove} from '../utils/render.js';
 import {filter} from '../utils/filters.js';
 import {FilterType, UpdateType} from '../const.js';
 
-export default class Filter {
+class Filter {
   constructor(filterContainer, filterModel, filmsModel) {
     this._filterContainer = filterContainer;
     this._filterModel = filterModel;
@@ -43,7 +43,7 @@ export default class Filter {
       return;
     }
 
-    this._filterModel.setFilter(UpdateType.MINOR, filterType);
+    this._filterModel.setFilter(UpdateType.MAJOR, filterType);
   }
 
   _getFilters() {
@@ -72,3 +72,5 @@ export default class Filter {
     ];
   }
 }
+
+export default Filter;

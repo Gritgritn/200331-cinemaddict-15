@@ -1,4 +1,4 @@
-export const FilmsTitles = [
+const FilmsTitles = [
   'The Dance of Life',
   'Sagebrush Trail',
   'The Man with the Golden Arm',
@@ -9,7 +9,7 @@ export const FilmsTitles = [
   'A Little Pony Without The Carpet',
 ];
 
-export const Posters = [
+const Posters = [
   './images/posters/made-for-each-other.png',
   './images/posters/popeye-meets-sinbad.png',
   './images/posters/sagebrush-trail.jpg',
@@ -19,7 +19,7 @@ export const Posters = [
   './images/posters/the-man-with-the-golden-arm.jpg',
 ];
 
-export const FilmsDirectors = [
+const FilmsDirectors = [
   'Don Digidon',
   'David Lynch',
   'Ethan Coen',
@@ -27,7 +27,7 @@ export const FilmsDirectors = [
   'Nikita Mikhalkov',
 ];
 
-export const Writers = [
+const Writers = [
   'Feodor Dostoevsky',
   'Lev Tolstoy',
   'Victor Pelevin',
@@ -36,7 +36,7 @@ export const Writers = [
   'Donald Trump',
 ];
 
-export const Actors = [
+const Actors = [
   'Robert De Niro',
   'Feodor Bondarchuk',
   'Leonardo Di Kaprio',
@@ -44,7 +44,7 @@ export const Actors = [
   'Al Pachino',
 ];
 
-export const ReleaseCountries = [
+const ReleaseCountries = [
   'France',
   'USA',
   'Russia',
@@ -52,7 +52,7 @@ export const ReleaseCountries = [
   'Japan',
 ];
 
-export const Genres = [
+const Genres = [
   'Drama',
   'Mystery',
   'Comedy',
@@ -61,7 +61,7 @@ export const Genres = [
   'Cartoon',
 ];
 
-export const Descriptions = [
+const Descriptions = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   'Cras aliquet varius magna, non porta ligula feugiat eget.',
   'Fusce tristique felis at fermentum pharetra.',
@@ -75,7 +75,7 @@ export const Descriptions = [
   'In rutrum ac purus sit amet tempus.',
 ];
 
-export const CommentAuthors = [
+const CommentAuthors = [
   'Tim Macoveev',
   'John Doe',
   'Karl Marks',
@@ -84,7 +84,7 @@ export const CommentAuthors = [
   'Fantomas',
 ];
 
-export const Comments = [
+const Comments = [
   'Interesting setting and a good cast',
   'Booooooooooring',
   'Very very old. Meh',
@@ -93,16 +93,18 @@ export const Comments = [
   'Amazing job!!!',
 ];
 
-export const Emotions = [
+const Emotions = [
   'smile',
   'sleeping',
   'puke',
   'angry',
 ];
 
-export const EmotionsImages = {
+const EmotionsImages = {
   'angry': './images/emoji/angry.png',
   'sleeping': './images/emoji/sleeping.png',
   'puke': './images/emoji/puke.png',
   'smile': './images/emoji/smile.png',
 };
+
+export {FilmsTitles, Posters, FilmsDirectors, Writers, Actors, ReleaseCountries, Genres, Descriptions, CommentAuthors, Comments, Emotions, EmotionsImages};

@@ -1,11 +1,12 @@
 import AbstractView from './abstract.js';
 
 const isFilterActive = (boolean) =>  boolean ? 'main-navigation__item--active' : '';
+const SORT_TYPE_DATA_ATTR = 'data-sort-type';
 
 const createFilterItemTemplate = (filter, currentFilterType) => {
   const {type, count} = filter;
   return(
-    `<a href="#${type}" class="main-navigation__item ${isFilterActive(currentFilterType === type)}" id="${type}">${type}${type === 'All movies' ? '' : `<span class="main-navigation__item-count">${count}</span>`}</a>`
+    `<a href="#${type}" class="main-navigation__item ${isFilterActive(currentFilterType === type)}" data-sort-type="${type}">${type}${type === 'All movies' ? '' : `<span class="main-navigation__item-count">${count}</span>`}</a>`
   );
 };
 
@@ -36,7 +37,12 @@ class MenuTemplate extends AbstractView {
 
   _filterTypeChangeHandler(evt) {
     evt.preventDefault();
-    this._callback.filterTypeChange(evt.target.id); // Поменял evt.target.value na id
+    const hasAttr = evt.target.hasAttribute(SORT_TYPE_DATA_ATTR);
+    if (!hasAttr) {
+      return;
+    }
+
+    this._callback.filterTypeChange(evt.target.getAttribute(SORT_TYPE_DATA_ATTR)); // Поменял evt.target.value na id
   }
 
   setFilterTypeChangeHandler(callback) {

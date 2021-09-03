@@ -6,6 +6,12 @@ const SortType = {
   RATE: 'date-up',
 };
 
+const EventType = {
+  FAVORITE: 'Favorite',
+  WATCHLIST: 'WatchList',
+  HISTORY: 'History',
+};
+
 const KeyboardKey = {
   ESCAPE: 'Escape',
 };
@@ -27,5 +33,5 @@ const UpdateType = {
   MAJOR: 'MAJOR',
 };
 
-export {EMOTIONS, SortType, KeyboardKey, UserAction, UpdateType, FilterType};
+export {EMOTIONS, SortType, KeyboardKey, UserAction, UpdateType, FilterType, EventType};
 export default KeyboardKey;

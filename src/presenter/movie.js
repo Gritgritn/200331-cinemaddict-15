@@ -1,7 +1,7 @@
 import FilmCardView from '../view/card.js';
 import PopupTemplateView from '../view/popup.js';
 import {render, RenderPosition, remove, replace} from '../utils/render.js';
-import {KeyboardKey, UserAction, UpdateType} from '../const.js';
+import {KeyboardKey, UserAction, UpdateType, EventType} from '../const.js';
 import CommentItem from '../view/popup-comment.js';
 import PopupNewCommentForm from '../view/popup-new-comment.js';
 
@@ -25,6 +25,7 @@ class Film {
     const prevFilmPopupComponent = this._popupComponent;
     this._filmCardComponent = new FilmCardView(film);
     this._popupComponent = new PopupTemplateView(film);
+    this._activeFilmId = null;
     this._bodyContainer = document.querySelector('body');
     this._filmCardComponent.setPosterClickHandler(this._openPopupClickHandler);
     this._filmCardComponent.setFilmNameClickHandler(this._openPopupClickHandler);
@@ -98,22 +99,23 @@ class Film {
   }
 
   _handleFavoriteClick() {
-    this._changeEventButtons('Favorite');
+    this._changeEventButtons(EventType.FAVORITE);
   }
 
   _changeEventButtons(eventType) {
     const copyFilm = {...this._film};
+    const filmUserDetails = copyFilm.userDetails;
     switch (eventType) {
-      case 'Favorite': {
-        copyFilm.userDetails.favorite = !this._film.userDetails.favorite;
+      case EventType.FAVORITE: {
+        filmUserDetails.favorite = !this._film.userDetails.favorite;
         break;
       }
-      case 'WatchList': {
-        copyFilm.userDetails.watchlist = !this._film.userDetails.watchlist;
+      case EventType.WATCHLIST: {
+        filmUserDetails.watchlist = !this._film.userDetails.watchlist;
         break;
       }
-      case 'History': {
-        copyFilm.userDetails.alreadyWatched = !this._film.userDetails.alreadyWatched;
+      case EventType.HISTORY: {
+        filmUserDetails.alreadyWatched = !this._film.userDetails.alreadyWatched;
         break;
       }
     }
@@ -132,12 +134,26 @@ class Film {
     document.querySelector('.film-details').remove();
   }
 
+  // set setActiveFilm(value) {
+  //   this._activeFilmId = value;
+  // };
+
   _openPopupClickHandler() {
     // Метод открытия попапа при нажатии на постер
     if (document.body.querySelector('.film-details')) {
       this._hidePopup();
     }
     this._renderPopup();
+    // setActiveFilm(1);
+    // с синтаксом всё-таки возникли проблемы
+    // сначала думал можно так: this._activeFilmId.set(film.id); но выдаёт ошибку
+    // можешь пожалуйста написать как, а то нашёл только примеры на переменных
+    // ещё одна проблема постер открывается не через board.js, а через этот файл
+    // как понимаю эту проблему можно решить передав film.id через _renderFilm()
+    // при вызове этого файла в конструктор передать значение film.id и использовать его в сеттере уже
+    // например const filmPresenter = new FilmPresenter(this._filmListContainer, this._handleViewAction, film.id);
+    // и уже с условием if (this._activeFilmId !== null) вызвать отрисовку попапа при отрисовке карточки фильма в init
+
     document.addEventListener('keydown', this._escKeyDownHandler);
     this._popupComponent.setClosePopupButtonHandler(() => {
       this._removePopup();
