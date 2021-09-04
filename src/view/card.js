@@ -1,39 +1,11 @@
-import dayjs from 'dayjs';
 import AbstractView from './abstract.js';
+import {getDurationFromMinutes, formatDate, getShortDescription} from '../utils/common.js';
 
 const createFilmCard = (film) => {
   // const {moviename, poster, description, premiereDate, rating, genre, runtime, isInWatchlist, isWatched, isFavorite} = film;
   const {id, comments, filmInfo, userDetails} = film;
-  const formatDate = (date, format) => dayjs(date).format(format);
-  const getShortDescription = (description, maxLength) => {
-    if (description.length > maxLength) {
-      description = `${description.substr(0, maxLength)}...`;
-    }
-    return description;
-  };
-  const getDurationFromMinutes = (durationInMinutes) => {
-    const lasting = dayjs.duration(durationInMinutes, 'minutes');
-    return `${lasting.hours()}h ${lasting.minutes()}m`;
-  };
   const releaseYear = formatDate(filmInfo.release.date, 'YYYY').slice(-4) || '';
   const runtime = getDurationFromMinutes(filmInfo.runtime) || '';
-
-  // const date = dayjs(premiereDate).format('YYYY');
-  // const hours = Math.floor(runtime / 60);
-  // const minutes = Math.floor(runtime) - (hours * 60);
-  // let slicedDescription = description.slice(0, 140);
-  // if (slicedDescription.length < description.length) {
-  //   slicedDescription += ' ...';
-  // }
-  // const watchlistClassName = isInWatchlist
-  //   ? 'film-card__controls-item--add-to-watchlist film-card__controls-item--active'
-  //   : 'film-card__controls-item--add-to-watchlist';
-  // const watchedClassName = isWatched
-  //   ? 'film-card__controls-item--mark-as-watched film-card__controls-item--active'
-  //   : 'film-card__controls-item--mark-as-watched';
-  // const favoriteClassName = isFavorite
-  //   ? 'film-card__controls-item--favorite film-card__controls-item--active'
-  //   : 'film-card__controls-item--favorite';
 
   return `<article class="film-card" data-id="${id}">
         <h3 class="film-card__title">${filmInfo.title}</h3>

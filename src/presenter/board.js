@@ -28,10 +28,12 @@ class Board {
     this._sortComponent = null;
     this._showMoreBtnComponent = null;
     this._noFilmComponent = null;
+    this._activeFilm = null;
 
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
     this._handleViewAction = this._handleViewAction.bind(this);
     this._handleModelEvent = this._handleModelEvent.bind(this);
+    this._handleActiveFilm = this._handleActiveFilm.bind(this);
 
     this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
     this._filmsModel.addObserver(this._handleModelEvent);
@@ -83,10 +85,12 @@ class Board {
     const filtredFilms = filter[this._filterType](films);
 
     switch (this._currentSortType) {
-      case SortType.DATE:
+      case SortType.DATE: {
         return filtredFilms.sort(sortByDate);
-      case SortType.RATE:
+      }
+      case SortType.RATE: {
         return filtredFilms.sort(sortByRating);
+      }
     }
     return filtredFilms;
   }
@@ -112,12 +116,20 @@ class Board {
     this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
 
     render(this._filmListComponent, this._sortComponent, RenderPosition.AFTERBEGIN);
+    console.log(this._activeFilm);
   }
 
   _renderFilm(film) {
-    const filmPresenter = new FilmPresenter(this._filmListContainer, this._handleViewAction);
+    const filmPresenter = new FilmPresenter(this._filmListContainer, this._handleViewAction, this._handleActiveFilm);
     filmPresenter.init(film);
     this._filmPresenter.set(film.id, filmPresenter);
+    if (this._activeFilm) {
+      new FilmPresenter(this._filmListContainer, this._handleViewAction, this._handleActiveFilm);
+    }
+  }
+
+  _handleActiveFilm(film) {
+    this._activeFilm = film;
   }
 
   _renderFilms(films) {
@@ -180,11 +192,7 @@ class Board {
     remove(this._showMoreBtnComponent);
 
 
-    if (resetRenderedFilmCount) {
-      this._renderedFilmCount = FILM_COUNT_PER_STEP;
-    } else {
-      this._renderedFilmCount = Math.min(filmCount, this._renderedFilmCount);
-    }
+    this._renderedFilmCount = resetRenderedFilmCount ? FILM_COUNT_PER_STEP : Math.min(filmCount, this._renderedFilmCount);
 
     if (resetSortType) {
       this._currentSortType = SortType.DEFAULT;

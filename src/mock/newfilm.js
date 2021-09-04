@@ -56,7 +56,7 @@ const getRandomFilmData = (numberOfMovies) => {
   const films = [];
   for (let i = 0; i < numberOfMovies; i++)  {
     films.push({
-      id: getMovieId(),
+      id: i,
       comments: getRandomCommentsData(getRandomInteger(MIN_COMMENTS_NUMBER, MAX_COMMENTS_NUMBER)),
       filmInfo: {
         title: getRandomItem(FilmsTitles),

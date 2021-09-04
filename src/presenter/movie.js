@@ -6,8 +6,9 @@ import CommentItem from '../view/popup-comment.js';
 import PopupNewCommentForm from '../view/popup-new-comment.js';
 
 class Film {
-  constructor(filmCardContainer, changeData) {
+  constructor(filmCardContainer, changeData, setActiveFilm) {
     this._filmCardContainer = filmCardContainer;
+    this._setActiveFilm = setActiveFilm;
     this._changeData = changeData;
     this._popupComponent = null;
     this._filmCardComponent = null;
@@ -25,7 +26,6 @@ class Film {
     const prevFilmPopupComponent = this._popupComponent;
     this._filmCardComponent = new FilmCardView(film);
     this._popupComponent = new PopupTemplateView(film);
-    this._activeFilmId = null;
     this._bodyContainer = document.querySelector('body');
     this._filmCardComponent.setPosterClickHandler(this._openPopupClickHandler);
     this._filmCardComponent.setFilmNameClickHandler(this._openPopupClickHandler);
@@ -67,6 +67,7 @@ class Film {
     // Метод создания попапа
     document.querySelector('body').classList.add('hide-overflow');
     document.querySelector('body').appendChild(this._popupComponent.getElement());
+    this._setActiveFilm(this._film);
     this._renderComments();
     render(this._popupComponent.getElement().querySelector('.film-details__comments-wrap'), new PopupNewCommentForm(this._film), RenderPosition.BEFOREEND);
   }
@@ -76,7 +77,7 @@ class Film {
     document.querySelector('body').removeChild(this._popupComponent.getElement());
     document.querySelector('body').classList.remove('hide-overflow');
     remove(this._popupComponent);
-
+    this._setActiveFilm(null);
   }
 
   _renderComments() {
@@ -94,6 +95,7 @@ class Film {
     if (evt.key === KeyboardKey.ESCAPE) {
       evt.preventDefault();
       this._removePopup();
+      this._setActiveFilm(null);
       document.removeEventListener('keydown', this._escKeyDownHandler);
     }
   }
@@ -134,26 +136,12 @@ class Film {
     document.querySelector('.film-details').remove();
   }
 
-  // set setActiveFilm(value) {
-  //   this._activeFilmId = value;
-  // };
-
   _openPopupClickHandler() {
     // Метод открытия попапа при нажатии на постер
     if (document.body.querySelector('.film-details')) {
       this._hidePopup();
     }
     this._renderPopup();
-    // setActiveFilm(1);
-    // с синтаксом всё-таки возникли проблемы
-    // сначала думал можно так: this._activeFilmId.set(film.id); но выдаёт ошибку
-    // можешь пожалуйста написать как, а то нашёл только примеры на переменных
-    // ещё одна проблема постер открывается не через board.js, а через этот файл
-    // как понимаю эту проблему можно решить передав film.id через _renderFilm()
-    // при вызове этого файла в конструктор передать значение film.id и использовать его в сеттере уже
-    // например const filmPresenter = new FilmPresenter(this._filmListContainer, this._handleViewAction, film.id);
-    // и уже с условием if (this._activeFilmId !== null) вызвать отрисовку попапа при отрисовке карточки фильма в init
-
     document.addEventListener('keydown', this._escKeyDownHandler);
     this._popupComponent.setClosePopupButtonHandler(() => {
       this._removePopup();
