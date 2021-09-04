@@ -116,16 +116,12 @@ class Board {
     this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
 
     render(this._filmListComponent, this._sortComponent, RenderPosition.AFTERBEGIN);
-    console.log(this._activeFilm);
   }
 
   _renderFilm(film) {
     const filmPresenter = new FilmPresenter(this._filmListContainer, this._handleViewAction, this._handleActiveFilm);
     filmPresenter.init(film);
     this._filmPresenter.set(film.id, filmPresenter);
-    if (this._activeFilm) {
-      new FilmPresenter(this._filmListContainer, this._handleViewAction, this._handleActiveFilm);
-    }
   }
 
   _handleActiveFilm(film) {
