@@ -1,11 +1,14 @@
 import FilmCardView from '../view/card.js';
 import PopupTemplateView from '../view/popup.js';
 import {render, RenderPosition, remove, replace} from '../utils/render.js';
-import {KeyboardKey} from '../const.js';
+import {KeyboardKey, UserAction, UpdateType, EventType} from '../const.js';
+import CommentItem from '../view/popup-comment.js';
+import PopupNewCommentForm from '../view/popup-new-comment.js';
 
 class Film {
-  constructor(filmCardContainer, changeData) {
+  constructor(filmCardContainer, changeData, setActiveFilm) {
     this._filmCardContainer = filmCardContainer;
+    this._setActiveFilm = setActiveFilm;
     this._changeData = changeData;
     this._popupComponent = null;
     this._filmCardComponent = null;
@@ -49,7 +52,7 @@ class Film {
 
     if (this._bodyContainer.contains(prevFilmPopupComponent.getElement())) {
       replace(this._popupComponent, prevFilmPopupComponent);
-    }
+    } // эти условия не работают, из-за этого попап не перерисовывается
 
     remove(prevFilmComponent);
     remove(prevFilmPopupComponent);
@@ -64,57 +67,69 @@ class Film {
     // Метод создания попапа
     document.querySelector('body').classList.add('hide-overflow');
     document.querySelector('body').appendChild(this._popupComponent.getElement());
+    this._setActiveFilm(this._film);
+    this._renderComments();
+    render(this._popupComponent.getElement().querySelector('.film-details__comments-wrap'), new PopupNewCommentForm(this._film), RenderPosition.BEFOREEND);
   }
 
   _removePopup() {
     // Метод удаления попапа
     document.querySelector('body').removeChild(this._popupComponent.getElement());
     document.querySelector('body').classList.remove('hide-overflow');
+    remove(this._popupComponent);
+    this._setActiveFilm(null);
   }
 
+  _renderComments() {
+    this._comments = this._film.comments;
+    // this._commentsNumber.textContent = this._comments.length;
+    this._comments.forEach((commentItem) => {
+      const comment = new CommentItem(commentItem);
+      // comment.setCommentDeleteCallback(this._handleCommentDeletion);
+      render(this._popupComponent.getElement().querySelector('.film-details__comments-list'), comment, RenderPosition.BEFOREEND);
+      // this._shownComments.set(commentItem.id, comment.getElement());
+    });
+  }
 
   _escKeyDownHandler(evt) {
     if (evt.key === KeyboardKey.ESCAPE) {
       evt.preventDefault();
       this._removePopup();
+      this._setActiveFilm(null);
       document.removeEventListener('keydown', this._escKeyDownHandler);
     }
   }
 
   _handleFavoriteClick() {
-    this._changeData(
-      Object.assign(
-        {},
-        this._film,
-        {
-          isFavorite: !this._film.isFavorite,
-        },
-      ),
-    );
+    this._changeEventButtons(EventType.FAVORITE);
+  }
+
+  _changeEventButtons(eventType) {
+    const copyFilm = {...this._film};
+    const filmUserDetails = copyFilm.userDetails;
+    switch (eventType) {
+      case EventType.FAVORITE: {
+        filmUserDetails.favorite = !this._film.userDetails.favorite;
+        break;
+      }
+      case EventType.WATCHLIST: {
+        filmUserDetails.watchlist = !this._film.userDetails.watchlist;
+        break;
+      }
+      case EventType.HISTORY: {
+        filmUserDetails.alreadyWatched = !this._film.userDetails.alreadyWatched;
+        break;
+      }
+    }
+    this._changeData(UserAction.UPDATE_FILM, UpdateType.MINOR, copyFilm);
   }
 
   _handleWatchListClick() {
-    this._changeData(
-      Object.assign(
-        {},
-        this._film,
-        {
-          isInWatchlist: !this._film.isInWatchlist,
-        },
-      ),
-    );
+    this._changeEventButtons('WatchList');
   }
 
   _handleAsWatchedClick() {
-    this._changeData(
-      Object.assign(
-        {},
-        this._film,
-        {
-          isWatched: !this._film.isWatched,
-        },
-      ),
-    );
+    this._changeEventButtons('History');
   }
 
   _hidePopup() {
