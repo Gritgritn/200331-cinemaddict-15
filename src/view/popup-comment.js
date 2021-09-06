@@ -1,5 +1,5 @@
 import {EmotionsImages} from '../mock/dataset';
-import Abstract from './abstract';
+import SmartView from './smart.js';
 import {relativeDate} from '../utils/common.js';
 
 
@@ -24,7 +24,7 @@ const getCommentItemHtml = (commentDataItem) => {
   `;
 };
 
-class CommentItem extends Abstract {
+class CommentItem extends SmartView {
   constructor(commentDataItem) {
     super();
     this._commentdataItem = commentDataItem;

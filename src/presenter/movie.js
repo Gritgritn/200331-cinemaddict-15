@@ -12,6 +12,7 @@ class Film {
     this._changeData = changeData;
     this._popupComponent = null;
     this._filmCardComponent = null;
+    this._newCommentForm = null;
     this._openPopupClickHandler = this._openPopupClickHandler.bind(this);
     this._escKeyDownHandler = this._escKeyDownHandler.bind(this);
     this._removePopup = this._removePopup.bind(this);
@@ -26,6 +27,9 @@ class Film {
     const prevFilmPopupComponent = this._popupComponent;
     this._filmCardComponent = new FilmCardView(film);
     this._popupComponent = new PopupTemplateView(film);
+    this._newCommentForm = new PopupNewCommentForm(this._film);
+    this._renderComments();
+    render(this._popupComponent.getElement().querySelector('.film-details__comments-wrap'), this._newCommentForm, RenderPosition.BEFOREEND);
     this._bodyContainer = document.querySelector('body');
     this._filmCardComponent.setPosterClickHandler(this._openPopupClickHandler);
     this._filmCardComponent.setFilmNameClickHandler(this._openPopupClickHandler);
@@ -53,7 +57,6 @@ class Film {
     if (this._bodyContainer.contains(prevFilmPopupComponent.getElement())) {
       replace(this._popupComponent, prevFilmPopupComponent);
     } // эти условия не работают, из-за этого попап не перерисовывается
-
     remove(prevFilmComponent);
     remove(prevFilmPopupComponent);
   }
@@ -68,14 +71,18 @@ class Film {
     document.querySelector('body').classList.add('hide-overflow');
     document.querySelector('body').appendChild(this._popupComponent.getElement());
     this._setActiveFilm(this._film);
+    // сделать условие удаляющее повторную отрисовку из инита
+    if(!this._newCommentForm) {
     this._renderComments();
     render(this._popupComponent.getElement().querySelector('.film-details__comments-wrap'), new PopupNewCommentForm(this._film), RenderPosition.BEFOREEND);
+    }
   }
 
   _removePopup() {
     // Метод удаления попапа
     document.querySelector('body').removeChild(this._popupComponent.getElement());
     document.querySelector('body').classList.remove('hide-overflow');
+    this._newCommentForm = null;
     remove(this._popupComponent);
     this._setActiveFilm(null);
   }
@@ -100,10 +107,6 @@ class Film {
     }
   }
 
-  _handleFavoriteClick() {
-    this._changeEventButtons(EventType.FAVORITE);
-  }
-
   _changeEventButtons(eventType) {
     const copyFilm = {...this._film};
     const filmUserDetails = copyFilm.userDetails;
@@ -121,7 +124,11 @@ class Film {
         break;
       }
     }
-    this._changeData(UserAction.UPDATE_FILM, UpdateType.MINOR, copyFilm);
+    this._changeData(UserAction.UPDATE_FILM, UpdateType.PATCH, copyFilm);
+  }
+
+  _handleFavoriteClick() {
+    this._changeEventButtons(EventType.FAVORITE);
   }
 
   _handleWatchListClick() {
