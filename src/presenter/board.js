@@ -172,6 +172,7 @@ class Board {
   destroy() {
     this._filmsModel.removeObserver(this._handleModelEvent);
     this._filterModel.removeObserver(this._handleModelEvent);
+    remove(this._filmListComponent);
     remove(this._sortComponent);
     this._filmPresenter.forEach((presenter) => presenter.destroy());
     this._filmPresenter.clear();
@@ -182,13 +183,6 @@ class Board {
     }
 
   }
-
-  // _clearFilmList() {
-  //   this._filmPresenter.forEach((presenter) => presenter.destroy());
-  //   this._filmPresenter.clear();
-  //   this._renderedFilmCount = FILM_COUNT_PER_STEP;
-  //   remove(this._showMoreBtnComponent);
-  // }
 
   _clearBoard({resetRenderedFilmCount = false, resetSortType = false} = {}) {
     const filmCount = this._getFilms().length;

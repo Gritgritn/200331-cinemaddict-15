@@ -38,6 +38,8 @@ class Filter {
   }
 
   _handleStatisticClick() {
+    // this._activeItem = NavigationItem.STATISTIC;
+
     this._renderScreen(Screen.STATISTIC);
   }
 

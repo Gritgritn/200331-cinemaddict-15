@@ -124,7 +124,7 @@ class Film {
         break;
       }
     }
-    this._changeData(UserAction.UPDATE_FILM, UpdateType.PATCH, copyFilm);
+    this._changeData(UserAction.UPDATE_FILM, UpdateType.MINOR, copyFilm);
   }
 
   _handleFavoriteClick() {

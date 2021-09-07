@@ -22,6 +22,7 @@ const filtersPresenter = new FiltersPresenter(siteMainElement, filterModel, film
 const filmPresenter = new BoardPresenter(siteMainElement, filmsModel, filterModel);
 
 const statisticScreenPresenter = new StatisticScreenPresenter(siteMainElement);
+
 let currentScreen = null;
 function renderScreen (screen) {
   if (screen === currentScreen) {
@@ -37,7 +38,6 @@ function renderScreen (screen) {
       break;
 
     case Screen.STATISTIC:
-      alert(2);
       filmPresenter.destroy();
       statisticScreenPresenter.init();
       break;

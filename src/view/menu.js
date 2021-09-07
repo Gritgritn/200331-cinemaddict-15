@@ -19,7 +19,7 @@ const createFilterTemplate = (filterItems, currentFilterType) => {
     <div class="main-navigation__items">
     ${filterItemsTemplate}
     </div>
-    <a href="#stats" class="main-navigation__additional ${isFilterActive(isStatsChecked)}" data-sort-type="stats">Stats</a>
+    <a href="#stats" class="main-navigation__additional ${isFilterActive(isStatsChecked)}">Stats</a>
     </nav>`;
 };
 
