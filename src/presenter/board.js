@@ -20,7 +20,7 @@ class Board {
     this._renderedFilmCount = FILM_COUNT_PER_STEP;
     this._filmPresenter = new Map();
     this._filterType = FilterType.ALL;
-    this._currentSortType = SortType.DEFAULT;
+
 
     this._filmListMain = new FilmListView();
     this._filmListComponent = new FilmBoardTemplateView();
@@ -41,6 +41,7 @@ class Board {
   init() {
     this._filmsModel.addObserver(this._handleModelEvent);
     this._filterModel.addObserver(this._handleModelEvent);
+    this._currentSortType = SortType.DEFAULT;
 
     render(this._filmListBoard, this._filmListComponent, RenderPosition.BEFOREEND);
     render(this._filmListComponent, this._filmListMain, RenderPosition.BEFOREEND);

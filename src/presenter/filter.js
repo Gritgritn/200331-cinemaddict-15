@@ -11,6 +11,7 @@ class Filter {
     this._renderScreen = renderScreen;
 
     this._filterComponent = null;
+    this._activeItem = null;
 
     this._handleModelEvent = this._handleModelEvent.bind(this);
     this._handleFilterTypeChange = this._handleFilterTypeChange.bind(this);
@@ -25,7 +26,7 @@ class Filter {
     const prevFilterComponent = this._filterComponent;
 
 
-    this._filterComponent = new MenuTemplateView(filters, this._filterModel.getFilter());
+    this._filterComponent = new MenuTemplateView(filters, this._filterModel.getFilter(), this._activeItem);
     this._filterComponent.setStatisticClickHandler(this._handleStatisticClick);
     this._filterComponent.setFilterTypeChangeHandler(this._handleFilterTypeChange);
     if (prevFilterComponent === null) {
@@ -38,8 +39,8 @@ class Filter {
   }
 
   _handleStatisticClick() {
-    // this._activeItem = NavigationItem.STATISTIC;
-
+    this._activeItem = 'stats';
+    this.init();
     this._renderScreen(Screen.STATISTIC);
   }
 
@@ -48,10 +49,8 @@ class Filter {
   }
 
   _handleFilterTypeChange(filterType) {
-    if (this._filterModel.getFilter() === filterType) {
-      return;
-    }
-
+    this._activeItem = '';
+    this.init();
     this._filterModel.setFilter(UpdateType.MAJOR, filterType);
 
     this._renderScreen(Screen.FILMS);
