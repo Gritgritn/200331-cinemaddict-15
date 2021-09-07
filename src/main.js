@@ -6,6 +6,8 @@ import {render, RenderPosition} from './utils/render.js';
 import BoardPresenter from './presenter/board.js';
 import FiltersPresenter from './presenter/filter.js';
 import {moviesData} from './mock/newfilm';
+import {Screen} from './const';
+import StatisticScreenPresenter from './presenter/statisctic-screen.js';
 
 const films = moviesData;
 const filmsModel = new FilmsModel();
@@ -16,12 +18,36 @@ const siteMainElement = document.querySelector('.main');
 const siteFooterElement = document.querySelector('.footer');
 
 const filterModel = new FilterModel();
-const filtersPresenter = new FiltersPresenter(siteMainElement, filterModel, filmsModel);
+const filtersPresenter = new FiltersPresenter(siteMainElement, filterModel, filmsModel, renderScreen);
 const filmPresenter = new BoardPresenter(siteMainElement, filmsModel, filterModel);
+
+const statisticScreenPresenter = new StatisticScreenPresenter(siteMainElement);
+let currentScreen = null;
+function renderScreen (screen) {
+  if (screen === currentScreen) {
+    return;
+  }
+
+  currentScreen = screen;
+
+  switch (screen) {
+    case Screen.FILMS:
+      statisticScreenPresenter.destroy();
+      filmPresenter.init();
+      break;
+
+    case Screen.STATISTIC:
+      alert(2);
+      filmPresenter.destroy();
+      statisticScreenPresenter.init();
+      break;
+  }
+};
 
 render(siteHeaderElement, new UserTitleView(), RenderPosition.BEFOREEND);
 
 filtersPresenter.init();
-filmPresenter.init();
+
+renderScreen(Screen.FILMS);
 
 render(siteFooterElement, new FooterStatisticView(), RenderPosition.BEFOREEND);

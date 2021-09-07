@@ -11,6 +11,7 @@ const createFilterItemTemplate = (filter, currentFilterType) => {
 };
 
 const createFilterTemplate = (filterItems, currentFilterType) => {
+  const isStatsChecked = currentFilterType === 'stats';
   const filterItemsTemplate = filterItems
     .map((filter) => createFilterItemTemplate(filter, currentFilterType))
     .join('');
@@ -18,7 +19,7 @@ const createFilterTemplate = (filterItems, currentFilterType) => {
     <div class="main-navigation__items">
     ${filterItemsTemplate}
     </div>
-    <a href="#stats" class="main-navigation__additional">Stats</a>
+    <a href="#stats" class="main-navigation__additional ${isFilterActive(isStatsChecked)}" data-sort-type="stats">Stats</a>
     </nav>`;
 };
 
@@ -29,6 +30,18 @@ class MenuTemplate extends AbstractView {
     this._currentFilter = currentFilterType;
 
     this._filterTypeChangeHandler = this._filterTypeChangeHandler.bind(this);
+    this._statisticClickHandler = this._statisticClickHandler.bind(this);
+    // this._switchToStatsCallback = this._switchToStatsCallback.bind(this);
+  }
+
+  _statisticClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.statisticClick();
+  }
+
+  setStatisticClickHandler(callback) {
+    this._callback.statisticClick = callback;
+    this.getElement().querySelector(`.${'main-navigation__additional'}`).addEventListener('click', this._statisticClickHandler);
   }
 
   getTemplate() {
@@ -36,18 +49,18 @@ class MenuTemplate extends AbstractView {
   }
 
   _filterTypeChangeHandler(evt) {
-    evt.preventDefault();
     const hasAttr = evt.target.hasAttribute(SORT_TYPE_DATA_ATTR);
     if (!hasAttr) {
       return;
     }
+    evt.preventDefault();
 
-    this._callback.filterTypeChange(evt.target.getAttribute(SORT_TYPE_DATA_ATTR)); // Поменял evt.target.value na id
+    this._callback.filterTypeChange(evt.target.getAttribute(SORT_TYPE_DATA_ATTR));
   }
 
   setFilterTypeChangeHandler(callback) {
     this._callback.filterTypeChange = callback;
-    this.getElement().addEventListener('click', this._filterTypeChangeHandler); // поменял change на click
+    this.getElement().addEventListener('click', this._filterTypeChangeHandler);
   }
 }
 

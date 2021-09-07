@@ -6,6 +6,11 @@ const SortType = {
   RATE: 'date-up',
 };
 
+const Screen = {
+  FILMS: 'FILMS',
+  STATISTIC: 'STATISTIC',
+};
+
 const EventType = {
   FAVORITE: 'Favorite',
   WATCHLIST: 'WatchList',
@@ -25,6 +30,7 @@ const FilterType = {
   WATCHLIST: 'Watchlist',
   HISTORY: 'History',
   FAVORITES: 'Favorites',
+  STATS: 'stats',
 };
 
 const UpdateType = {
@@ -33,5 +39,5 @@ const UpdateType = {
   MAJOR: 'MAJOR',
 };
 
-export {EMOTIONS, SortType, KeyboardKey, UserAction, UpdateType, FilterType, EventType};
+export {EMOTIONS, SortType, KeyboardKey, UserAction, UpdateType, FilterType, EventType, Screen};
 export default KeyboardKey;

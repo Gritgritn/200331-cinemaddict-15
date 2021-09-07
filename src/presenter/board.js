@@ -36,11 +36,12 @@ class Board {
     this._handleActiveFilm = this._handleActiveFilm.bind(this);
 
     this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
-    this._filmsModel.addObserver(this._handleModelEvent);
-    this._filterModel.addObserver(this._handleModelEvent);
   }
 
   init() {
+    this._filmsModel.addObserver(this._handleModelEvent);
+    this._filterModel.addObserver(this._handleModelEvent);
+
     render(this._filmListBoard, this._filmListComponent, RenderPosition.BEFOREEND);
     render(this._filmListComponent, this._filmListMain, RenderPosition.BEFOREEND);
 
@@ -168,12 +169,26 @@ class Board {
     }
   }
 
-  _clearFilmList() {
+  destroy() {
+    this._filmsModel.removeObserver(this._handleModelEvent);
+    this._filterModel.removeObserver(this._handleModelEvent);
+    remove(this._sortComponent);
     this._filmPresenter.forEach((presenter) => presenter.destroy());
     this._filmPresenter.clear();
-    this._renderedFilmCount = FILM_COUNT_PER_STEP;
-    remove(this._showMoreBtnComponent);
+
+
+    if (this._showMoreBtnComponent) {
+      remove(this._showMoreBtnComponent);
+    }
+
   }
+
+  // _clearFilmList() {
+  //   this._filmPresenter.forEach((presenter) => presenter.destroy());
+  //   this._filmPresenter.clear();
+  //   this._renderedFilmCount = FILM_COUNT_PER_STEP;
+  //   remove(this._showMoreBtnComponent);
+  // }
 
   _clearBoard({resetRenderedFilmCount = false, resetSortType = false} = {}) {
     const filmCount = this._getFilms().length;
