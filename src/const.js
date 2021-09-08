@@ -39,5 +39,12 @@ const UpdateType = {
   MAJOR: 'MAJOR',
 };
 
-export {EMOTIONS, SortType, KeyboardKey, UserAction, UpdateType, FilterType, EventType, Screen};
+const Rank = {
+  NONE: 'NONE',
+  NOVICE: 'NOVICE',
+  FAN: 'FAN',
+  MOVIE_BUFF: 'MOVIE_BUFF',
+};
+
+export {EMOTIONS, SortType, KeyboardKey, UserAction, UpdateType, FilterType, EventType, Screen, Rank};
 export default KeyboardKey;

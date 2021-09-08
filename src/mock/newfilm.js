@@ -46,7 +46,7 @@ const MAX_AGE_RATING = 100;
 const MIN_RUN_TIME = 60;
 const MAX_RUN_TIME = 240;
 
-const NUMBER_OF_MOVIES = 16;
+const NUMBER_OF_MOVIES = 25;
 
 const getRandomFilmData = (numberOfMovies) => {
   const films = [];

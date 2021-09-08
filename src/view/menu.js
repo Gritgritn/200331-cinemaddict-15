@@ -33,7 +33,6 @@ class MenuTemplate extends AbstractView {
 
     this._filterTypeChangeHandler = this._filterTypeChangeHandler.bind(this);
     this._statisticClickHandler = this._statisticClickHandler.bind(this);
-    // this._switchToStatsCallback = this._switchToStatsCallback.bind(this);
   }
 
   _statisticClickHandler(evt) {
