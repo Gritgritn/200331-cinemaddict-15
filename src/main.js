@@ -29,7 +29,7 @@ const profilePresenter = new ProfilePresenter(siteHeaderElement, rankModel, film
 const filtersPresenter = new FiltersPresenter(siteMainElement, filterModel, filmsModel, renderScreen);
 const filmPresenter = new BoardPresenter(siteMainElement, filmsModel, filterModel);
 
-const statisticScreenPresenter = new StatisticScreenPresenter(siteMainElement);
+const statisticScreenPresenter = new StatisticScreenPresenter(siteMainElement, rankModel, filmsModel);
 
 let currentScreen = null;
 function renderScreen (screen) {

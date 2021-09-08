@@ -36,6 +36,28 @@ const getRandomCommentsData = (numberOfComments) => {
   return comments;
 };
 
+const getRandomItemFromArray = (items) => {
+  const index = getRandomInteger(0, items.length - 1);
+  return items[index];
+};
+
+const getUniqueItemsFromArray = (items, maxUniqueAmount, minUniqueAmount = 1) => {
+  const uniqueAmount = getRandomInteger(minUniqueAmount, maxUniqueAmount);
+  const itemsSet = new Set();
+  while (itemsSet.size < uniqueAmount) {
+    itemsSet.add(getRandomItemFromArray(items));
+  }
+  return Array.from(itemsSet);
+};
+
+const generateWriters = () => getUniqueItemsFromArray(Writers, 3);
+const generateActors = () => getUniqueItemsFromArray(Actors, 4, 1);
+const generateGenres = () => {
+  const maxAmount = getRandomInteger(1, 3);
+  return getUniqueItemsFromArray(Genres, maxAmount);
+};
+
+
 const MIN_COMMENTS_NUMBER = 0;
 const MAX_COMMENTS_NUMBER = 5;
 const MIN_RATING = 0;
@@ -46,7 +68,7 @@ const MAX_AGE_RATING = 100;
 const MIN_RUN_TIME = 60;
 const MAX_RUN_TIME = 240;
 
-const NUMBER_OF_MOVIES = 25;
+const NUMBER_OF_MOVIES = 15;
 
 const getRandomFilmData = (numberOfMovies) => {
   const films = [];
@@ -61,14 +83,14 @@ const getRandomFilmData = (numberOfMovies) => {
         poster: getRandomItem(Posters),
         ageRating: getRandomInteger(MIN_AGE_RATING, MAX_AGE_RATING),
         director: getRandomItem(FilmsDirectors),
-        writers: getRandomSubArray(Writers).join(', '),
-        actors: getRandomSubArray(Actors).join(', '),
+        writers: generateWriters(),
+        actors: generateActors(),
         release: {
           date: getRandomDate(),
           releaseCountry: getRandomItem(ReleaseCountries),
         },
         runtime: getRandomInteger(MIN_RUN_TIME, MAX_RUN_TIME),
-        genre: getRandomSubArray(Genres).join(' '),
+        genre: generateGenres(),
         description: getRandomDescription(Descriptions),
       },
       userDetails: {

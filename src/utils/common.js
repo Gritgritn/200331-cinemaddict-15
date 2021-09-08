@@ -8,6 +8,8 @@ const getRandomInteger = (a = 0, b = 1) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
+const formatItems = (items) => items.join(', ');
+
 const getDurationFromMinutes = (durationInMinutes) => {
   const lasting = dayjs.duration(durationInMinutes, 'minutes');
   return `${lasting.hours()}h ${lasting.minutes()}m`;
@@ -30,4 +32,4 @@ const sortByDate = (filmA, filmB) => filmB.filmInfo.release.date - filmA.filmInf
 
 const sortByRating = (filmA ,filmB) => filmB.filmInfo.totalRating - filmA.filmInfo.totalRating;
 
-export {getRandomInteger, updateItem, sortByDate, sortByRating, relativeDate, getDurationFromMinutes, formatDate, getShortDescription};
+export {formatItems, getRandomInteger, updateItem, sortByDate, sortByRating, relativeDate, getDurationFromMinutes, formatDate, getShortDescription};

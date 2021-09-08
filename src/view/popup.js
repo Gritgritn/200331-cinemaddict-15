@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
+import {formatItems} from '../utils/common.js';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import SmartView from './smart.js';
-// import {isCtrlEnterEvent} from '../utils/render.js';
 
 dayjs.extend(relativeTime);
 
@@ -14,7 +14,7 @@ const CreatePopupElement = (film) => {
   };
   const releaseDate= formatDate(filmInfo.release.date,'DD MMMM YYYY');
   const runtime = getDurationFromMinutes(filmInfo.runtime) || '';
-  const genres = filmInfo.genre.split(' ').length > 1 ? 'Gengres' : 'Genre';
+  const genresTitle = filmInfo.genre.length > 1 ? 'Gengres' : 'Genre';
 
   return `<section class="film-details" data-id="${id}">
   <form class="film-details__inner" action="" method="get">
@@ -48,11 +48,11 @@ const CreatePopupElement = (film) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Writers</td>
-              <td class="film-details__cell">${filmInfo.writers}</td>
+              <td class="film-details__cell">${formatItems(filmInfo.writers)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Actors</td>
-              <td class="film-details__cell">${filmInfo.actors}</td>
+              <td class="film-details__cell">${formatItems(filmInfo.actors)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
@@ -67,9 +67,9 @@ const CreatePopupElement = (film) => {
               <td class="film-details__cell">${filmInfo.release.releaseCountry}</td>
             </tr>
             <tr class="film-details__row">
-              <td class="film-details__term">${genres}</td>
+              <td class="film-details__term">${genresTitle}</td>
               <td class="film-details__cell">
-                <span class="film-details__genre">${filmInfo.genre}</span>
+                <span class="film-details__genre">${formatItems(filmInfo.genre)}</span>
             </tr>
           </table>
 
