@@ -1,3 +1,5 @@
+import { getTotalRuntime } from './common.js';
+
 const getGenresStatistic = (watchedFilms) => {
   const genresStatistic = new Map();
   watchedFilms.forEach( ({ filmInfo }) => {
@@ -22,22 +24,13 @@ const getGenresStatistic = (watchedFilms) => {
 
 const getTopGenre = ({ genre }) => genre.length ? genre[0] : null;
 
-const getTotalDuration = (totalMinutesDuration) => {
-  const MINUTES_IN_HOUR = 60;
-
-  const hour = Math.floor(totalMinutesDuration / 60);
-  const minute = totalMinutesDuration - hour * MINUTES_IN_HOUR;
-
-  return { hour, minute };
-};
-
 const getWatchedStatisticData = (watchedFilms) => {
   const totalMinutesDuration = watchedFilms.reduce((duration, film) => duration += film.filmInfo.runtime, 0);
   const genresStatistic = getGenresStatistic(watchedFilms);
 
   return {
     totalAmount: watchedFilms.length,
-    totalDuration: getTotalDuration(totalMinutesDuration),
+    totalDuration: getTotalRuntime(totalMinutesDuration),
     genresStatistic: genresStatistic,
     topGenre: genresStatistic && getTopGenre(genresStatistic),
   };

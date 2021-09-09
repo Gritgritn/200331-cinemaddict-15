@@ -100,7 +100,12 @@ export default class StatisticView extends SmartView {
 
   updateElement() {
     super.updateElement();
+    this._focusActiveFilter();
     this._renderChart(this._data.genresStatistic);
+  }
+
+  _focusActiveFilter() {
+    this.getElement().querySelector('.statistic__filters-input:checked').focus();
   }
 
   _periodChangeHandler(evt) {

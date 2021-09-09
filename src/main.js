@@ -1,11 +1,10 @@
-import FooterStatisticView from './view/footerstatistic.js';
 import { getRank } from './utils/profile.js';
 import { filter } from './utils/filters.js';
 import RankModel from './model/rank.js';
 import ProfilePresenter from './presenter/profile.js';
 import FilmsModel from './model/movie.js';
 import FilterModel from './model/filter.js';
-import {render, RenderPosition} from './utils/render.js';
+import FooterStatisticPresenter from './presenter/footer-statistics.js';
 import BoardPresenter from './presenter/board.js';
 import FiltersPresenter from './presenter/filter.js';
 import {moviesData} from './mock/newfilm';
@@ -28,6 +27,7 @@ const filterModel = new FilterModel();
 const profilePresenter = new ProfilePresenter(siteHeaderElement, rankModel, filmsModel);
 const filtersPresenter = new FiltersPresenter(siteMainElement, filterModel, filmsModel, renderScreen);
 const filmPresenter = new BoardPresenter(siteMainElement, filmsModel, filterModel);
+const footerStatisticPresenter = new FooterStatisticPresenter(siteFooterElement);
 
 const statisticScreenPresenter = new StatisticScreenPresenter(siteMainElement, rankModel, filmsModel);
 
@@ -57,4 +57,4 @@ filtersPresenter.init();
 
 renderScreen(Screen.FILMS);
 
-render(siteFooterElement, new FooterStatisticView(), RenderPosition.BEFOREEND);
+footerStatisticPresenter.init(films.length);

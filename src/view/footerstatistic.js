@@ -1,16 +1,22 @@
 import {getRandomInteger} from '../utils/common.js';
 import AbstractView from './abstract.js';
 
-const generalMovieCount = getRandomInteger(110110, 150000);
-const createFooterStatisticTemplate = () => (
+// const generalMovieCount = getRandomInteger(110110, 150000);
+const createFooterStatisticTemplate = (filmsAmount) => (
   `<section class="footer__statistics">
-  <p>${generalMovieCount} movies inside</p>
+  <p>${filmsAmount} movies inside</p>
   </section>`
 );
 
 class FooterStatistic extends AbstractView {
+  constructor(filmsAmount = 0) {
+    super();
+
+    this._filmsAmount = filmsAmount;
+  }
+
   getTemplate() {
-    return createFooterStatisticTemplate();
+    return createFooterStatisticTemplate(this._filmsAmount);
   }
 }
 
