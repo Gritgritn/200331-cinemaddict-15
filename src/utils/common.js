@@ -8,6 +8,23 @@ const getRandomInteger = (a = 0, b = 1) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
+const isDateInPeriod = (date, period) => {
+  period = period === 'today' ? 'day' : period;
+
+  const limitDate = dayjs().subtract(1, period);
+  return dayjs(date).isAfter(limitDate);
+};
+
+const isFilmInWhatcingPeriod = (film, period) => {
+  if (period === 'all-time') {
+    return true;
+  }
+
+  const { watchingDate } = film.userDetails;
+
+  return isDateInPeriod(watchingDate, period);
+};
+
 const formatItems = (items) => items.join(', ');
 
 const getDurationFromMinutes = (durationInMinutes) => {
@@ -32,4 +49,4 @@ const sortByDate = (filmA, filmB) => filmB.filmInfo.release.date - filmA.filmInf
 
 const sortByRating = (filmA ,filmB) => filmB.filmInfo.totalRating - filmA.filmInfo.totalRating;
 
-export {formatItems, getRandomInteger, updateItem, sortByDate, sortByRating, relativeDate, getDurationFromMinutes, formatDate, getShortDescription};
+export {isFilmInWhatcingPeriod, formatItems, getRandomInteger, updateItem, sortByDate, sortByRating, relativeDate, getDurationFromMinutes, formatDate, getShortDescription};

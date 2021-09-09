@@ -8,6 +8,7 @@ dayjs.extend(relativeTime);
 dayjs.extend(duration);
 
 const getRandomDate = () => dayjs().subtract(getRandomInteger(1, 40000), 'day');
+const getRandomWatchingDate = () => dayjs().subtract(getRandomInteger(1, 500), 'day');
 const getRandomBoolean = () => Boolean(getRandomInteger(0, 1));
 const getRandomDescription = (arrayOfStrings) => arrayOfStrings.slice(0, getRandomInteger(1, 5)).join(' ');
 const getRandomFloat = (min, max, decimals) => {
@@ -96,7 +97,7 @@ const getRandomFilmData = (numberOfMovies) => {
       userDetails: {
         watchlist: getRandomBoolean(),
         alreadyWatched: getRandomBoolean(),
-        watchingDate: getRandomDate(),
+        watchingDate: getRandomWatchingDate(),
         favorite: getRandomBoolean(),
       },
     });

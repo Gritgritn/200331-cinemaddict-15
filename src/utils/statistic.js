@@ -1,9 +1,8 @@
 const getGenresStatistic = (watchedFilms) => {
   const genresStatistic = new Map();
   watchedFilms.forEach( ({ filmInfo }) => {
-    const { genre } = filmInfo;
-      genre.forEach((genreItem) => {
-        const count = genresStatistic.has(genreItem) ? genresStatistic.get(genreItem) : 1;
+    filmInfo.genre.forEach((genreItem) => {
+        const count = genresStatistic.has(genreItem) ? genresStatistic.get(genreItem) : 0;
         genresStatistic.set(genreItem, count + 1);
       });
   });
@@ -18,7 +17,7 @@ const getGenresStatistic = (watchedFilms) => {
       counts.push(count);
     });
 
-  return { genre, counts };
+    return genre.length ? { genre, counts } : null;
 };
 
 const getTopGenre = ({ genre }) => genre.length ? genre[0] : null;
@@ -32,7 +31,7 @@ const getTotalDuration = (totalMinutesDuration) => {
   return { hour, minute };
 };
 
-export const getWatchedStatisticData = (watchedFilms) => {
+const getWatchedStatisticData = (watchedFilms) => {
   const totalMinutesDuration = watchedFilms.reduce((duration, film) => duration += film.filmInfo.runtime, 0);
   const genresStatistic = getGenresStatistic(watchedFilms);
 
@@ -40,6 +39,12 @@ export const getWatchedStatisticData = (watchedFilms) => {
     totalAmount: watchedFilms.length,
     totalDuration: getTotalDuration(totalMinutesDuration),
     genresStatistic: genresStatistic,
-    topGenre: getTopGenre(genresStatistic),
+    topGenre: genresStatistic && getTopGenre(genresStatistic),
   };
 };
+
+const isFilmInWatchedPeriod = (film, period) => {
+
+};
+
+export {getWatchedStatisticData, isFilmInWatchedPeriod};
