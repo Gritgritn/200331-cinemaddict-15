@@ -1,5 +1,6 @@
 import {CommentAuthors, Comments, Emotions} from './dataset';
 import dayjs from 'dayjs';
+import { nanoid } from 'nanoid';
 import {getRandomInteger} from '../utils/common.js';
 import {Actors, Descriptions, FilmsDirectors, FilmsTitles, Genres, Posters, ReleaseCountries, Writers} from './dataset';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
@@ -7,6 +8,7 @@ import duration from 'dayjs/plugin/duration.js';
 dayjs.extend(relativeTime);
 dayjs.extend(duration);
 
+const comments = new Map();
 const getRandomDate = () => dayjs().subtract(getRandomInteger(1, 40000), 'day');
 const getRandomWatchingDate = () => dayjs().subtract(getRandomInteger(1, 500), 'day');
 const getRandomBoolean = () => Boolean(getRandomInteger(0, 1));
@@ -37,11 +39,78 @@ const getRandomCommentsData = (numberOfComments) => {
   return comments;
 };
 
+const generateCommentDate = () => {
+  const commentDayShift = getRandomInteger(0, 180);
+  const commentMinuteShift = getRandomInteger(0, 700);
+  return dayjs().subtract(commentDayShift, 'day').subtract(commentMinuteShift, 'minute').toDate();
+};
+
+const generateComment = () => {
+  const comment = {
+    id: nanoid(),
+    text: getRandomItem(Comments),
+    author: getRandomItem(CommentAuthors),
+    emotion: getRandomItem(Emotions),
+    date: generateCommentDate(),
+  };
+
+  comments.set(comment.id, comment);
+
+  return comment;
+};
+
+const getCommentById = (id) => comments.get(id);
+
+const getCommentsByIds = (ids) => ids.map((id) => getCommentById(id));
+
+const createComment = ({ text, emotion }) => {
+  if (!text || !emotion) {
+    throw new Error('Comment invalid');
+  }
+
+  const newComment = {
+    text,
+    emotion,
+    author: 'Me',
+    id: nanoid(),
+    date: new Date(),
+  };
+
+  comments.set(newComment.id, newComment);
+
+  return newComment;
+};
+
+const deleteComment = (commentId) => {
+  comments.delete(commentId);
+};
+
+const generateComments = () => {
+  // с вероятностью 25% комментарии отсутствуют
+  if (getRandomBoolean() && getRandomBoolean()) {
+    return [];
+  }
+
+  const commentsAmount = getRandomInteger(1, 5);
+  const comments = [];
+
+  for (let i = 0; i < commentsAmount; i++) {
+    const comment = generateComment();
+    comments.push(comment.id);
+  }
+
+  return comments;
+};
+
+const getAllFilms = () => Array.from(films.values());
+
+const getFilmComments = (id) => getCommentsByIds(films.get(id).comments);
+
+
 const getRandomItemFromArray = (items) => {
   const index = getRandomInteger(0, items.length - 1);
   return items[index];
 };
-
 const getUniqueItemsFromArray = (items, maxUniqueAmount, minUniqueAmount = 1) => {
   const uniqueAmount = getRandomInteger(minUniqueAmount, maxUniqueAmount);
   const itemsSet = new Set();
@@ -50,7 +119,6 @@ const getUniqueItemsFromArray = (items, maxUniqueAmount, minUniqueAmount = 1) =>
   }
   return Array.from(itemsSet);
 };
-
 const generateWriters = () => getUniqueItemsFromArray(Writers, 3);
 const generateActors = () => getUniqueItemsFromArray(Actors, 4, 1);
 const generateGenres = () => {
@@ -76,7 +144,7 @@ const getRandomFilmData = (numberOfMovies) => {
   for (let i = 0; i < numberOfMovies; i++)  {
     films.push({
       id: i,
-      comments: getRandomCommentsData(getRandomInteger(MIN_COMMENTS_NUMBER, MAX_COMMENTS_NUMBER)),
+      comments: generateComments(),
       filmInfo: {
         title: getRandomItem(FilmsTitles),
         alternativeTitle: getRandomItem(FilmsTitles),
@@ -107,4 +175,4 @@ const getRandomFilmData = (numberOfMovies) => {
 
 const moviesData = getRandomFilmData(NUMBER_OF_MOVIES);
 
-export {moviesData};
+export {moviesData, getAllFilms, getFilmComments, createComment, deleteComment, getCommentsByIds};

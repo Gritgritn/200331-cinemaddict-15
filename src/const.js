@@ -17,12 +17,20 @@ const EventType = {
   HISTORY: 'History',
 };
 
+const NEW_COMMENT_DEFAULT = {
+  text: '',
+  emotion: '',
+};
+
 const KeyboardKey = {
   ESCAPE: 'Escape',
 };
 
 const UserAction = {
   UPDATE_FILM: 'UPDATE_FILM',
+  CREATE_COMMENT: 'create-comment',
+  DELETE_COMMENT: 'delete-comment',
+  UPDATE_FILM_USER_DETAILS: 'updtae-film-user-details',
 };
 
 const FilterType = {
@@ -46,5 +54,5 @@ const Rank = {
   MOVIE_BUFF: 'MOVIE_BUFF',
 };
 
-export {EMOTIONS, SortType, KeyboardKey, UserAction, UpdateType, FilterType, EventType, Screen, Rank};
+export {EMOTIONS, NEW_COMMENT_DEFAULT, SortType, KeyboardKey, UserAction, UpdateType, FilterType, EventType, Screen, Rank};
 export default KeyboardKey;

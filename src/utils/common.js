@@ -16,6 +16,10 @@ const getTotalRuntime = (totalMinutesAmount) => {
   return { hour: hoursAmount, minute: minutesAmount };
 };
 
+const getCurrentDate = () => dayjs().toDate();
+
+const getCommentDate = (date) => dayjs(date).fromNow();
+
 const isDateInPeriod = (date, period) => {
   period = period === 'today' ? 'day' : period;
 
@@ -47,6 +51,10 @@ const getShortDescription = (description, maxLength) => {
   return description;
 };
 
+const isEsc = ({ code }) => code === 'Escape';
+
+const isEnter = ({ code }) => code === 'Enter';
+
 const formatDate = (date, format) => dayjs(date).format(format);
 
 const relativeDate = (date) => dayjs(date).fromNow();
@@ -57,4 +65,4 @@ const sortByDate = (filmA, filmB) => filmB.filmInfo.release.date - filmA.filmInf
 
 const sortByRating = (filmA ,filmB) => filmB.filmInfo.totalRating - filmA.filmInfo.totalRating;
 
-export {getTotalRuntime, isFilmInWhatcingPeriod, formatItems, getRandomInteger, updateItem, sortByDate, sortByRating, relativeDate, getDurationFromMinutes, formatDate, getShortDescription};
+export {isEsc, isEnter, getCurrentDate, getCommentDate, getTotalRuntime, isFilmInWhatcingPeriod, formatItems, getRandomInteger, updateItem, sortByDate, sortByRating, relativeDate, getDurationFromMinutes, formatDate, getShortDescription};

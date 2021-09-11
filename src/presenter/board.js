@@ -9,6 +9,7 @@ import FilmListContainerView from '../view/flim-listcontainer.js';
 import {sortByDate, sortByRating} from '../utils/common.js';
 import {SortType, UpdateType, UserAction, FilterType} from '../const.js';
 import {filter} from '../utils/filters.js';
+import FilmDetailsPresenter from './film-details.js';
 
 const FILM_COUNT_PER_STEP = 5;
 
@@ -28,12 +29,13 @@ class Board {
     this._sortComponent = null;
     this._showMoreBtnComponent = null;
     this._noFilmComponent = null;
-    this._activeFilm = null;
 
+    this._showFilmDetails = this._showFilmDetails.bind(this);
+
+    this._hideFilmDetails = this._hideFilmDetails.bind(this);
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
     this._handleViewAction = this._handleViewAction.bind(this);
     this._handleModelEvent = this._handleModelEvent.bind(this);
-    this._handleActiveFilm = this._handleActiveFilm.bind(this);
 
     this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
   }
@@ -49,17 +51,42 @@ class Board {
     this._renderBoard();
   }
 
+  _showFilmDetails(film) {
+    if (this._filmDetailsPresenter &&
+        this._filmDetailsPresenter.filmId !== film.id) {
+      this._filmDetailsPresenter.destroy();
+      this._filmDetailsPresenter = new FilmDetailsPresenter(this._filmListBoard, this._filmsModel, this._handleViewAction, this._hideFilmDetails);
+    }
+
+    if (!this._filmDetailsPresenter) {
+      this._filmListBoard.classList.add('hide-overflow');
+    this._filmDetailsPresenter = new FilmDetailsPresenter(this._filmListBoard, this._filmsModel, this._handleViewAction, this._hideFilmDetails);
+    }
+
+    this._filmDetailsPresenter.init(film);
+  }
+
+  _hideFilmDetails() {
+    this._filmListBoard.classList.remove('hide-overflow');
+    this._filmDetailsPresenter.destroy();
+    this._filmDetailsPresenter = null;
+  }
+
   _handleViewAction(actionType, updateType, update) {
     switch (actionType) {
       case UserAction.UPDATE_FILM: {
         this._filmsModel.updateFilm(updateType, update);
         break;
       }
+      case UserAction.DELETE_COMMENT: {
+        this._filmsModel.deleteComment(updateType, update);
+        break;
+      }
+      case UserAction.CREATE_COMMENT: {
+        this._filmsModel.createComment(updateType, update);
+        break;
+      }
     }
-    // Здесь будем вызывать обновление модели.
-    // actionType - действие пользователя, нужно чтобы понять, какой метод модели вызвать
-    // updateType - тип изменений, нужно чтобы понять, что после нужно обновить
-    // update - обновленные данные
   }
 
   _handleModelEvent(updateType, data) {
@@ -121,13 +148,9 @@ class Board {
   }
 
   _renderFilm(film) {
-    const filmPresenter = new FilmPresenter(this._filmListContainer, this._handleViewAction, this._handleActiveFilm);
+    const filmPresenter = new FilmPresenter(this._filmListContainer, this._handleViewAction, this._showFilmDetails);
     filmPresenter.init(film);
     this._filmPresenter.set(film.id, filmPresenter);
-  }
-
-  _handleActiveFilm(film) {
-    this._activeFilm = film;
   }
 
   _renderFilms(films) {

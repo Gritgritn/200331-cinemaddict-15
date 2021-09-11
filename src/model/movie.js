@@ -1,4 +1,6 @@
 import AbstractObserver from '../utils/abstract-observer.js';
+import { createComment, deleteComment, getCommentsByIds } from '../mock/newfilm.js';
+
 
 class Films extends AbstractObserver {
   constructor() {
@@ -10,9 +12,36 @@ class Films extends AbstractObserver {
     this._films = films.slice();
   }
 
-  getComments(id) {
-    const movieIndex = this._films.findIndex((item) => +item.id === id);
-    return this._films[movieIndex].comments;
+  // getComments(id) {
+  //   const movieIndex = this._films.findIndex((item) => +item.id === id);
+  //   return this._films[movieIndex].comments;
+  // }
+
+  getFilmComments(id) {
+    const { comments } = this._films.find((film) => film.id === id);
+    return getCommentsByIds(comments);
+  }
+
+  deleteComment(updateType, { film, commentId }) {
+    deleteComment(commentId);
+
+    const updatedFilm = {
+      ...film,
+      comments: film.comments.filter((id) => id !== commentId),
+    };
+
+    this.updateFilm(updateType, updatedFilm);
+  }
+
+  createComment(updateType, { film, newComment }) {
+    const { id: commentId } = createComment(newComment);
+
+    const updatedFilm = {
+      ...film,
+      comments: [...film.comments, commentId],
+    };
+
+    this.updateFilm(updateType, updatedFilm);
   }
 
   updateFilm(updateType, update) {
