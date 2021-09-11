@@ -4,7 +4,7 @@ import { filter } from '../utils/filters.js';
 import { getRank } from '../utils/profile.js';
 import ProfileView from '../view/profile.js';
 
-export default class ProfilePresenter {
+class ProfilePresenter {
   constructor(profileContainer, rankModel, filmsModel) {
     this._profileContainer = profileContainer;
     this._rankModel = rankModel;
@@ -45,3 +45,5 @@ export default class ProfilePresenter {
     }
   }
 }
+
+export default ProfilePresenter;

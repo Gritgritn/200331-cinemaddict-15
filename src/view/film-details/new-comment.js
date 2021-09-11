@@ -1,5 +1,4 @@
 import { EMOTIONS, NEW_COMMENT_DEFAULT } from '../../const.js';
-
 import SmartView from '../smart.js';
 
 const createEmotionInputTemplate = (emotion, isChecked) => {
@@ -12,7 +11,7 @@ const createEmotionInputTemplate = (emotion, isChecked) => {
   `;
 };
 
-export const createNewCommentTemplate = ({ text, emotion: currentEmotion }) => {
+const createNewCommentTemplate = ({ text, emotion: currentEmotion }) => {
   const emotionInputsTemplate = Object.values(EMOTIONS).map((emotion) => createEmotionInputTemplate(emotion, emotion === currentEmotion)).join('');
   const emojiLabelTemplate = currentEmotion ?
     `<img src="images/emoji/${currentEmotion}.png" width="55" height="55" alt="emoji-smile" />` : '';
@@ -32,7 +31,7 @@ export const createNewCommentTemplate = ({ text, emotion: currentEmotion }) => {
   `;
 };
 
-export default class NewCommentView extends SmartView {
+class NewCommentView extends SmartView {
   constructor(newCommentData = NEW_COMMENT_DEFAULT) {
     super();
 
@@ -85,3 +84,6 @@ export default class NewCommentView extends SmartView {
       .addEventListener('input', this._commentInputHandler);
   }
 }
+
+export {createNewCommentTemplate};
+export default NewCommentView;

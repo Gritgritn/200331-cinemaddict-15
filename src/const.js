@@ -54,5 +54,28 @@ const Rank = {
   MOVIE_BUFF: 'MOVIE_BUFF',
 };
 
-export {EMOTIONS, NEW_COMMENT_DEFAULT, SortType, KeyboardKey, UserAction, UpdateType, FilterType, EventType, Screen, Rank};
+const RankToTextContent = {
+  NONE: '',
+  NOVICE: 'Novice',
+  FAN: 'Fan',
+  MOVIE_BUFF: 'Movie Buff',
+};
+
+const StatisticPeriodValue = {
+  ALL_TIME: 'all-time',
+  TODAY: 'today',
+  WEEK: 'week',
+  MONTH: 'month',
+  YEAR: 'year',
+};
+
+const StatisticPeriodLabel = {
+  ALL_TIME: 'All time',
+  TODAY: 'Today',
+  WEEK: 'Week',
+  MONTH: 'Month',
+  YEAR: 'Year',
+};
+
+export {StatisticPeriodLabel, StatisticPeriodValue, RankToTextContent, EMOTIONS, NEW_COMMENT_DEFAULT, SortType, KeyboardKey, UserAction, UpdateType, FilterType, EventType, Screen, Rank};
 export default KeyboardKey;

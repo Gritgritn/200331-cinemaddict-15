@@ -12,11 +12,6 @@ class Films extends AbstractObserver {
     this._films = films.slice();
   }
 
-  // getComments(id) {
-  //   const movieIndex = this._films.findIndex((item) => +item.id === id);
-  //   return this._films[movieIndex].comments;
-  // }
-
   getFilmComments(id) {
     const { comments } = this._films.find((film) => film.id === id);
     return getCommentsByIds(comments);

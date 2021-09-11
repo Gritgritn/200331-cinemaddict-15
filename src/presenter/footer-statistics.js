@@ -1,7 +1,7 @@
 import { render, replace, RenderPosition } from '../utils/render.js';
 import FooterStatisticView from '../view/footerstatistic.js';
 
-export default class FooterStatisticsPresenter {
+class FooterStatisticsPresenter {
   constructor(footerStatisticsContainer) {
     this._footerStatisticsContainer = footerStatisticsContainer;
   }
@@ -20,3 +20,5 @@ export default class FooterStatisticsPresenter {
     }
   }
 }
+
+export default FooterStatisticsPresenter;

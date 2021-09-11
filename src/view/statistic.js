@@ -1,23 +1,7 @@
 import SmartView from './smart.js';
-import { Rank } from '../const.js';
+import { Rank, StatisticPeriodValue, StatisticPeriodLabel } from '../const.js';
 import Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-
-const StatisticPeriodValue = {
-  ALL_TIME: 'all-time',
-  TODAY: 'today',
-  WEEK: 'week',
-  MONTH: 'month',
-  YEAR: 'year',
-};
-
-const StatisticPeriodLabel = {
-  ALL_TIME: 'All time',
-  TODAY: 'Today',
-  WEEK: 'Week',
-  MONTH: 'Month',
-  YEAR: 'Year',
-};
 
 const createPeriodInputTemplate = ({ value, checked, label }) => `
   <input type="radio" class="statistic__filters-input visually-hidden" name="statistic-filter" id="statistic-${value}" value="${value}" ${checked ? 'checked' : ''}>
@@ -76,7 +60,7 @@ const createStatisticTemplate = (statisticsData) => {
   `;
 };
 
-export default class StatisticView extends SmartView {
+class StatisticView extends SmartView {
   constructor() {
     super();
     this._periodChangeHandler = this._periodChangeHandler.bind(this);
@@ -182,3 +166,4 @@ export default class StatisticView extends SmartView {
 }
 
 export {createStatisticTemplate};
+export default StatisticView;

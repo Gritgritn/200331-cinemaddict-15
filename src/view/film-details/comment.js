@@ -22,7 +22,7 @@ const createCommentTemplate = (comment) => {
   `;
 };
 
-export default class CommentView extends AbstractView {
+class CommentView extends AbstractView {
   constructor(comment) {
     super();
 
@@ -49,3 +49,5 @@ export default class CommentView extends AbstractView {
       .addEventListener('click', this._deleteButtonClickHandler);
   }
 }
+
+export default CommentView;

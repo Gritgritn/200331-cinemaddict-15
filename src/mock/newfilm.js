@@ -19,25 +19,11 @@ const getRandomFloat = (min, max, decimals) => {
   const randomInteger = startValue + Math.random() * (endValue - startValue);
   return +randomInteger.toFixed(decimals);
 };
-const getRandomSubArray = (arrayOfItems) => arrayOfItems.filter(() => getRandomBoolean());
 const getRandomItem = (arrayOfItems) => {
   const index = getRandomInteger(0, arrayOfItems.length - 1);
   return arrayOfItems[index];
 };
 
-const getRandomCommentsData = (numberOfComments) => {
-  const comments = [];
-  for (let i = 0; i < numberOfComments; i++) {
-    comments.push({
-      id: getRandomInteger(1, 10000),
-      author: getRandomItem(CommentAuthors),
-      comment: getRandomItem(Comments),
-      date: getRandomDate('D MMMM YYYY'),
-      emotion: getRandomItem(Emotions),
-    });
-  }
-  return comments;
-};
 
 const generateCommentDate = () => {
   const commentDayShift = getRandomInteger(0, 180);
@@ -126,9 +112,6 @@ const generateGenres = () => {
   return getUniqueItemsFromArray(Genres, maxAmount);
 };
 
-
-const MIN_COMMENTS_NUMBER = 0;
-const MAX_COMMENTS_NUMBER = 5;
 const MIN_RATING = 0;
 const MAX_RATING = 10;
 const RATING_DECIMALS = 1;

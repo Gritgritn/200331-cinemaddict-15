@@ -1,7 +1,7 @@
 import AbstractObserver from '../utils/abstract-observer.js';
 import { Rank } from '../const.js';
 
-export default class RankModel extends AbstractObserver {
+class RankModel extends AbstractObserver {
   constructor(rank = Rank.NONE) {
     super();
     this._currentRank = rank;
@@ -16,3 +16,5 @@ export default class RankModel extends AbstractObserver {
     return this._currentRank;
   }
 }
+
+export default RankModel;

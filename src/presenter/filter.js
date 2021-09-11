@@ -25,13 +25,7 @@ class Filter {
     const filters = this._getFilters();
     const prevFilterComponent = this._filterComponent;
 
-
     this._filterComponent = new MenuTemplateView(filters, this._filterModel.getFilter(), this._activeItem);
-    // блокирует смену фильтров при отсуствии фильмов
-    // if (this._filmsModel.getFilms().length) {
-    //   this._filterComponent.setStatisticClickHandler(this._handleStatisticClick);
-    //   this._filterComponent.setFilterTypeChangeHandler(this._handleFilterTypeChange);
-    // }
 
     this._filterComponent.setStatisticClickHandler(this._handleStatisticClick);
     this._filterComponent.setFilterTypeChangeHandler(this._handleFilterTypeChange);

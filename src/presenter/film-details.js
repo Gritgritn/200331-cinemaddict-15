@@ -10,7 +10,7 @@ import CommentsListView from '../view/film-details/comments-list.js';
 import CommentView from '../view/film-details/comment.js';
 import NewCommentView from '../view/film-details/new-comment.js';
 
-export default class FilmDetailsPresenter {
+class FilmDetailsPresenter {
   constructor(filmDetailsContainer, filmsModel, changeFilm, hideFilmDetails) {
     this._filmDetailsContainer = filmDetailsContainer;
     this._filmsModel = filmsModel;
@@ -175,3 +175,5 @@ export default class FilmDetailsPresenter {
     document.removeEventListener('keydown', this._handleDocumentKeydown);
   }
 }
+
+export default FilmDetailsPresenter;

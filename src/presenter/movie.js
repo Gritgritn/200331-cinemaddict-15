@@ -1,10 +1,6 @@
 import FilmCardView from '../view/card.js';
-import PopupTemplateView from '../view/popup.js';
 import {render, RenderPosition, remove, replace} from '../utils/render.js';
-import {KeyboardKey, UserAction, UpdateType, EventType} from '../const.js';
-import CommentItem from '../view/popup-comment.js';
-import PopupNewCommentForm from '../view/popup-new-comment.js';
-import PopupTemplatePresenter from './film-details.js';
+import {UserAction, UpdateType, EventType} from '../const.js';
 
 class Film {
   constructor(filmCardContainer, changeData, showFilmDetails) {
@@ -79,63 +75,6 @@ class Film {
   _handleAsWatchedClick() {
     this._changeEventButtons(EventType.HISTORY);
   }
-
-  // _renderPopup() {
-  //   // Метод создания попапа
-  //   document.querySelector('body').classList.add('hide-overflow');
-  //   document.querySelector('body').appendChild(this._popupComponent.getElement());
-  //   this._setActiveFilm(this._film);
-  //   // сделать условие удаляющее повторную отрисовку из инита
-  //   if(!this._newCommentForm) {
-  //   this._renderComments();
-  //   render(this._popupComponent.getElement().querySelector('.film-details__comments-wrap'), new PopupNewCommentForm(this._film), RenderPosition.BEFOREEND);
-  //   }
-  // }
-
-  // _removePopup() {
-  //   // Метод удаления попапа
-  //   document.querySelector('body').removeChild(this._popupComponent.getElement());
-  //   document.querySelector('body').classList.remove('hide-overflow');
-  //   this._newCommentForm = null;
-  //   remove(this._popupComponent);
-  //   this._setActiveFilm(null);
-  // }
-
-  // _renderComments() {
-  //   this._comments = this._film.comments;
-  //   // this._commentsNumber.textContent = this._comments.length;
-  //   this._comments.forEach((commentItem) => {
-  //     const comment = new CommentItem(commentItem);
-  //     // comment.setCommentDeleteCallback(this._handleCommentDeletion);
-  //     render(this._popupComponent.getElement().querySelector('.film-details__comments-list'), comment, RenderPosition.BEFOREEND);
-  //     // this._shownComments.set(commentItem.id, comment.getElement());
-  //   });
-  // }
-
-  // _escKeyDownHandler(evt) {
-  //   if (evt.key === KeyboardKey.ESCAPE) {
-  //     evt.preventDefault();
-  //     this._removePopup();
-  //     this._setActiveFilm(null);
-  //     document.removeEventListener('keydown', this._escKeyDownHandler);
-  //   }
-  // }
-
-  // _hidePopup() {
-  //   document.querySelector('.film-details').remove();
-  // }
-
-  // _openPopupClickHandler() {
-  //   // Метод открытия попапа при нажатии на постер
-  //   if (document.body.querySelector('.film-details')) {
-  //     this._hidePopup();
-  //   }
-  //   this._renderPopup();
-  //   document.addEventListener('keydown', this._escKeyDownHandler);
-  //   this._popupComponent.setClosePopupButtonHandler(() => {
-  //     this._removePopup();
-  //   });
-  // }
 }
 
 export default Film;
