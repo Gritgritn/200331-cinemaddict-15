@@ -1,5 +1,6 @@
 import FilmCardView from '../view/card.js';
 import {render, RenderPosition, remove, replace} from '../utils/render.js';
+import {getCurrentDate} from '../utils/common.js';
 import {UserAction, UpdateType, EventType} from '../const.js';
 
 class Film {
@@ -58,6 +59,7 @@ class Film {
       }
       case EventType.HISTORY: {
         filmUserDetails.alreadyWatched = !this._film.userDetails.alreadyWatched;
+        filmUserDetails.watchingDate = !this._film.userDetails.alreadyWatched ? "" : getCurrentDate();
         break;
       }
     }
