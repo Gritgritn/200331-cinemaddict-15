@@ -8,8 +8,10 @@ class Films extends AbstractObserver {
     this._films = [];
   }
 
-  setFilms(films) {
+  setFilms(updateType, films) {
     this._films = films.slice();
+
+    this._notify(updateType);
   }
 
   getFilmComments(id) {
@@ -67,7 +69,7 @@ class Films extends AbstractObserver {
       alternativeTitle: film['film_info']['alternative_title'],
       ageRating: film['film_info']['age_rating'],
       rating: film['film_info']['total_rating'],
-      poster: film['film_info'].poster.split('images/posters/')[1],
+      poster: film['film_info'].poster,
       release: {
         date: new Date(film['film_info']['release']['date']),
         releaseCountry: film['film_info']['release']['release_country'],
@@ -98,7 +100,7 @@ class Films extends AbstractObserver {
         ['alternative_title']: film.filmInfo.alternativeTitle,
         ['age_rating']: film.filmInfo.ageRating,
         ['total_rating']: film.filmInfo.rating,
-        poster: `'images/posters/'${film.filmInfo.poster}`,
+        poster: film.filmInfo.poster,
       };
 
       serverFilm['film_info']['release'] = {

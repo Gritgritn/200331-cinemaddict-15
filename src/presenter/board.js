@@ -105,6 +105,12 @@ class Board {
         this._renderBoard();
         break;
       }
+      case UpdateType.INIT: {
+        // this._isLoading = false;
+        // remove(this._loadingComponent);
+        this._renderBoard();
+        break;
+      }
     }
   }
 

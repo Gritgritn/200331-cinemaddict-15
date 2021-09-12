@@ -37,7 +37,7 @@ const CreatePopupElement = (film) => {
             </div>
 
             <div class="film-details__rating">
-              <p class="film-details__total-rating">${filmInfo.totalRating}</p>
+              <p class="film-details__total-rating">${filmInfo.rating}</p>
             </div>
           </div>
 

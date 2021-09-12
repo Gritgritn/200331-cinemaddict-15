@@ -1,19 +1,19 @@
 import AbstractView from './abstract.js';
 import {getDurationFromMinutes, formatDate, getShortDescription} from '../utils/common.js';
+import {formatItems} from '../utils/common.js';
 
 const createFilmCard = (film) => {
-  // const {moviename, poster, description, premiereDate, rating, genre, runtime, isInWatchlist, isWatched, isFavorite} = film;
   const {id, comments, filmInfo, userDetails} = film;
   const releaseYear = formatDate(filmInfo.release.date, 'YYYY').slice(-4) || '';
   const runtime = getDurationFromMinutes(filmInfo.runtime) || '';
 
   return `<article class="film-card" data-id="${id}">
         <h3 class="film-card__title">${filmInfo.title}</h3>
-        <p class="film-card__rating">${filmInfo.totalRating}</p>
+        <p class="film-card__rating">${filmInfo.rating}</p>
         <p class="film-card__info">
           <span class="film-card__year">${releaseYear}</span>
           <span class="film-card__duration">${runtime}</span>
-          <span class="film-card__genre">${filmInfo.genre}</span>
+          <span class="film-card__genre">${formatItems(filmInfo.genre)}</span>
         </p>
         <img src="${filmInfo.poster}" alt="" class="film-card__poster">
         <p class="film-card__description">${getShortDescription(filmInfo.description, 140)}</p>

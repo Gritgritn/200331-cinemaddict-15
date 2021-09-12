@@ -24,6 +24,12 @@ export default class Api {
     .then((films) => films.map(FilmsModel.adaptFilmToClient))
   }
 
+  setFilms(updateType, films) {
+    this._tasks = films.slice();
+
+    this._notify(updateType);
+  }
+
   updateFilm(film) {
     return this._load({
       url: `films/${film.id}`,
