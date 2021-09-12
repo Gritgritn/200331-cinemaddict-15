@@ -1,5 +1,5 @@
 import SmartView from './smart.js';
-import { Rank, StatisticPeriodValue, StatisticPeriodLabel } from '../const.js';
+import { Rank} from '../const.js';
 import Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -10,7 +10,20 @@ const createPeriodInputTemplate = ({ value, checked, label }) => `
 
 const createStatisticTemplate = (statisticsData) => {
   const { rank, totalAmount, totalDuration, topGenre, genresStatistic, activePeriodValue = StatisticPeriodValue.ALL_TIME} = statisticsData;
-
+  const StatisticPeriodValue = {
+    ALL_TIME: 'all-time',
+    TODAY: 'today',
+    WEEK: 'week',
+    MONTH: 'month',
+    YEAR: 'year',
+  };
+  const StatisticPeriodLabel = {
+    ALL_TIME: 'All time',
+    TODAY: 'Today',
+    WEEK: 'Week',
+    MONTH: 'Month',
+    YEAR: 'Year',
+  };
   const periodInputsTemplate = Object.entries(StatisticPeriodValue)
     .map(([period, value]) => createPeriodInputTemplate({
       value,

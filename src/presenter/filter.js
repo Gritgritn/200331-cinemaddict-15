@@ -39,7 +39,7 @@ class Filter {
   }
 
   _handleStatisticClick() {
-    this._activeItem = 'stats';
+    this._activeItem = FilterType.STATS;
     this.init();
     this._renderScreen(Screen.STATISTIC);
   }

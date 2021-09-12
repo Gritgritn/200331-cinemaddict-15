@@ -40,15 +40,16 @@ function renderScreen (screen) {
   currentScreen = screen;
 
   switch (screen) {
-    case Screen.FILMS:
+    case Screen.FILMS: {
       statisticScreenPresenter.destroy();
       filmPresenter.init();
       break;
-
-    case Screen.STATISTIC:
+    }
+    case Screen.STATISTIC: {
       filmPresenter.destroy();
       statisticScreenPresenter.init();
       break;
+    }
   }
 }
 
