@@ -1,12 +1,12 @@
 import dayjs from 'dayjs';
+import {formatItems} from '../../utils/common.js';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
-import SmartView from './smart.js';
-// import {isCtrlEnterEvent} from '../utils/render.js';
+import AbstractView from '../abstract.js';
 
 dayjs.extend(relativeTime);
 
 const CreatePopupElement = (film) => {
-  const {id, comments, filmInfo, userDetails} = film;
+  const {id, filmInfo, userDetails} = film;
   const formatDate = (date, format) => dayjs(date).format(format);
   const getDurationFromMinutes = (durationInMinutes) => {
     const lasting = dayjs.duration(durationInMinutes, 'minutes');
@@ -14,7 +14,7 @@ const CreatePopupElement = (film) => {
   };
   const releaseDate= formatDate(filmInfo.release.date,'DD MMMM YYYY');
   const runtime = getDurationFromMinutes(filmInfo.runtime) || '';
-  const genres = filmInfo.genre.split(' ').length > 1 ? 'Gengres' : 'Genre';
+  const genresTitle = filmInfo.genre.length > 1 ? 'Gengres' : 'Genre';
 
   return `<section class="film-details" data-id="${id}">
   <form class="film-details__inner" action="" method="get">
@@ -48,11 +48,11 @@ const CreatePopupElement = (film) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Writers</td>
-              <td class="film-details__cell">${filmInfo.writers}</td>
+              <td class="film-details__cell">${formatItems(filmInfo.writers)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Actors</td>
-              <td class="film-details__cell">${filmInfo.actors}</td>
+              <td class="film-details__cell">${formatItems(filmInfo.actors)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
@@ -67,9 +67,9 @@ const CreatePopupElement = (film) => {
               <td class="film-details__cell">${filmInfo.release.releaseCountry}</td>
             </tr>
             <tr class="film-details__row">
-              <td class="film-details__term">${genres}</td>
+              <td class="film-details__term">${genresTitle}</td>
               <td class="film-details__cell">
-                <span class="film-details__genre">${filmInfo.genre}</span>
+                <span class="film-details__genre">${formatItems(filmInfo.genre)}</span>
             </tr>
           </table>
 
@@ -85,35 +85,34 @@ const CreatePopupElement = (film) => {
         <button type="button" class="film-details__control-button film-details__control-button--favorite ${userDetails.favorite ? 'film-details__control-button--active' : ''}" id="favorite" name="favorite">Add to favorites</button>
       </section>
     </div>
-
-    <div class="film-details__bottom-container">
-      <section class="film-details__comments-wrap">
-        <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
-        <ul class="film-details__comments-list">
-        </ul>
-      </section>
-    </div>
   </form>
   </section>`;
 };
 
-class PopupTemplate extends SmartView {
+class PopupTemplate extends AbstractView {
   constructor(film) {
     super();
     this._film = film;
     this._favoritesClickHandler = this._favoritesClickHandler.bind(this);
     this._watchedClickHandler = this._watchedClickHandler.bind(this);
     this._watchlistClickHandler = this._watchlistClickHandler.bind(this);
-    this._popupClickHandler = this._popupClickHandler.bind(this);
+    this._popupCloseClickHandler = this._popupCloseClickHandler.bind(this);
     this.restoreHandlers();
   }
-
 
   getTemplate() {
     return CreatePopupElement(this._film);
   }
 
-  _popupClickHandler(evt) {
+  get scrollTop() {
+    return this.getElement().scrollTop;
+  }
+
+  set scrollTop(value) {
+    this.getElement().scrollTop = value;
+  }
+
+  _popupCloseClickHandler(evt) {
     evt.preventDefault();
     this._callback.popupClick();
   }
@@ -133,16 +132,14 @@ class PopupTemplate extends SmartView {
     this._callback.watchlistClick();
   }
 
-
   restoreHandlers() {
     this.getElement().querySelector('.film-details__control-button--favorite').addEventListener('click', this._favoritesClickHandler);
     this.getElement().querySelector('.film-details__control-button--watched').addEventListener('click', this._watchedClickHandler);
     this.getElement().querySelector('.film-details__control-button--watchlist').addEventListener('click', this._watchlistClickHandler);
-    this.getElement().querySelector('.film-details__close-btn').addEventListener('click', this._popupClickHandler);
+    this.getElement().querySelector('.film-details__close-btn').addEventListener('click', this._popupCloseClickHandler);
   }
 
-
-  setFavoritePopupButtonClick(callback) {
+  setAddFavoriteButtonClickHandler(callback) {
     this._callback.favoritesClick = callback;
     this.getElement().querySelector('.film-details__control-button--favorite').addEventListener('click', this._favoritesClickHandler);
   }
@@ -159,7 +156,7 @@ class PopupTemplate extends SmartView {
 
   setClosePopupButtonHandler(callback) {
     this._callback.popupClick = callback;
-    this.getElement().querySelector('.film-details__close-btn').addEventListener('click', this._popupClickHandler);
+    this.getElement().querySelector('.film-details__close-btn').addEventListener('click', this._popupCloseClickHandler);
     this.restoreHandlers();
   }
 }

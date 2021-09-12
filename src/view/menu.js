@@ -1,6 +1,7 @@
 import AbstractView from './abstract.js';
 
 const isFilterActive = (boolean) =>  boolean ? 'main-navigation__item--active' : '';
+const isStatsActive = (boolean) =>  boolean ? 'main-navigation__item--active' : '';
 const SORT_TYPE_DATA_ATTR = 'data-sort-type';
 
 const createFilterItemTemplate = (filter, currentFilterType) => {
@@ -10,7 +11,8 @@ const createFilterItemTemplate = (filter, currentFilterType) => {
   );
 };
 
-const createFilterTemplate = (filterItems, currentFilterType) => {
+const createFilterTemplate = (filterItems, currentFilterType, activeItem) => {
+  const isStatsChecked = activeItem === 'stats';
   const filterItemsTemplate = filterItems
     .map((filter) => createFilterItemTemplate(filter, currentFilterType))
     .join('');
@@ -18,36 +20,48 @@ const createFilterTemplate = (filterItems, currentFilterType) => {
     <div class="main-navigation__items">
     ${filterItemsTemplate}
     </div>
-    <a href="#stats" class="main-navigation__additional">Stats</a>
+    <a href="#stats" class="main-navigation__additional ${isStatsActive(isStatsChecked)}">Stats</a>
     </nav>`;
 };
 
 class MenuTemplate extends AbstractView {
-  constructor(filters, currentFilterType) {
+  constructor(filters, currentFilterType, activeItem) {
     super();
     this._filters = filters;
     this._currentFilter = currentFilterType;
+    this._activeItem = activeItem;
 
     this._filterTypeChangeHandler = this._filterTypeChangeHandler.bind(this);
+    this._statisticClickHandler = this._statisticClickHandler.bind(this);
+  }
+
+  _statisticClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.statisticClick();
+  }
+
+  setStatisticClickHandler(callback) {
+    this._callback.statisticClick = callback;
+    this.getElement().querySelector(`.${'main-navigation__additional'}`).addEventListener('click', this._statisticClickHandler);
   }
 
   getTemplate() {
-    return createFilterTemplate(this._filters, this._currentFilter);
+    return createFilterTemplate(this._filters, this._currentFilter, this._activeItem);
   }
 
   _filterTypeChangeHandler(evt) {
-    evt.preventDefault();
     const hasAttr = evt.target.hasAttribute(SORT_TYPE_DATA_ATTR);
     if (!hasAttr) {
       return;
     }
+    evt.preventDefault();
 
-    this._callback.filterTypeChange(evt.target.getAttribute(SORT_TYPE_DATA_ATTR)); // Поменял evt.target.value na id
+    this._callback.filterTypeChange(evt.target.getAttribute(SORT_TYPE_DATA_ATTR));
   }
 
   setFilterTypeChangeHandler(callback) {
     this._callback.filterTypeChange = callback;
-    this.getElement().addEventListener('click', this._filterTypeChangeHandler); // поменял change на click
+    this.getElement().addEventListener('click', this._filterTypeChangeHandler);
   }
 }
 
