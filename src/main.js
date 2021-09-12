@@ -10,8 +10,23 @@ import FiltersPresenter from './presenter/filter.js';
 import {moviesData} from './mock/newfilm';
 import {Screen, FilterType} from './const';
 import StatisticScreenPresenter from './presenter/statisctic-screen.js';
+import EmptyBoardView from './view/empty-board.js';
+import Api from './api.js';
+
+const AUTHORIZATION = 'Basic hS2sfS24ccl1sa2j';
+const END_POINT = 'https://15.ecmascript.pages.academy/cinemaddict';
 
 const films = moviesData;
+
+const api = new Api(END_POINT, AUTHORIZATION);
+api.getFilms().then((films) => {
+  console.log(films);
+  // Есть проблема: cтруктура объекта похожа, но некоторые ключи называются иначе,
+  // а ещё на сервере используется snake_case, а у нас camelCase.
+  // Можно, конечно, переписать часть нашего клиентского приложения, но зачем?
+  // Есть вариант получше - паттерн "Адаптер"
+});
+
 const mockRank = getRank(filter[FilterType.HISTORY](films).length);
 
 const filmsModel = new FilmsModel();
