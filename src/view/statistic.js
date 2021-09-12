@@ -3,6 +3,21 @@ import { Rank} from '../const.js';
 import Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
+const StatisticPeriodValue = {
+  ALL_TIME: 'all-time',
+  TODAY: 'today',
+  WEEK: 'week',
+  MONTH: 'month',
+  YEAR: 'year',
+};
+const StatisticPeriodLabel = {
+  ALL_TIME: 'All time',
+  TODAY: 'Today',
+  WEEK: 'Week',
+  MONTH: 'Month',
+  YEAR: 'Year',
+};
+
 const createPeriodInputTemplate = ({ value, checked, label }) => `
   <input type="radio" class="statistic__filters-input visually-hidden" name="statistic-filter" id="statistic-${value}" value="${value}" ${checked ? 'checked' : ''}>
   <label for="statistic-${value}" class="statistic__filters-label">${label}</label>
@@ -10,20 +25,6 @@ const createPeriodInputTemplate = ({ value, checked, label }) => `
 
 const createStatisticTemplate = (statisticsData) => {
   const { rank, totalAmount, totalDuration, topGenre, genresStatistic, activePeriodValue = StatisticPeriodValue.ALL_TIME} = statisticsData;
-  const StatisticPeriodValue = {
-    ALL_TIME: 'all-time',
-    TODAY: 'today',
-    WEEK: 'week',
-    MONTH: 'month',
-    YEAR: 'year',
-  };
-  const StatisticPeriodLabel = {
-    ALL_TIME: 'All time',
-    TODAY: 'Today',
-    WEEK: 'Week',
-    MONTH: 'Month',
-    YEAR: 'Year',
-  };
   const periodInputsTemplate = Object.entries(StatisticPeriodValue)
     .map(([period, value]) => createPeriodInputTemplate({
       value,
