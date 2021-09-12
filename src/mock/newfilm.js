@@ -8,7 +8,7 @@ import duration from 'dayjs/plugin/duration.js';
 dayjs.extend(relativeTime);
 dayjs.extend(duration);
 
-let comments = new Map();
+const comments = new Map();
 const getRandomDate = () => dayjs().subtract(getRandomInteger(1, 40000), 'day');
 const getRandomWatchingDate = () => dayjs().subtract(getRandomInteger(1, 500), 'day');
 const getRandomBoolean = () => Boolean(getRandomInteger(0, 1));
@@ -78,7 +78,7 @@ const generateComments = () => {
   }
 
   const commentsAmount = getRandomInteger(1, 5);
-  let comments = [];
+  const comments = [];
 
   for (let i = 0; i < commentsAmount; i++) {
     const comment = generateComment();
