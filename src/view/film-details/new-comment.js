@@ -62,7 +62,7 @@ class NewCommentView extends SmartView {
   }
 
   _emotionToggleHandler(evt) {
-    const emotionInput = evt.target.closest(`.film-details__emoji-item`);
+    const emotionInput = evt.target.closest('.film-details__emoji-item');
     if (!emotionInput || !evt.currentTarget.contains(emotionInput)) {
       return;
     }
@@ -76,11 +76,11 @@ class NewCommentView extends SmartView {
 
   _setInnerHandlers() {
     this.getElement()
-      .querySelector(`.film-details__emoji-list`)
+      .querySelector('.film-details__emoji-list')
       .addEventListener('change', this._emotionToggleHandler);
 
     this.getElement()
-      .querySelector(`.film-details__comment-input`)
+      .querySelector('.film-details__comment-input')
       .addEventListener('input', this._commentInputHandler);
   }
 }

@@ -72,7 +72,7 @@ class FilmDetailsPresenter {
     const copyFilm = {...this._film};
     const filmUserDetails = copyFilm.userDetails;
     filmUserDetails.alreadyWatched = !this._film.userDetails.alreadyWatched;
-    filmUserDetails.watchingDate = !this._film.userDetails.alreadyWatched ? "" : getCurrentDate();
+    filmUserDetails.watchingDate = !this._film.userDetails.alreadyWatched ? '' : getCurrentDate();
     this._changeFilm(UserAction.UPDATE_FILM, UpdateType.MINOR, copyFilm);
   }
 

@@ -37,7 +37,7 @@ class CommentView extends AbstractView {
 
   _deleteButtonClickHandler(evt) {
     evt.preventDefault();
-    const commentItem = evt.target.closest(`.film-details__comment`);
+    const commentItem = evt.target.closest('.film-details__comment');
 
     this._callback._deleteButtonClick(commentItem.dataset.commentId);
   }
@@ -45,7 +45,7 @@ class CommentView extends AbstractView {
   setDeleteButtonClickHandler(callback) {
     this._callback._deleteButtonClick = callback;
     this.getElement()
-      .querySelector(`.film-details__comment-delete`)
+      .querySelector('.film-details__comment-delete')
       .addEventListener('click', this._deleteButtonClickHandler);
   }
 }

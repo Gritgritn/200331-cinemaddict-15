@@ -16,7 +16,6 @@ class StatisticScreen {
 
   init() {
     this._watchedFilms = filter[FilterType.HISTORY](this._filmsModel.getFilms());
-    console.log('watchedFilms:', this._watchedFilms);
     this._statiscticView = new StatisticView();
     this._statiscticView.setPeriodChangeHandler(this._handlePeriodChange);
     this._statiscticView.updateData({
@@ -29,7 +28,6 @@ class StatisticScreen {
 
   _handlePeriodChange(activePeriodValue) {
     const watchedFilms = [...this._watchedFilms].filter((film) => isFilmInWhatcingPeriod(film, activePeriodValue));
-    console.log('watchedFilms:', watchedFilms);
 
     this._statiscticView.updateData({
       activePeriodValue,

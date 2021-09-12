@@ -59,7 +59,7 @@ class Film {
       }
       case EventType.HISTORY: {
         filmUserDetails.alreadyWatched = !this._film.userDetails.alreadyWatched;
-        filmUserDetails.watchingDate = !this._film.userDetails.alreadyWatched ? "" : getCurrentDate();
+        filmUserDetails.watchingDate = !this._film.userDetails.alreadyWatched ? '' : getCurrentDate();
         break;
       }
     }

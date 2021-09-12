@@ -50,7 +50,7 @@ function renderScreen (screen) {
       statisticScreenPresenter.init();
       break;
   }
-};
+}
 
 profilePresenter.init();
 filtersPresenter.init();

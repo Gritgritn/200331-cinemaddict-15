@@ -60,7 +60,7 @@ class Board {
 
     if (!this._filmDetailsPresenter) {
       this._filmListBoard.classList.add('hide-overflow');
-    this._filmDetailsPresenter = new FilmDetailsPresenter(this._filmListBoard, this._filmsModel, this._handleViewAction, this._hideFilmDetails);
+      this._filmDetailsPresenter = new FilmDetailsPresenter(this._filmListBoard, this._filmsModel, this._handleViewAction, this._hideFilmDetails);
     }
 
     this._filmDetailsPresenter.init(film);
