@@ -20,7 +20,7 @@ const filmsMock = moviesData;
 
 const api = new Api(END_POINT, AUTHORIZATION);
 
-const mockRank = getRank(filter[FilterType.HISTORY](films).length);
+const mockRank = getRank(filter[FilterType.HISTORY](filmsMock).length);
 
 const filmsModel = new FilmsModel();
 
