@@ -58,12 +58,12 @@ class Board {
     if (this._filmDetailsPresenter &&
         this._filmDetailsPresenter.filmId !== film.id) {
       this._filmDetailsPresenter.destroy();
-      this._filmDetailsPresenter = new FilmDetailsPresenter(this._filmListBoard, this._filmsModel, this._handleViewAction, this._hideFilmDetails);
+      this._filmDetailsPresenter = new FilmDetailsPresenter(this._filmListBoard, this._filmsModel, this._handleViewAction, this._hideFilmDetails, this._api);
     }
 
     if (!this._filmDetailsPresenter) {
       this._filmListBoard.classList.add('hide-overflow');
-      this._filmDetailsPresenter = new FilmDetailsPresenter(this._filmListBoard, this._filmsModel, this._handleViewAction, this._hideFilmDetails);
+      this._filmDetailsPresenter = new FilmDetailsPresenter(this._filmListBoard, this._filmsModel, this._handleViewAction, this._hideFilmDetails, this._api);
     }
 
     this._filmDetailsPresenter.init(film);
@@ -78,7 +78,6 @@ class Board {
   _handleViewAction(actionType, updateType, update) {
     switch (actionType) {
       case UserAction.UPDATE_FILM: {
-        // this._filmsModel.updateFilm(updateType, update);
         this._api.updateFilm(update).then((response) => {
           this._filmsModel.updateFilm(updateType, response);
         });
@@ -263,6 +262,7 @@ class Board {
     if (filmCount > this._renderedFilmCount) {
       this._renderShowMoreButton();
     }
+
   }
 }
 

@@ -11,11 +11,12 @@ import CommentView from '../view/film-details/comment.js';
 import NewCommentView from '../view/film-details/new-comment.js';
 
 class FilmDetailsPresenter {
-  constructor(filmDetailsContainer, filmsModel, changeFilm, hideFilmDetails) {
+  constructor(filmDetailsContainer, filmsModel, changeFilm, hideFilmDetails, api) {
     this._filmDetailsContainer = filmDetailsContainer;
     this._filmsModel = filmsModel;
     this._changeFilm = changeFilm;
     this._hideFilmDetails = hideFilmDetails;
+    this._api = api;
 
     this._handleCloseButtonClick = this._handleCloseButtonClick.bind(this);
     this._handleDocumentKeydown = this._handleDocumentKeydown.bind(this);
@@ -121,7 +122,7 @@ class FilmDetailsPresenter {
   }
 
   _renderComments() {
-    const filmComments = this._filmsModel.getFilmComments(this.filmId);
+    const filmComments = this._api.getComments(this._film);
     this._commentsContainerView = new CommentsContainerView();
     render(this._filmDetailsBottomView, this._commentsContainerView, RenderPosition.BEFOREEND);
 
@@ -131,11 +132,13 @@ class FilmDetailsPresenter {
     render(this._commentsContainerView, this._commentsTitleView, RenderPosition.BEFOREEND);
     render(this._commentsContainerView, this._commentsListView, RenderPosition.BEFOREEND);
 
-    filmComments.forEach((comment) => {
-      const commentsView = new CommentView(comment);
-      commentsView.setDeleteButtonClickHandler(this._handleDeleteButtonClick);
-      render(this._commentsListView, commentsView, RenderPosition.BEFOREEND);
-    });
+    // console.log(this._api.getComments(this._film));
+
+    // filmComments.forEach((comment) => {
+    //   const commentsView = new CommentView(comment);
+    //   commentsView.setDeleteButtonClickHandler(this._handleDeleteButtonClick);
+    //   render(this._commentsListView, commentsView, RenderPosition.BEFOREEND);
+    // });
   }
 
   _renderNewComment() {

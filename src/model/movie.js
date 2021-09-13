@@ -14,6 +14,11 @@ class Films extends AbstractObserver {
     this._notify(updateType);
   }
 
+  // setComments(updateType, comments) {
+  //   this._comments = comments.slice();
+  //   this._notify(updateType);
+  // }
+
   getFilmComments(id) {
     const { comments } = this._films.find((film) => film.id === id);
     return getCommentsByIds(comments);
@@ -59,6 +64,17 @@ class Films extends AbstractObserver {
 
   getFilms() {
     return this._films;
+  }
+
+  static adaptCommentToClient(comment) {
+    const clientComment = { ...comment };
+
+    clientComment.text = comment.comment;
+    clientComment.date = new Date(comment.date);
+    delete clientComment.comment;
+
+
+    return clientComment;
   }
 
   static adaptFilmToClient(film) {

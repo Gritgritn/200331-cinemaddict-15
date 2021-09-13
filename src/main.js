@@ -66,7 +66,7 @@ filtersPresenter.init();
 renderScreen(Screen.FILMS);
 
 footerStatisticPresenter.init(films.length);
-console.log(api.getFilms());
+// console.log(api.getFilms());
 
 api.getFilms().then((films) => {
   filmsModel.setFilms(UpdateType.INIT, films);

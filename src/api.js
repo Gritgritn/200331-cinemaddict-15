@@ -24,8 +24,18 @@ export default class Api {
     .then((films) => films.map(FilmsModel.adaptFilmToClient))
   }
 
+  getComments(film) {
+    return this._load({
+      url: `comments/${film.id}`,
+      method: Method.GET,
+      headers: new Headers({'Content-Type': 'application/json'}),
+    })
+    .then(Api.toJSON)
+    .then((comments) => comments.map(FilmsModel.adaptCommentToClient));
+  }
+
   setFilms(updateType, films) {
-    this._tasks = films.slice();
+    this._films = films.slice();
 
     this._notify(updateType);
   }
@@ -41,13 +51,7 @@ export default class Api {
     .then(FilmsModel.adaptFilmToClient);
   }
 
-  getComments(film) {
-    return this._load({
-      url: `comments/${film.id}`,
-      method: Method.GET,
-      headers: new Headers({'Content-Type': 'application/json'}),
-    });
-  }
+
 
   addComment(film) {
     return this._load({
