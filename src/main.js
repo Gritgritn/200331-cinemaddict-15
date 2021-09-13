@@ -19,14 +19,10 @@ const END_POINT = 'https://15.ecmascript.pages.academy/cinemaddict';
 const films = moviesData;
 
 const api = new Api(END_POINT, AUTHORIZATION);
-// api.getFilms().then((films) => {
-//   console.log(films);
-// });
 
 const mockRank = getRank(filter[FilterType.HISTORY](films).length);
 
 const filmsModel = new FilmsModel();
-// filmsModel.setFilms(films);
 
 const siteHeaderElement = document.querySelector('.header');
 const siteMainElement = document.querySelector('.main');
@@ -37,7 +33,7 @@ const filterModel = new FilterModel();
 
 const profilePresenter = new ProfilePresenter(siteHeaderElement, rankModel, filmsModel);
 const filtersPresenter = new FiltersPresenter(siteMainElement, filterModel, filmsModel, renderScreen);
-const filmPresenter = new BoardPresenter(siteMainElement, filmsModel, filterModel);
+const filmPresenter = new BoardPresenter(siteMainElement, filmsModel, filterModel, api);
 const footerStatisticPresenter = new FooterStatisticPresenter(siteFooterElement);
 
 const statisticScreenPresenter = new StatisticScreenPresenter(siteMainElement, rankModel, filmsModel);
