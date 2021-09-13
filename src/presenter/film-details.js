@@ -7,7 +7,7 @@ import FilmDetailsBottomView from '../view/film-details/film-details-bottom.js';
 import CommentsContainerView from '../view/film-details/comments-container.js';
 import CommentsTitleView from '../view/film-details/comments-title.js';
 import CommentsListView from '../view/film-details/comments-list.js';
-import CommentView from '../view/film-details/comment.js';
+// import CommentView from '../view/film-details/comment.js';
 import NewCommentView from '../view/film-details/new-comment.js';
 
 class FilmDetailsPresenter {

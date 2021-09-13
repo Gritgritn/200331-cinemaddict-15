@@ -19,9 +19,9 @@ export default class Api {
   }
 
   getFilms() {
-   return this._load({url: 'movies'})
-    .then(Api.toJSON)
-    .then((films) => films.map(FilmsModel.adaptFilmToClient))
+    return this._load({url: 'movies'})
+      .then(Api.toJSON)
+      .then((films) => films.map(FilmsModel.adaptFilmToClient));
   }
 
   getComments(film) {
@@ -30,8 +30,8 @@ export default class Api {
       method: Method.GET,
       headers: new Headers({'Content-Type': 'application/json'}),
     })
-    .then(Api.toJSON)
-    .then((comments) => comments.map(FilmsModel.adaptCommentToClient));
+      .then(Api.toJSON)
+      .then((comments) => comments.map(FilmsModel.adaptCommentToClient));
   }
 
   setFilms(updateType, films) {
@@ -47,11 +47,9 @@ export default class Api {
       body: JSON.stringify(FilmsModel.adaptFilmToServer(film)),
       headers: new Headers({'Content-Type': 'application/json'}),
     })
-    .then(Api.toJSON)
-    .then(FilmsModel.adaptFilmToClient);
+      .then(Api.toJSON)
+      .then(FilmsModel.adaptFilmToClient);
   }
-
-
 
   addComment(film) {
     return this._load({
@@ -81,7 +79,7 @@ export default class Api {
     const response = await fetch(
       `${this._endPoint}/${url}`,
       {method, body, headers},
-      );
+    );
 
     return Api.checkStatus(response);
   }

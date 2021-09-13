@@ -7,7 +7,7 @@ import FilterModel from './model/filter.js';
 import FooterStatisticPresenter from './presenter/footer-statistics.js';
 import BoardPresenter from './presenter/board.js';
 import FiltersPresenter from './presenter/filter.js';
-import {moviesData} from './mock/newfilm';
+// import {moviesData} from './mock/newfilm';
 import {Screen, FilterType, UpdateType} from './const';
 import StatisticScreenPresenter from './presenter/statisctic-screen.js';
 // import EmptyBoardView from './view/empty-board.js';
@@ -16,7 +16,7 @@ import Api from './api.js';
 const AUTHORIZATION = 'Basic hS2sfS24ccl1sa2j';
 const END_POINT = 'https://15.ecmascript.pages.academy/cinemaddict';
 
-const films = moviesData;
+// const films = moviesData;
 
 const api = new Api(END_POINT, AUTHORIZATION);
 
@@ -71,6 +71,6 @@ footerStatisticPresenter.init(films.length);
 api.getFilms().then((films) => {
   filmsModel.setFilms(UpdateType.INIT, films);
 })
-.catch(() => {
-  filmsModel.setFilms(UpdateType.INIT, []);
-});
+  .catch(() => {
+    filmsModel.setFilms(UpdateType.INIT, []);
+  });

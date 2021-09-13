@@ -106,38 +106,38 @@ class Films extends AbstractObserver {
 
     delete clientFilm['user_details'];
     return clientFilm;
-  };
+  }
 
   static adaptFilmToServer(film) {
     const serverFilm = { ... film};
 
-      serverFilm['film_info'] = {
-        ...film.filmInfo,
-        ['alternative_title']: film.filmInfo.alternativeTitle,
-        ['age_rating']: film.filmInfo.ageRating,
-        ['total_rating']: film.filmInfo.rating,
-        poster: film.filmInfo.poster,
-      };
+    serverFilm['film_info'] = {
+      ...film.filmInfo,
+      ['alternative_title']: film.filmInfo.alternativeTitle,
+      ['age_rating']: film.filmInfo.ageRating,
+      ['total_rating']: film.filmInfo.rating,
+      poster: film.filmInfo.poster,
+    };
 
-      serverFilm['film_info']['release'] = {
-        ['date']: film.filmInfo.release.date ? film.filmInfo.release.date.toISOString() : null,
-        ['release_country']: film.filmInfo.release.releaseCountry,
-      };
+    serverFilm['film_info']['release'] = {
+      ['date']: film.filmInfo.release.date ? film.filmInfo.release.date.toISOString() : null,
+      ['release_country']: film.filmInfo.release.releaseCountry,
+    };
 
-      serverFilm['user_details'] = {
-        ['watchlist']: film.userDetails.watchlist,
-        ['favorite']: film.userDetails.favorite,
-        ['already_watched']: film.userDetails.alreadyWatched,
-        ['watching_date']: film.userDetails.watchingDate ? film.userDetails.watchingDate.toISOString() : null,
-      };
-      delete serverFilm.filmInfo;
-      delete serverFilm['film_info'].alternativeTitle;
-      delete serverFilm['film_info'].releaseCountry;
-      delete serverFilm['film_info'].releaseDate;
-      delete serverFilm['film_info'].ageRating;
-      delete serverFilm['film_info'].rating;
-      delete serverFilm.userDetails;
-      return serverFilm;
+    serverFilm['user_details'] = {
+      ['watchlist']: film.userDetails.watchlist,
+      ['favorite']: film.userDetails.favorite,
+      ['already_watched']: film.userDetails.alreadyWatched,
+      ['watching_date']: film.userDetails.watchingDate ? film.userDetails.watchingDate.toISOString() : null,
+    };
+    delete serverFilm.filmInfo;
+    delete serverFilm['film_info'].alternativeTitle;
+    delete serverFilm['film_info'].releaseCountry;
+    delete serverFilm['film_info'].releaseDate;
+    delete serverFilm['film_info'].ageRating;
+    delete serverFilm['film_info'].rating;
+    delete serverFilm.userDetails;
+    return serverFilm;
   };
 }
 
