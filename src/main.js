@@ -20,7 +20,7 @@ const END_POINT = 'https://15.ecmascript.pages.academy/cinemaddict';
 
 const api = new Api(END_POINT, AUTHORIZATION);
 
-const mockRank = getRank(filter[FilterType.HISTORY](films).length);
+// const mockRank = getRank(filter[FilterType.HISTORY](films).length);
 
 const filmsModel = new FilmsModel();
 
@@ -65,7 +65,7 @@ filtersPresenter.init();
 
 renderScreen(Screen.FILMS);
 
-footerStatisticPresenter.init(films.length);
+footerStatisticPresenter.init(api.getFilms().length);
 // console.log(api.getFilms());
 
 api.getFilms().then((films) => {

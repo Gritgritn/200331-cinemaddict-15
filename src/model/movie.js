@@ -138,7 +138,7 @@ class Films extends AbstractObserver {
     delete serverFilm['film_info'].rating;
     delete serverFilm.userDetails;
     return serverFilm;
-  };
+  }
 }
 
 export default Films;
