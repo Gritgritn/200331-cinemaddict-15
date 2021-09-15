@@ -35,6 +35,18 @@ class CommentView extends AbstractView {
     return createCommentTemplate(this._comment);
   }
 
+  setDeletingStatus() {
+    this.getElement()
+      .querySelector('.film-details__comment-delete')
+      .textContent = 'Deleting...';
+  }
+
+  resetDeletingStatus() {
+    this.getElement()
+      .querySelector('.film-details__comment-delete')
+      .textContent = 'Delete';
+  }
+
   _deleteButtonClickHandler(evt) {
     evt.preventDefault();
     const commentItem = evt.target.closest('.film-details__comment');

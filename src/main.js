@@ -10,8 +10,8 @@ import FiltersPresenter from './presenter/filter.js';
 import {moviesData} from './mock/newfilm';
 import {Screen, FilterType, UpdateType} from './const';
 import StatisticScreenPresenter from './presenter/statisctic-screen.js';
-// import EmptyBoardView from './view/empty-board.js';
 import Api from './api.js';
+import CommentsModel from './model/comments.js';
 
 const AUTHORIZATION = 'Basic hS2sfS24ccl1sa2j';
 const END_POINT = 'https://15.ecmascript.pages.academy/cinemaddict';
@@ -30,10 +30,11 @@ const siteFooterElement = document.querySelector('.footer');
 
 const rankModel = new RankModel(mockRank);
 const filterModel = new FilterModel();
+const commentsModel = new CommentsModel(api,filmsModel);
 
 const profilePresenter = new ProfilePresenter(siteHeaderElement, rankModel, filmsModel);
 const filtersPresenter = new FiltersPresenter(siteMainElement, filterModel, filmsModel, renderScreen);
-const filmPresenter = new BoardPresenter(siteMainElement, filmsModel, filterModel, api);
+const filmPresenter = new BoardPresenter(siteMainElement, filmsModel, filterModel, api, commentsModel);
 const footerStatisticPresenter = new FooterStatisticPresenter(siteFooterElement);
 
 const statisticScreenPresenter = new StatisticScreenPresenter(siteMainElement, rankModel, filmsModel);
@@ -66,7 +67,7 @@ filtersPresenter.init();
 renderScreen(Screen.FILMS);
 
 footerStatisticPresenter.init(filmsMock.length);
-// console.log(api.getFilms());
+console.log(api.getFilms());
 
 api.getFilms().then((films) => {
   filmsModel.setFilms(UpdateType.INIT, films);

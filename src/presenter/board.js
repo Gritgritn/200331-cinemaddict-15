@@ -76,22 +76,9 @@ class Board {
   }
 
   _handleViewAction(actionType, updateType, update) {
-    switch (actionType) {
-      case UserAction.UPDATE_FILM: {
         this._api.updateFilm(update).then((response) => {
           this._filmsModel.updateFilm(updateType, response);
         });
-        break;
-      }
-      case UserAction.DELETE_COMMENT: {
-        this._filmsModel.deleteComment(updateType, update);
-        break;
-      }
-      case UserAction.CREATE_COMMENT: {
-        this._filmsModel.createComment(updateType, update);
-        break;
-      }
-    }
   }
 
   _handleModelEvent(updateType, data) {

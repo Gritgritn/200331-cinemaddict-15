@@ -62,5 +62,10 @@ const RankToTextContent = {
   MOVIE_BUFF: 'Movie Buff',
 };
 
-export {RankToTextContent, EMOTIONS, NEW_COMMENT_DEFAULT, SortType, KeyboardKey, UserAction, UpdateType, FilterType, EventType, Screen, Rank};
+const CommentsTitle = {
+  ERROR: 'was not loaded',
+  LOADING: 'loading...',
+};
+
+export {CommentsTitle, RankToTextContent, EMOTIONS, NEW_COMMENT_DEFAULT, SortType, KeyboardKey, UserAction, UpdateType, FilterType, EventType, Screen, Rank};
 export default KeyboardKey;

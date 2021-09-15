@@ -24,6 +24,14 @@ const render = (container, child, place) => {
   }
 };
 
+const rerender = (newElement, oldElement, container, place = RenderPosition.BEFOREEND) => {
+  if (oldElement) {
+    replace(newElement, oldElement);
+  } else {
+    render(container, newElement, place);
+  }
+};
+
 const isCtrlEnterEvent = (evt) => evt.ctrlKey && 'Enter'.includes(evt.key);
 
 const createElement = (template) => {
@@ -62,4 +70,4 @@ const remove = (component) => {
   component.removeElement();
 };
 
-export {remove, createElement, render, RenderPosition, replace, isCtrlEnterEvent};
+export {rerender, remove, createElement, render, RenderPosition, replace, isCtrlEnterEvent};
