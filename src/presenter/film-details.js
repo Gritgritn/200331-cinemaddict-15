@@ -227,8 +227,6 @@ class FilmDetailsPresenter {
     if (updateType === UpdateType.MAJOR) {
       return;
     }
-    const loadComments = updateType !== UpdateType.MINOR;
-    console.log(updateType);
     this.init(updatedFilm, { loadComments: false });
   }
 

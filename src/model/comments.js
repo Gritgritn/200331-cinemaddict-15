@@ -16,7 +16,6 @@ export default class Comments extends AbstractObserver {
 
   setComments(comments) {
     this._comments = comments.slice();
-    console.log(this._comments);
   }
 
   getComments() {

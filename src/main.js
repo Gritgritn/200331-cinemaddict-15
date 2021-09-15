@@ -65,9 +65,7 @@ profilePresenter.init();
 filtersPresenter.init();
 
 renderScreen(Screen.FILMS);
-
 footerStatisticPresenter.init(filmsMock.length);
-console.log(api.getFilms());
 
 api.getFilms().then((films) => {
   filmsModel.setFilms(UpdateType.INIT, films);

@@ -24,14 +24,6 @@ const render = (container, child, place) => {
   }
 };
 
-const rerender = (newElement, oldElement, container, place = RenderPosition.BEFOREEND) => {
-  if (oldElement) {
-    replace(newElement, oldElement);
-  } else {
-    render(container, newElement, place);
-  }
-};
-
 const isCtrlEnterEvent = (evt) => evt.ctrlKey && 'Enter'.includes(evt.key);
 
 const createElement = (template) => {
@@ -56,6 +48,14 @@ const replace = (newChild, oldChild) => {
   }
 
   parent.replaceChild(newChild, oldChild);
+};
+
+const rerender = (newElement, oldElement, container, place = RenderPosition.BEFOREEND) => {
+  if (oldElement) {
+    replace(newElement, oldElement);
+  } else {
+    render(container, newElement, place);
+  }
 };
 
 const remove = (component) => {

@@ -7,7 +7,7 @@ import FilmListView from '../view/filmlist.js';
 import FilmPresenter from './movie.js';
 import FilmListContainerView from '../view/flim-listcontainer.js';
 import {sortByDate, sortByRating} from '../utils/common.js';
-import {SortType, UpdateType, UserAction, FilterType} from '../const.js';
+import {SortType, UpdateType, FilterType} from '../const.js';
 import {filter} from '../utils/filters.js';
 import FilmDetailsPresenter from './film-details.js';
 import EmptyBoardView from '../view/empty-board.js';
@@ -76,9 +76,9 @@ class Board {
   }
 
   _handleViewAction(actionType, updateType, update) {
-        this._api.updateFilm(update).then((response) => {
-          this._filmsModel.updateFilm(updateType, response);
-        });
+    this._api.updateFilm(update).then((response) => {
+      this._filmsModel.updateFilm(updateType, response);
+    });
   }
 
   _handleModelEvent(updateType, data) {
