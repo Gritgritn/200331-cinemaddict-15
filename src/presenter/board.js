@@ -7,25 +7,28 @@ import FilmListView from '../view/filmlist.js';
 import FilmPresenter from './movie.js';
 import FilmListContainerView from '../view/flim-listcontainer.js';
 import {sortByDate, sortByRating} from '../utils/common.js';
-import {SortType, UpdateType, UserAction, FilterType} from '../const.js';
+import {SortType, UpdateType, FilterType} from '../const.js';
 import {filter} from '../utils/filters.js';
 import FilmDetailsPresenter from './film-details.js';
+import EmptyBoardView from '../view/empty-board.js';
 
 const FILM_COUNT_PER_STEP = 5;
 
 class Board {
-  constructor(filmListBoard, filmsModel, filterModel) {
+  constructor(filmListBoard, filmsModel, filterModel, api) {
     this._filmsModel = filmsModel;
     this._filterModel = filterModel;
     this._filmListBoard = filmListBoard;
     this._renderedFilmCount = FILM_COUNT_PER_STEP;
     this._filmPresenter = new Map();
     this._filterType = FilterType.ALL;
-
+    this._isLoading = true;
+    this._api = api;
 
     this._filmListMain = new FilmListView();
     this._filmListComponent = new FilmBoardTemplateView();
     this._filmListContainer = new FilmListContainerView();
+    this._loadingComponent = new EmptyBoardView();
     this._sortComponent = null;
     this._showMoreBtnComponent = null;
     this._noFilmComponent = null;
@@ -55,12 +58,12 @@ class Board {
     if (this._filmDetailsPresenter &&
         this._filmDetailsPresenter.filmId !== film.id) {
       this._filmDetailsPresenter.destroy();
-      this._filmDetailsPresenter = new FilmDetailsPresenter(this._filmListBoard, this._filmsModel, this._handleViewAction, this._hideFilmDetails);
+      this._filmDetailsPresenter = new FilmDetailsPresenter(this._filmListBoard, this._filmsModel, this._handleViewAction, this._hideFilmDetails, this._api);
     }
 
     if (!this._filmDetailsPresenter) {
       this._filmListBoard.classList.add('hide-overflow');
-      this._filmDetailsPresenter = new FilmDetailsPresenter(this._filmListBoard, this._filmsModel, this._handleViewAction, this._hideFilmDetails);
+      this._filmDetailsPresenter = new FilmDetailsPresenter(this._filmListBoard, this._filmsModel, this._handleViewAction, this._hideFilmDetails, this._api);
     }
 
     this._filmDetailsPresenter.init(film);
@@ -73,20 +76,9 @@ class Board {
   }
 
   _handleViewAction(actionType, updateType, update) {
-    switch (actionType) {
-      case UserAction.UPDATE_FILM: {
-        this._filmsModel.updateFilm(updateType, update);
-        break;
-      }
-      case UserAction.DELETE_COMMENT: {
-        this._filmsModel.deleteComment(updateType, update);
-        break;
-      }
-      case UserAction.CREATE_COMMENT: {
-        this._filmsModel.createComment(updateType, update);
-        break;
-      }
-    }
+    this._api.updateFilm(update).then((response) => {
+      this._filmsModel.updateFilm(updateType, response);
+    });
   }
 
   _handleModelEvent(updateType, data) {
@@ -105,7 +97,17 @@ class Board {
         this._renderBoard();
         break;
       }
+      case UpdateType.INIT: {
+        this._isLoading = false;
+        remove(this._loadingComponent);
+        this._renderBoard();
+        break;
+      }
     }
+  }
+
+  _renderLoading() {
+    render(this._filmListBoard, this._loadingComponent, RenderPosition.BEFOREEND);
   }
 
   _getFilms() {
@@ -218,6 +220,7 @@ class Board {
     if (this._noFilmComponent) {
       remove(this._noFilmComponent);
     }
+    remove(this._loadingComponent);
     remove(this._showMoreBtnComponent);
 
 
@@ -229,6 +232,10 @@ class Board {
   }
 
   _renderBoard() {
+    if (this._isLoading) {
+      this._renderLoading();
+      return;
+    }
     const films = this._getFilms();
     const filmCount = films.length;
     if (filmCount === 0) {
@@ -242,6 +249,7 @@ class Board {
     if (filmCount > this._renderedFilmCount) {
       this._renderShowMoreButton();
     }
+
   }
 }
 

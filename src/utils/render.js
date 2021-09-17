@@ -50,6 +50,14 @@ const replace = (newChild, oldChild) => {
   parent.replaceChild(newChild, oldChild);
 };
 
+const rerender = (newElement, oldElement, container, place = RenderPosition.BEFOREEND) => {
+  if (oldElement) {
+    replace(newElement, oldElement);
+  } else {
+    render(container, newElement, place);
+  }
+};
+
 const remove = (component) => {
   if (component === null) {
     return;
@@ -62,4 +70,4 @@ const remove = (component) => {
   component.removeElement();
 };
 
-export {remove, createElement, render, RenderPosition, replace, isCtrlEnterEvent};
+export {rerender, remove, createElement, render, RenderPosition, replace, isCtrlEnterEvent};

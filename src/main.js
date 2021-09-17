@@ -1,5 +1,3 @@
-import { getRank } from './utils/profile.js';
-import { filter } from './utils/filters.js';
 import RankModel from './model/rank.js';
 import ProfilePresenter from './presenter/profile.js';
 import FilmsModel from './model/movie.js';
@@ -7,26 +5,29 @@ import FilterModel from './model/filter.js';
 import FooterStatisticPresenter from './presenter/footer-statistics.js';
 import BoardPresenter from './presenter/board.js';
 import FiltersPresenter from './presenter/filter.js';
-import {moviesData} from './mock/newfilm';
-import {Screen, FilterType} from './const';
+import {Screen, UpdateType} from './const';
 import StatisticScreenPresenter from './presenter/statisctic-screen.js';
+import Api from './api.js';
+import CommentsModel from './model/comments.js';
 
-const films = moviesData;
-const mockRank = getRank(filter[FilterType.HISTORY](films).length);
+const AUTHORIZATION = 'Basic hS2sfS24ccl1sa2j';
+const END_POINT = 'https://15.ecmascript.pages.academy/cinemaddict';
+
+const api = new Api(END_POINT, AUTHORIZATION);
 
 const filmsModel = new FilmsModel();
-filmsModel.setFilms(films);
 
 const siteHeaderElement = document.querySelector('.header');
 const siteMainElement = document.querySelector('.main');
 const siteFooterElement = document.querySelector('.footer');
 
-const rankModel = new RankModel(mockRank);
+const rankModel = new RankModel();
 const filterModel = new FilterModel();
+const commentsModel = new CommentsModel(api,filmsModel);
 
 const profilePresenter = new ProfilePresenter(siteHeaderElement, rankModel, filmsModel);
 const filtersPresenter = new FiltersPresenter(siteMainElement, filterModel, filmsModel, renderScreen);
-const filmPresenter = new BoardPresenter(siteMainElement, filmsModel, filterModel);
+const filmPresenter = new BoardPresenter(siteMainElement, filmsModel, filterModel, api, commentsModel);
 const footerStatisticPresenter = new FooterStatisticPresenter(siteFooterElement);
 
 const statisticScreenPresenter = new StatisticScreenPresenter(siteMainElement, rankModel, filmsModel);
@@ -58,4 +59,10 @@ filtersPresenter.init();
 
 renderScreen(Screen.FILMS);
 
-footerStatisticPresenter.init(films.length);
+api.getFilms().then((films) => {
+  filmsModel.setFilms(UpdateType.INIT, films);
+  footerStatisticPresenter.init(films.length);
+})
+  .catch(() => {
+    filmsModel.setFilms(UpdateType.INIT, []);
+  });

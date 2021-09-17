@@ -63,6 +63,6 @@ const updateItem = (items, update) => items.map((it) => it.id === update.id ? up
 
 const sortByDate = (filmA, filmB) => filmB.filmInfo.release.date - filmA.filmInfo.release.date;
 
-const sortByRating = (filmA ,filmB) => filmB.filmInfo.totalRating - filmA.filmInfo.totalRating;
+const sortByRating = (filmA ,filmB) => filmB.filmInfo.rating - filmA.filmInfo.rating;
 
 export {isEsc, isEnter, getCurrentDate, getCommentDate, getTotalRuntime, isFilmInWhatcingPeriod, formatItems, getRandomInteger, updateItem, sortByDate, sortByRating, relativeDate, getDurationFromMinutes, formatDate, getShortDescription};

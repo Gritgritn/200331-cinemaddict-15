@@ -40,7 +40,7 @@ class NewCommentView extends SmartView {
     };
 
     this._commentInputHandler = this._commentInputHandler.bind(this);
-    this._emotionToggleHandler = this._emotionToggleHandler.bind(this);
+    this._emotionClickHandler = this._emotionClickHandler.bind(this);
 
     this._setInnerHandlers();
   }
@@ -61,7 +61,35 @@ class NewCommentView extends SmartView {
     return this._data;
   }
 
-  _emotionToggleHandler(evt) {
+  setErrorState() {
+    this.getElement().classList.add('shake');
+  }
+
+  enable() {
+    this.getElement()
+      .querySelector('.film-details__comment-input')
+      .disabled = false;
+
+    this.getElement()
+      .querySelector('.film-details__emoji-list')
+      .addEventListener('click', this._emotionClickHandler);
+  }
+
+  disable() {
+    this.getElement()
+      .querySelector('.film-details__comment-input')
+      .disabled = true;
+
+    this.getElement()
+      .querySelector('.film-details__emoji-list')
+      .removeEventListener('click', this._emotionClickHandler);
+  }
+
+  clearErrorState() {
+    this.getElement().classList.remove('shake');
+  }
+
+  _emotionClickHandler(evt) {
     const emotionInput = evt.target.closest('.film-details__emoji-item');
     if (!emotionInput || !evt.currentTarget.contains(emotionInput)) {
       return;
@@ -77,7 +105,7 @@ class NewCommentView extends SmartView {
   _setInnerHandlers() {
     this.getElement()
       .querySelector('.film-details__emoji-list')
-      .addEventListener('change', this._emotionToggleHandler);
+      .addEventListener('click', this._emotionClickHandler);
 
     this.getElement()
       .querySelector('.film-details__comment-input')

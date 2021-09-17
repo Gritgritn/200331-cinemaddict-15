@@ -1,6 +1,6 @@
-import { UserAction, UpdateType } from '../const.js';
+import { UserAction, UpdateType, CommentsTitle } from '../const.js';
 import { getCurrentDate, isEsc, isEnter } from '../utils/common.js';
-import { render, replace, remove, RenderPosition } from '../utils/render.js';
+import { render, rerender, remove, RenderPosition } from '../utils/render.js';
 
 import FilmDetailsView from '../view/film-details/film-details.js';
 import FilmDetailsBottomView from '../view/film-details/film-details-bottom.js';
@@ -11,11 +11,15 @@ import CommentView from '../view/film-details/comment.js';
 import NewCommentView from '../view/film-details/new-comment.js';
 
 class FilmDetailsPresenter {
-  constructor(filmDetailsContainer, filmsModel, changeFilm, hideFilmDetails) {
+  constructor(filmDetailsContainer, filmsModel, changeFilm, hideFilmDetails, api) {
     this._filmDetailsContainer = filmDetailsContainer;
     this._filmsModel = filmsModel;
     this._changeFilm = changeFilm;
     this._hideFilmDetails = hideFilmDetails;
+    this._api = api;
+    this._filmComments = [];
+    this._prevScrollTop = 0;
+    this._commentView = new Map();
 
     this._handleCloseButtonClick = this._handleCloseButtonClick.bind(this);
     this._handleDocumentKeydown = this._handleDocumentKeydown.bind(this);
@@ -32,9 +36,49 @@ class FilmDetailsPresenter {
     this._filmsModel.addObserver(this._handleModelEvent);
   }
 
-  init(film) {
+  init(film, { loadComments = true } = {}) {
     this._film = film;
+    this._isLoading = loadComments;
+    this._commentsTitleView = null;
+    this._commentsListView = null;
+    this._commentView = new Map();
     this._renderFilmDetails();
+  }
+
+  _renderCommentsContainer() {
+    this._commentsContainerView = new CommentsContainerView();
+    render(this._filmDetailsBottomView, this._commentsContainerView, RenderPosition.BEFOREEND);
+  }
+
+  _getCommentsTitle() {
+    if (this._isLoading) {
+      return CommentsTitle.LOADING;
+    }
+    if (this._isError) {
+      return CommentsTitle.ERROR;
+    }
+    return this._filmComments.length;
+  }
+
+  _renderComments() {
+    const prevCommentsTitleView = this._commentsTitleView;
+    const prevCommentsListView = this._commentsListView;
+    this._commentsTitleView =  new CommentsTitleView(this._getCommentsTitle());
+    this._commentsListView = new CommentsListView();
+
+    rerender(this._commentsTitleView, prevCommentsTitleView, this._commentsContainerView);
+    rerender(this._commentsListView, prevCommentsListView, this._commentsContainerView);
+
+    if (this._isLoading || this._isError) {
+      return;
+    }
+
+    this._filmComments.forEach((comment) => {
+      const commentView = new CommentView(comment);
+      this._commentView.set(comment.id, commentView);
+      commentView.setDeleteButtonClickHandler(this._handleDeleteButtonClick);
+      render(this._commentsListView, commentView, RenderPosition.BEFOREEND);
+    });
   }
 
   get filmId() {
@@ -83,33 +127,44 @@ class FilmDetailsPresenter {
     this._changeFilm(UserAction.UPDATE_FILM, UpdateType.MINOR, copyFilm);
   }
 
-  _handleDeleteButtonClick(id) {
-    const payload = {
-      commentId: id,
-      film: this._film,
-    };
-    this._changeFilm(UserAction.DELETE_COMMENT, UpdateType.PATCH, payload);
+  async _handleDeleteButtonClick(commentId) {
+    try {
+      this._commentView.get(commentId).setDeletingStatus();
+      await this._api.deleteComment(commentId);
+
+      const updatedFilm = {
+        ...this._film,
+        comments: this._film.comments.filter((id) => id !== commentId),
+      };
+      this._filmComments = this._filmComments.filter(({ id }) => id !== commentId);
+      this._changeFilm('delete comment', UpdateType.PATCH, updatedFilm);
+
+    } catch (error) {
+      this._commentView.get(commentId).resetDeletingStatus();
+    }
   }
 
-  _handleFormSubmit() {
+  async _handleFormSubmit() {
     const newComment = this._newCommentView.getData();
 
-    if (!newComment.text || !newComment.emotion) {
-      return;
+    try {
+      this._newCommentView.disable();
+      this._newCommentView.clearErrorState();
+      const { updatedFilm, updatedComments } =  await this._api.addComment(this._film, newComment);
+
+      this._filmComments = updatedComments;
+      this._changeFilm(null, UpdateType.PATCH, updatedFilm);
+      this._newCommentView.reset();
+    } catch (error) {
+      this._newCommentView.setErrorState();
     }
-
-    const payload = {
-      newComment,
-      film: this._film,
-    };
-
-    this._changeFilm(UserAction.CREATE_COMMENT, UpdateType.PATCH, payload);
-    this._newCommentView.reset();
+    this._newCommentView.enable();
   }
 
   _renderFilmInfo() {
+    const prevFilmDetailsView = this._filmDetailsView;
+
     this._filmDetailsView = new FilmDetailsView(this._film);
-    this._filmDetailsBottomView = new FilmDetailsBottomView();
 
     this._filmDetailsView.setClosePopupButtonHandler(this._handleCloseButtonClick);
 
@@ -117,56 +172,57 @@ class FilmDetailsPresenter {
     this._filmDetailsView.setMarkAsWatchedPopupButtonClick(this._handleAddWatchedButtonClick);
     this._filmDetailsView.setAddFavoriteButtonClickHandler(this._handleAddFavoriteButtonClick);
 
-    render(this._filmDetailsView, this._filmDetailsBottomView, RenderPosition.BEFOREEND);
-  }
-
-  _renderComments() {
-    const filmComments = this._filmsModel.getFilmComments(this.filmId);
-    this._commentsContainerView = new CommentsContainerView();
-    render(this._filmDetailsBottomView, this._commentsContainerView, RenderPosition.BEFOREEND);
-
-    this._commentsTitleView =  new CommentsTitleView(filmComments.length);
-    this._commentsListView = new CommentsListView();
-
-    render(this._commentsContainerView, this._commentsTitleView, RenderPosition.BEFOREEND);
-    render(this._commentsContainerView, this._commentsListView, RenderPosition.BEFOREEND);
-
-    filmComments.forEach((comment) => {
-      const commentsView = new CommentView(comment);
-      commentsView.setDeleteButtonClickHandler(this._handleDeleteButtonClick);
-      render(this._commentsListView, commentsView, RenderPosition.BEFOREEND);
-    });
+    rerender(this._filmDetailsView, prevFilmDetailsView, this._filmDetailsContainer);
+    if (!prevFilmDetailsView) {
+      document.addEventListener('keydown', this._handleDocumentKeydown);
+    }
   }
 
   _renderNewComment() {
-    if (!this._newCommentView) {
-      this._newCommentView = new NewCommentView();
-    }
-
-    render(this._commentsListView, this._newCommentView, RenderPosition.BEFOREEND);
+    this._newCommentView = this._newCommentView || new NewCommentView();
+    render(this._commentsContainerView, this._newCommentView, RenderPosition.BEFOREEND);
   }
 
-  _renderFilmDetails() {
-    const prevFilmDetailsView = this._filmDetailsView;
-    const scrollTop = prevFilmDetailsView ? this._filmDetailsView.scrollTop : null;
+  _renderFilmsBottom() {
+    this._filmDetailsBottomView = new FilmDetailsBottomView();
 
-    this._renderFilmInfo();
+    this._renderCommentsContainer();
     this._renderComments();
     this._renderNewComment();
 
-    if (prevFilmDetailsView) {
-      document.removeEventListener('keydown', this._handleDocumentKeydown);
-      replace(this._filmDetailsView, prevFilmDetailsView);
-      this._filmDetailsView.scrollTop = scrollTop;
-    } else {
-      render(this._filmDetailsContainer, this._filmDetailsView, RenderPosition.BEFOREEND);
-    }
+    render(this._filmDetailsView, this._filmDetailsBottomView, RenderPosition.BEFOREEND);
+  }
 
-    document.addEventListener('keydown', this._handleDocumentKeydown);
+  async _renderFilmDetails() {
+    this._isLoading = true;
+    this._isError = false;
+    this._prevScrollTop = this._filmDetailsView ? this._filmDetailsView.scrollTop : 0;
+
+    this._renderFilmInfo();
+    this._renderFilmsBottom();
+
+    this._filmDetailsView.scrollTop = this._prevScrollTop;
+
+    if (!this._isLoading) {
+      return;
+    }
+    try {
+      this._isError = false;
+      this._filmComments = await this._api.getComments(this._film);
+    } catch (error) {
+      this._isError = true;
+    } finally {
+      this._isLoading = false;
+      this._renderComments();
+      this._filmDetailsView.scrollTop = this._prevScrollTop;
+    }
   }
 
   _handleModelEvent(updateType, updatedFilm) {
-    this.init(updatedFilm);
+    if (updateType === UpdateType.MAJOR) {
+      return;
+    }
+    this.init(updatedFilm, { loadComments: false });
   }
 
   destroy() {
