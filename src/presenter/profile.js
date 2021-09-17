@@ -39,7 +39,7 @@ class ProfilePresenter {
     const rank = getRank(watchedFilmsAmount);
 
     if (rank !== this._rankModel.getRank()) {
-     this._rankModel.setRank(UpdateType.MAJOR, rank);
+    this._rankModel.setRank(UpdateType.MAJOR, rank);
     }
   }
 }
