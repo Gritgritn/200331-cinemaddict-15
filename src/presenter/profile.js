@@ -33,14 +33,14 @@ class ProfilePresenter {
     this.init();
   }
 
-  _handleFilmsModelEvent(updateType) {
-      const films = this._filmsModel.getFilms();
-      const watchedFilmsAmount = filter[FilterType.HISTORY](films).length;
-      const rank = getRank(watchedFilmsAmount);
+  _handleFilmsModelEvent() {
+    const films = this._filmsModel.getFilms();
+    const watchedFilmsAmount = filter[FilterType.HISTORY](films).length;
+    const rank = getRank(watchedFilmsAmount);
 
-      if (rank !== this._rankModel.getRank()) {
-        this._rankModel.setRank(UpdateType.MAJOR, rank);
-      }
+    if (rank !== this._rankModel.getRank()) {
+     this._rankModel.setRank(UpdateType.MAJOR, rank);
+    }
   }
 }
 
