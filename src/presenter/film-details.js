@@ -1,6 +1,6 @@
-import { UserAction, UpdateType, CommentsTitle } from '../const.js';
-import { getCurrentDate, isEsc, isEnter } from '../utils/common.js';
-import { render, rerender, remove, RenderPosition } from '../utils/render.js';
+import {UserAction, UpdateType, CommentsTitle} from '../const.js';
+import {getCurrentDate, isEsc, isEnter} from '../utils/common.js';
+import {render, rerender, remove, RenderPosition} from '../utils/render.js';
 
 import FilmDetailsView from '../view/film-details/film-details.js';
 import FilmDetailsBottomView from '../view/film-details/film-details-bottom.js';
@@ -36,7 +36,7 @@ class FilmDetailsPresenter {
     this._filmsModel.addObserver(this._handleModelEvent);
   }
 
-  init(film, { loadComments = true } = {}) {
+  init(film, {loadComments = true} = {}) {
     this._film = film;
     this._isLoading = loadComments;
     this._commentsTitleView = null;
@@ -136,7 +136,7 @@ class FilmDetailsPresenter {
         ...this._film,
         comments: this._film.comments.filter((id) => id !== commentId),
       };
-      this._filmComments = this._filmComments.filter(({ id }) => id !== commentId);
+      this._filmComments = this._filmComments.filter(({id}) => id !== commentId);
       this._changeFilm('delete comment', UpdateType.PATCH, updatedFilm);
 
     } catch (error) {
@@ -222,7 +222,7 @@ class FilmDetailsPresenter {
     if (updateType === UpdateType.MAJOR) {
       return;
     }
-    this.init(updatedFilm, { loadComments: false });
+    this.init(updatedFilm, {loadComments: false });
   }
 
   destroy() {

@@ -1,4 +1,4 @@
-import { render, replace, RenderPosition } from '../utils/render.js';
+import {render, replace, RenderPosition} from '../utils/render.js';
 import FooterStatisticView from '../view/footerstatistic.js';
 
 class FooterStatisticsPresenter {

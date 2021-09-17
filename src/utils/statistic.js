@@ -1,4 +1,4 @@
-import { getTotalRuntime } from './common.js';
+import {getTotalRuntime} from './common.js';
 
 const getGenresStatistic = (watchedFilms) => {
   const genresStatistic = new Map();
