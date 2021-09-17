@@ -35,7 +35,7 @@ class Films extends AbstractObserver {
   }
 
   static adaptNewCommentToServer(comment) {
-    const serverComment = {  };
+    const serverComment = { };
     serverComment.id = comment.id;
     serverComment.author = comment.author;
     serverComment.date = new Date(comment.date);
@@ -45,7 +45,7 @@ class Films extends AbstractObserver {
   }
 
   static adaptFilmToClient(film) {
-    const clientFilm = { ... film};
+    const clientFilm = {... film};
 
     clientFilm.filmInfo = {
       ...film['film_info'],
@@ -76,7 +76,7 @@ class Films extends AbstractObserver {
   }
 
   static adaptFilmToServer(film) {
-    const serverFilm = { ... film};
+    const serverFilm = {...film};
 
     serverFilm['film_info'] = {
       ...film.filmInfo,

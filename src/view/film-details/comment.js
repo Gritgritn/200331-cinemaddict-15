@@ -1,9 +1,9 @@
 import he from 'he';
-import { getCommentDate } from '../../utils/common.js';
+import {getCommentDate} from '../../utils/common.js';
 import AbstractView from '../abstract.js';
 
 const createCommentTemplate = (comment) => {
-  const { author, date, emotion, text, id } = comment;
+  const {author, date, emotion, text, id} = comment;
 
   return `
     <li class="film-details__comment" data-comment-id=${id}>

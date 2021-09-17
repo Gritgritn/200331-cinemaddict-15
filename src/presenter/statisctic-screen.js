@@ -2,15 +2,14 @@ import {remove, render, RenderPosition } from '../utils/render.js';
 import StatisticView from '../view/statistic.js';
 import {filter} from '../utils/filters.js';
 import {isFilmInWhatcingPeriod} from '../utils/common.js';
-import { FilterType } from '../const.js';
-import { getWatchedStatisticData } from '../utils/statistic.js';
+import {FilterType} from '../const.js';
+import {getWatchedStatisticData} from '../utils/statistic.js';
 
 class StatisticScreen {
   constructor(statisticContainer, rankModel, filmsModel) {
     this._statisticContainer = statisticContainer;
     this._rankModel = rankModel;
     this._filmsModel = filmsModel;
-
     this._handlePeriodChange = this._handlePeriodChange.bind(this);
   }
 
