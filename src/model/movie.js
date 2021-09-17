@@ -14,6 +14,10 @@ class Films extends AbstractObserver {
     this._notify(updateType);
   }
 
+  getFilms() {
+    return this._films;
+  }
+
   setComments(updateType, comments) {
     this._comments = comments.slice();
     this._notify(updateType);
@@ -62,28 +66,25 @@ class Films extends AbstractObserver {
     this._notify(updateType, update);
   }
 
-  getFilms() {
-    return this._films;
-  }
+
 
   static adaptCommentToClient(comment) {
-    const clientComment = { ...comment };
-
+    const clientComment = { };
+    clientComment.id = comment.id;
+    clientComment.author = comment.author;
     clientComment.text = comment.comment;
     clientComment.date = new Date(comment.date);
-    delete clientComment.comment;
-
-
+    clientComment.emotion = comment.emotion;
     return clientComment;
   }
 
   static adaptNewCommentToServer(comment) {
-    const serverComment = { ...comment };
-
+    const serverComment = {  };
+    serverComment.id = comment.id;
+    serverComment.author = comment.author;
+    serverComment.date = new Date(comment.date);
+    serverComment.emotion = comment.emotion;
     serverComment.comment = comment.text;
-
-    delete serverComment.text;
-
     return serverComment;
   }
 

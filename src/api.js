@@ -7,12 +7,7 @@ const Method = {
   DELETE: 'DELETE',
 };
 
-const SuccessHTTPStatusRange = {
-  MIN: 200,
-  MAX: 299,
-};
-
-export default class Api {
+class Api {
   constructor(endPoint, authorization) {
     this._endPoint = endPoint;
     this._authorization = authorization;
@@ -34,8 +29,8 @@ export default class Api {
       .then((comments) => comments.map(FilmsModel.adaptCommentToClient));
   }
 
-  async deleteComment(id) {
-    await this._load({
+  deleteComment(id) {
+    this._load({
       url: `comments/${id}`,
       method: Method.DELETE,
     });
@@ -54,7 +49,6 @@ export default class Api {
       updatedFilm: FilmsModel.adaptFilmToClient(movie),
       updatedComments: comments.map(FilmsModel.adaptCommentToClient),
     };
-    // const updatedFilm = FilmsModel.adaptFilmToClient(movie);
 
     return adaptedResponse;
   }
@@ -83,45 +77,6 @@ export default class Api {
     });
   }
 
-  // addComment(movie, comment) {
-  //   return this._load({
-  //     url: `comments/${movie.id}`,
-  //     method: Method.PUT,
-  //     body: JSON.stringify(CommentsModel.adaptToServer(comment)),
-  //     headers: new Headers({'Content-Type': 'application/json'}),
-  //   })
-  //     .then(Api.toJSON)
-  //     .then((data) => ({
-  //       film: MoviesModel.adaptToClient(data.movie),
-  //       comments: data.comments.map(CommentsModel.adaptToClient),
-  //     }));
-  // }
-
-  // deleteComment(commentId) {
-  //   return this._load({
-  //     url: `comments/${commentId}`,
-  //     method: Method.PUT,
-  //   });
-  // }
-
-  // addComment(film) {
-  //   return this._load({
-  //     url: `comments/${film.id}`,
-  //     method: Method.POST,
-  //     // body: JSON.stringify(TasksModel.adaptToServer(task)),
-  //     headers: new Headers({'Content-Type': 'application/json'}),
-  //   });
-  //   // .then(Api.toJSON)
-  //   // .then(TasksModel.adaptToClient);
-  // }
-
-  // deleteComment(comment) {
-  //   return this._load({
-  //     url: `comments/${comment.id}`,
-  //     method: Method.DELETE,
-  //   });
-  // }
-
   async _load({
     url,
     method = Method.GET,
@@ -139,8 +94,7 @@ export default class Api {
 
   static checkStatus(response) {
     if (
-      response.status < SuccessHTTPStatusRange.MIN ||
-      response.status > SuccessHTTPStatusRange.MAX
+      !response.ok
     ) {
       throw new Error(`${response.status}: ${response.statusText}`);
     }
@@ -156,3 +110,5 @@ export default class Api {
     throw err;
   }
 }
+
+export default Api;

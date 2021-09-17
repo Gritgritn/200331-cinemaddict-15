@@ -34,7 +34,6 @@ class ProfilePresenter {
   }
 
   _handleFilmsModelEvent(updateType) {
-    if (updateType === UpdateType.MINOR) {
       const films = this._filmsModel.getFilms();
       const watchedFilmsAmount = filter[FilterType.HISTORY](films).length;
       const rank = getRank(watchedFilmsAmount);
@@ -42,7 +41,6 @@ class ProfilePresenter {
       if (rank !== this._rankModel.getRank()) {
         this._rankModel.setRank(UpdateType.MAJOR, rank);
       }
-    }
   }
 }
 

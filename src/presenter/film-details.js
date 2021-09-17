@@ -45,10 +45,6 @@ class FilmDetailsPresenter {
     this._renderFilmDetails();
   }
 
-  // _renderComment(comment) {
-  //   render(this._commentsContainerView, new CommentView(comment), RenderPosition.BEFOREEND);
-  // }
-
   _renderCommentsContainer() {
     this._commentsContainerView = new CommentsContainerView();
     render(this._filmDetailsBottomView, this._commentsContainerView, RenderPosition.BEFOREEND);
@@ -217,7 +213,6 @@ class FilmDetailsPresenter {
       this._isError = true;
     } finally {
       this._isLoading = false;
-      // this._prevScrollTop = this._filmDetailsView.scrollTop;
       this._renderComments();
       this._filmDetailsView.scrollTop = this._prevScrollTop;
     }

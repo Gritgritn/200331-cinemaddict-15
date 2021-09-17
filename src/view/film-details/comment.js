@@ -36,15 +36,15 @@ class CommentView extends AbstractView {
   }
 
   setDeletingStatus() {
-    this.getElement()
-      .querySelector('.film-details__comment-delete')
-      .textContent = 'Deleting...';
+    const button = this.getElement().querySelector('.film-details__comment-delete');
+    button.disabled = true;
+    button.textContent = 'Deleting...';
   }
 
   resetDeletingStatus() {
-    this.getElement()
-      .querySelector('.film-details__comment-delete')
-      .textContent = 'Delete';
+    const button = this.getElement().querySelector('.film-details__comment-delete');
+    button.disabled = false;
+    button.textContent = 'Delete';
   }
 
   _deleteButtonClickHandler(evt) {
