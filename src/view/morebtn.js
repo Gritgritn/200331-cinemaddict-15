@@ -1,6 +1,6 @@
 import AbstractView from './abstract.js';
 
-const createShowmoreBtn = () => (
+const createShowMoreBtn = () => (
   `<button class="films-list__show-more">
     Show more
   </button>`
@@ -13,7 +13,7 @@ class ShowmoreBtn extends AbstractView {
   }
 
   getTemplate() {
-    return createShowmoreBtn();
+    return createShowMoreBtn();
   }
 
   _clickHandler(evt) {
