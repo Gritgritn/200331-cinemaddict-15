@@ -53,12 +53,6 @@ class Api {
     return adaptedResponse;
   }
 
-  setFilms(updateType, films) {
-    this._films = films.slice();
-
-    this._notify(updateType);
-  }
-
   updateFilm(film) {
     return this._load({
       url: `movies/${film.id}`,
